@@ -8,11 +8,11 @@ IDOSDK version update log
 
 Document: [Chinese](https://idoosmart.github.io/Native_GitBook/zh/) | [English](https://idoosmart.github.io/Native_GitBook/en/)
 
-Demo：[Github](https://github.com/idoosmart/Native_Demo)
+Demo: [Github](https://github.com/idoosmart/Native_Demo)
 
-Android SDK：[Github](https://github.com/idoosmart/android_sdk)
+Android SDK: [Github](https://github.com/idoosmart/android_sdk)
 
-iOS SDK： [Github](https://github.com/idoosmart/ios_sdk_full)
+iOS SDK: [Github](https://github.com/idoosmart/ios_sdk_full)
 
 ## 4.5.8<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2026/09/23</span>
 
@@ -67,7 +67,7 @@ iOS SDK： [Github](https://github.com/idoosmart/ios_sdk_full)
 
 ## 4.5.1<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2026/03/27</span>
 
-##### Update Content：
+##### Update Content:
 
 - Rings now support gesture configuration.
 
@@ -75,13 +75,13 @@ iOS SDK： [Github](https://github.com/idoosmart/ios_sdk_full)
 
 ## 4.5.0<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2026/03/24</span>
 
-##### Update Content：
+##### Update Content:
 
 - Added support for ring devices.
 
 
 
-## 4.4.14（iOS only)<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2026/03/18</span>
+## 4.4.14 (iOS only)<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2026/03/18</span>
 
 ##### Update Content:
 
@@ -206,7 +206,7 @@ iOS SDK： [Github](https://github.com/idoosmart/ios_sdk_full)
 
 ##### Update content:
 
-- Support 16 KB page sizes (android)；
+- Support 16 KB page sizes (android);
 - *Upgrade flutter engine version [to upgrade](http://idoosmart.github.io/Native_GitBook/en/doc/IDOSDK.html?h=Use%20SDK%20version%204.4.0%20and%20above)
 
 
@@ -256,7 +256,7 @@ iOS SDK： [Github](https://github.com/idoosmart/ios_sdk_full)
 
 
 
-## 4.2.11<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2025/03/18</span>
+## 4.2.11<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2025/05/16</span>
 
 ##### Update content:
 
@@ -265,7 +265,7 @@ iOS SDK： [Github](https://github.com/idoosmart/ios_sdk_full)
 
 
 
-## 4.2.10<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2025/03/18</span>
+## 4.2.10<span style="font-size:15px;color:gray;">&nbsp;&nbsp;2025/05/13</span>
 
 ##### Update content:
 
@@ -605,7 +605,7 @@ iOS SDK： [Github](https://github.com/idoosmart/ios_sdk_full)
 
 ##### Update content:
 
-- Supplement [Quick Message Reply](https://idoosmart.github.io/Native_GitBook/zh/doc/logicDescription/quickMsgReplyList.html), default quick message reply list command (android)
+- Supplement [Quick Message Reply](https://idoosmart.github.io/Native_GitBook/en/doc/logicDescription/quickMsgReplyList.html), default quick message reply list command (android)
 
 - Adapt the unbinding function
 - Fix the abnormal parameter problem of some command interfaces of iOS Objective-C (iOS)
@@ -730,5 +730,5 @@ func checkDeviceBindState(macAddress: String) -> Bool
 
 ```kotlin
 /// Query the binding status based on the device macAddress
-func checkDeviceBindState(macAddress: String): Boolean
+fun checkDeviceBindState(macAddress: String): Boolean
 ```
