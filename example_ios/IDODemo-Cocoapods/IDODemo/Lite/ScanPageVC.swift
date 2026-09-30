@@ -2,7 +2,7 @@
 //  ScanPageVC.swift
 //  IDODemoLite
 //
-//  扫描添加设备页。扫描仍走 XYCentralManager。
+//  Scan-and-add device page. Scanning still goes through XYCentralManager.
 //
 
 import UIKit
@@ -31,7 +31,7 @@ class ScanPageVC: BaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "添加设备"
+        title = "Add device"
         view.backgroundColor = .white
         view.addSubview(tableView)
         view.addSubview(btnReload)
@@ -89,7 +89,7 @@ extension ScanPageVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "扫描结果 / Scan"
+        return "Scan"
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

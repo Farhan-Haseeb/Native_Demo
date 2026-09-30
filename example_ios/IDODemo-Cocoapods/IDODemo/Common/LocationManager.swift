@@ -34,9 +34,9 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.distanceFilter = kCLDistanceFilterNone
     }
     
-    // MARK: - 权限相关方法
+    // MARK: - Permission methods
     
-    /// 获取当前权限状态
+    /// Get the current permission status
     private func getAuthorizationStatus() -> CLAuthorizationStatus {
         if #available(iOS 14.0, *) {
             return locationManager.authorizationStatus
@@ -45,7 +45,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    /// 请求定位权限
+    /// Request location permission
     func requestLocationPermission() {
         guard CLLocationManager.locationServicesEnabled() else {
             showLocationServiceDisabledAlert()
@@ -53,11 +53,11 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
         
         locationManager.requestWhenInUseAuthorization()
-        // 或者根据需求使用
+        // Or, as needed, use
         // locationManager.requestAlwaysAuthorization()
     }
     
-    /// 检查定位权限状态
+    /// Check the location permission status
     func checkLocationAuthorization() -> Bool {
         let status = getAuthorizationStatus()
         
@@ -96,7 +96,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    // iOS 14及以上版本使用此代理方法
+    // iOS 14 and later use this delegate method
     @available(iOS 14.0, *)
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let status = manager.authorizationStatus
@@ -120,7 +120,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         handleLocationUpdate(newLocation)
         guard let newLocation = locations.last else { return }
         
-        // 计算距离
+        // Calculate the distance
         if let previousLocation = previousLocation {
             let distance = newLocation.distance(from: previousLocation)
             totalDistance += distance
@@ -135,7 +135,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     private func updateRoute(with coordinate: CLLocationCoordinate2D) {
         routeCoordinates.append(coordinate)
         
-        // 绘制折线
+        // Draw the polyline
 //        let polyline = MKPolyline(coordinates: routeCoordinates, count: routeCoordinates.count)
 //        mapView.addOverlay(polyline)
     }
@@ -145,7 +145,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationErrorBlock?(error)
     }
     
-    // MARK: - 辅助方法
+    // MARK: - Helper methods
     
     func startUpdatingLocation() {
         locationManager.startUpdatingLocation()
@@ -159,35 +159,35 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     private func handleLocationUpdate(_ location: CLLocation) {
-        print("位置更新：\(location.coordinate.latitude), \(location.coordinate.longitude) signal:\(location.horizontalAccuracy)")
+        print("Location update: \(location.coordinate.latitude), \(location.coordinate.longitude) signal:\(location.horizontalAccuracy)")
     }
     
     private func handleLocationError(_ error: Error) {
-        //print("定位错误：\(error.localizedDescription)")
+        //print("Location error: \(error.localizedDescription)")
     }
     
-    // MARK: - Alert 提示
+    // MARK: - Alert prompts
     
     private func showLocationServiceDisabledAlert() {
         let alert = UIAlertController(
-            title: "定位服务未开启",
-            message: "请在设置中开启定位服务",
+            title: "Location services are off",
+            message: "Please turn on location services in Settings",
             preferredStyle: .alert
         )
         
-        let settingsAction = UIAlertAction(title: "去设置", style: .default) { _ in
-            // 跳转到系统设置
+        let settingsAction = UIAlertAction(title: "Go to Settings", style: .default) { _ in
+            // Jump to system Settings
             if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(settingsURL)
             }
         }
         
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(settingsAction)
         alert.addAction(cancelAction)
         
-        // 获取当前最顶层的 ViewController 来展示 alert
+        // Get the topmost ViewController to present the alert
         if let topVC = getTopViewController() {
             topVC.present(alert, animated: true)
         }
@@ -195,18 +195,18 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     private func showGoToSettingsAlert() {
         let alert = UIAlertController(
-            title: "需要定位权限",
-            message: "请在设置中允许访问您的位置信息",
+            title: "Location permission required",
+            message: "Please allow access to your location in Settings",
             preferredStyle: .alert
         )
         
-        let settingsAction = UIAlertAction(title: "去设置", style: .default) { _ in
+        let settingsAction = UIAlertAction(title: "Go to Settings", style: .default) { _ in
             if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(settingsURL)
             }
         }
         
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(settingsAction)
         alert.addAction(cancelAction)
@@ -216,7 +216,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    // 获取顶层 ViewController
+    // Get the top ViewController
     private func getTopViewController() -> UIViewController? {
         let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
         var topViewController = keyWindow?.rootViewController

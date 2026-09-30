@@ -2,7 +2,7 @@
 //  ScanPageVC.swift
 //  IDODemo
 //
-//  扫描添加设备页
+//  Scan-and-add device page
 //
 
 import UIKit
@@ -32,7 +32,7 @@ class ScanPageVC: BaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "添加设备"
+        title = "Add device"
         view.backgroundColor = .white
 
         view.addSubview(tableView)
@@ -129,7 +129,7 @@ extension ScanPageVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "扫描结果 / Scan"
+        return "Scan"
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -159,7 +159,7 @@ extension ScanPageVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let deviceModel = scanList[indexPath.row]
         if deviceModel.isOta && deviceModel.deviceId == 0 {
-            SVProgressHUD.showInfo(withStatus: "设备处理ota状态，先去升级")
+            SVProgressHUD.showInfo(withStatus: "Device is in OTA mode, upgrade it first")
             tableView.deselectRow(at: indexPath, animated: false)
             return
         }

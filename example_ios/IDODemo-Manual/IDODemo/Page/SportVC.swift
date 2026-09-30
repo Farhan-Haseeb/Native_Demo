@@ -144,7 +144,7 @@ extension SportVC {
     
     private func refreshState() {
         
-        // !!!: 设备主动发起的运动，暂时不支持与app状态联动，忽略状态刷新
+        // !!!: Sports started by the device are not yet linked with the app state; ignore the state refresh
         if (baseModel == nil) {
             print("ignore")
             stopTimer()
@@ -306,28 +306,28 @@ extension SportVC {
 
 extension SportVC: IDOExchangeDataOCDelegate {
     
-    /// ble发起运动 app监听ble
-    /// - Parameter model: 监听ble执行数据实体
+    /// ble initiates sport, app listens to ble
+    /// - Parameter model: data entity from listening to ble execution
     /// ```
-    /// 数据实体包括：
-    /// ble设备发送交换运动数据开始 IDOBleStartExchangeModel
-    /// ble设备交换运动数据过程中 IDOBleIngExchangeModel
-    /// ble设备发送交换运动数据结束 IDOBleEndExchangeModel
-    /// ble设备发送交换运动数据暂停 IDOBlePauseExchangeModel
-    /// ble设备发送交换运动数据恢复 IDOBleRestoreExchangeModel
-    /// ble设备操作运动计划 IDOBleOperatePlanExchangeModel
-    /// app发起运动 app监听ble
-    /// ble设备发送交换运动数据暂停 IDOAppBlePauseExchangeModel
-    /// ble设备发送交换运动数据恢复 IDOAppBleRestoreExchangeModel
-    /// ble设备发送交换运动数据结束 IDOAppBleEndExchangeModel
+    /// Data entities include:
+    /// ble device sends sport data exchange start IDOBleStartExchangeModel
+    /// ble device sport data exchange in progress IDOBleIngExchangeModel
+    /// ble device sends sport data exchange end IDOBleEndExchangeModel
+    /// ble device sends sport data exchange pause IDOBlePauseExchangeModel
+    /// ble device sends sport data exchange resume IDOBleRestoreExchangeModel
+    /// ble device operates sport plan IDOBleOperatePlanExchangeModel
+    /// app initiates sport, app listens to ble
+    /// ble device sends sport data exchange pause IDOAppBlePauseExchangeModel
+    /// ble device sends sport data exchange resume IDOAppBleRestoreExchangeModel
+    /// ble device sends sport data exchange end IDOAppBleEndExchangeModel
     func appListenBleExec(model: NSObject) {
         if (model is IDOBleStartExchangeModel) {
             guard let obj = model as? IDOBleStartExchangeModel else {
-                print("异常：数据为空")
+                print("Exception: data is empty")
                 return
             }
             let sendModel = IDOBleStartReplyExchangeModel(baseModel: obj.baseModel, operate: obj.operate, retCode: 0)
-            // !!!: 暂时不支持设备启动运动和app联动
+            // !!!: Device-started sports are not yet linked with the app
             //baseModel = obj.baseModel
             sdk.dataExchange.appReplyExec(model: sendModel)
             exchangeType = .started
@@ -369,7 +369,7 @@ extension SportVC: IDOExchangeDataOCDelegate {
         }
         else if (model is IDOAppBleEndExchangeModel) {
             guard let obj = model as? IDOAppBleEndExchangeModel else {
-                print("异常：数据为空")
+                print("Exception: data is empty")
                 return
             }
             let sendModel = IDOAppBleEndReplyExchangeModel(baseModel: baseModel,
@@ -387,27 +387,27 @@ extension SportVC: IDOExchangeDataOCDelegate {
     
     func appListenAppExec(model: NSObject) {
         
-        /// app执行响应
-        /// - Parameter model: 监听app执行Ble响应实体
+        /// app execution response
+        /// - Parameter model: Ble response entity from listening to app execution
         /// ```
-        /// 响应实体包括：
-        /// app 开始发起运动 ble回复 IDOAppStartReplyExchangeModel
-        /// app 发起运动结束 ble回复 IDOAppEndReplyExchangeModel
-        /// app 交换运动数据 ble回复 IDOAppIngReplyExchangeModel
-        /// app 交换运动数据暂停 ble回复 IDOAppPauseReplyExchangeModel
-        /// app 交换运动数据恢复 ble回复 IDOAppRestoreReplyExchangeModel
-        /// app v3交换运动数据 ble回复 IDOAppIngV3ReplyExchangeModel
-        /// app 操作运动计划 ble回复 IDOAppOperatePlanReplyExchangeModel
-        /// app 获取v3多运动一次活动数据 ble回复 IDOAppActivityDataV3ExchangeModel
-        /// app 获取v3多运动一次心率数据 ble回复 IDOAppHrDataExchangeModel
-        /// app 获取v3多运动一次GPS数据 ble回复 IDOAppGpsDataExchangeModel
+        /// Response entities include:
+        /// app starts sport, ble replies IDOAppStartReplyExchangeModel
+        /// app ends sport, ble replies IDOAppEndReplyExchangeModel
+        /// app exchanges sport data, ble replies IDOAppIngReplyExchangeModel
+        /// app pauses sport data exchange, ble replies IDOAppPauseReplyExchangeModel
+        /// app resumes sport data exchange, ble replies IDOAppRestoreReplyExchangeModel
+        /// app v3 exchanges sport data, ble replies IDOAppIngV3ReplyExchangeModel
+        /// app operates sport plan, ble replies IDOAppOperatePlanReplyExchangeModel
+        /// app gets v3 multi-sport single activity data, ble replies IDOAppActivityDataV3ExchangeModel
+        /// app gets v3 multi-sport single heart rate data, ble replies IDOAppHrDataExchangeModel
+        /// app gets v3 multi-sport single GPS data, ble replies IDOAppGpsDataExchangeModel
         
         if (model is IDOAppStartReplyExchangeModel) {
             let obj = model as? IDOAppStartReplyExchangeModel
             print("sport started now : \(String(describing: obj))")
-            //* - 0:成功; 1:设备已经进入运动模式失败;
-            //* - 2:设备电量低失败;3:手环正在充电
-            //* - 4:正在使用Alexa 5:通话中
+            //* - 0:succeeded; 1:failed, device already in sport mode;;
+            //* - 2:failed, device battery low;3:band is charging
+            //* - 4:using Alexa 5:in a call
             guard obj?.retCode == 0 else {
                 textConsole.text = "sport failed to launch, because of \(String(describing: obj?.retCode))"
                 return
@@ -453,8 +453,8 @@ extension SportVC: IDOExchangeDataOCDelegate {
             distance = max(distance, obj?.distance ?? 0)
             if (isSportEnd) {
                 isSportEnd = false
-                // TODO: 运动任务结束
-                print("运动任务结束!! / Sports mission completed!!")
+                // TODO: sport task ended
+                print("Sports mission completed!!")
             }
         }
         else if (model is IDOAppHrDataExchangeModel) {

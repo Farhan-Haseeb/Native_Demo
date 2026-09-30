@@ -17,22 +17,22 @@
     
     [Cmdoc getBtName:^(CmdError * _Nonnull err, NSString * _Nullable btName) {
         if (err.isOK) {
-            NSLog(@"获取成功 btName:%@", btName);
+            NSLog(@"Get succeeded btName:%@", btName);
         }else {
-            NSLog(@"btName 获取失败");
+            NSLog(@"btName get failed");
         }
     }];
     
     [Cmdoc getBatteryInfo:^(CmdError * _Nonnull err, IDOBatteryInfoModel * _Nullable obj) {
         if (err.isOK) {
-            NSLog(@"电量信息获取成功 obj:%@", obj);
+            NSLog(@"Battery info get succeeded obj:%@", obj);
         }else {
-            NSLog(@"电量信息获取失败");
+            NSLog(@"Battery info get failed");
         }
     }];
     
     [sdkoc.device refreshDeviceInfoWithForced:true completion:^(BOOL rs) {
-        NSLog(@"手动刷新设备信息：%d", rs);
+        NSLog(@"Manually refresh device info: %d", rs);
     }];
     
 }

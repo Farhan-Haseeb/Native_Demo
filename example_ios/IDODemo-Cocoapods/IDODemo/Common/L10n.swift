@@ -655,8 +655,14 @@ enum L10n {
     static var power30sAveragePower: String { String(localized: "power30sAveragePower") }
 
     // MARK: - Other
+    /// Confirm
+    static var confirm: String { String(localized: "Confirm") }
     /// Cross country running
     static var crossCountryRunning: String { String(localized: "Cross country running") }
+    /// Dial Customization Tool
+    static var dialCustomizationTool: String { String(localized: "Dial Customization Tool") }
+    /// Import ZIP file
+    static var importZipFile: String { String(localized: "Import ZIP file") }
     static var mon28: String { String(localized: "MON 28") }
     /// Max Heart Rate
     static var maxHeartRate: String { String(localized: "Max Heart Rate") }

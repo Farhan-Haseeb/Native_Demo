@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TestOC : NSObject
 
 
-/// 测试基础指令
+/// Test basic commands
 - (void)testCommand;
 
-/// 测试数据同步
+/// Test data sync
 - (void)testSync;
 
 @end

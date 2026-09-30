@@ -15,7 +15,7 @@ import SVProgressHUD
 
 extension MainPageVC {
     
-    // Register sdk, 只执行一次
+    // Register sdk, run only once
     func registerSDK() {
         sdk.ble.addBleDelegate(api: self)
 
@@ -27,7 +27,7 @@ extension MainPageVC {
         sdk.alexa.setupAlexa(delegate: self, clientId: clientId)
         
         
-        // 蓝牙状态
+        // Bluetooth state
         sdk.ble.getBluetoothState { [weak self] stateModel in
             self?.bleState = stateModel
             self?.funcPage?.bleState = stateModel
@@ -162,19 +162,19 @@ extension MainPageVC: IDOBleDelegate {
 
 extension MainPageVC: IDOBridgeDelegate {
     
-    // SDK状态通知
+    // SDK status notification
     func listenStatusNotification(status: IDOStatusNotification) {
         print("StatusNotification: \(status)")
         NotificationCenter.default.post(name: Notify.onSdkStatusChanged, object: status)
     }
     
-    // 设备通知
+    // Device notification
     func listenDeviceNotification(model: IDODeviceNotificationModel) {
         print("DeviceNotification: \(model)")
         NotificationCenter.default.post(name: Notify.onSdkDeviceStateChanged, object: model)
     }
     
-    // APP提供设备绑定状态, 设备蓝牙连接时会调用该方法，如何返回true，将会走快速配置（获取设备功能表、设备信息、三级版本号、更新手表时间等）
+    // APP provides the device bind state; this method is called when the device connects over Bluetooth. If it returns true, fast config runs (get the function table, device info, three-level version number, update the watch time, etc.)
     func checkDeviceBindState(macAddress: String) -> Bool {
         let isBinded = UserDefaults.standard.isBind(macAddress)
         print("checkDeviceBindState mac\(macAddress) isBinded:\(isBinded)")
@@ -183,7 +183,7 @@ extension MainPageVC: IDOBridgeDelegate {
     
     func listenWaitingOtaDevice(otaDevice: protocol_channel.IDOOtaDeviceModel) {
         print("\n otaDevice:\(otaDevice.description)\n")
-        // 当前不在文件传输详情页才弹出 OTA 提示
+        // Only show the OTA prompt when not on the file transfer detail page
         if !(navigationController?.topViewController is TransferFileDetailVC) {
             _otaMode()
         }
@@ -191,7 +191,7 @@ extension MainPageVC: IDOBridgeDelegate {
     
     func _otaMode() {
         SVProgressHUD.dismiss()
-        let alert = UIAlertController(title: "OTA Mode", message: "当前设备处理OTA模式，现在去升级？/ The current device handles OTA mode, upgrade now?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "OTA Mode", message: "The current device is in OTA mode. Upgrade now?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             let vc = TransferFileDetailVC(cmd: .ota)

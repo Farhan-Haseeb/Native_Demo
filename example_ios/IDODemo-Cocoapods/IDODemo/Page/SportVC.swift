@@ -25,7 +25,7 @@ enum SportInitiator {
 
 class SportVC: UIViewController {
     
-    // 标记当前是谁发起的运动 / Marker indicating who initiated the current sport
+    // Marker indicating who initiated the current sport
     fileprivate var activeSportInitiator: SportInitiator = .none
     
     private let disposeBag = DisposeBag()
@@ -44,7 +44,7 @@ class SportVC: UIViewController {
         btn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if self.activeSportInitiator == .ble {
-                let msg = "Cannot perform Action: BLE device sport is running. / 无法操作：设备端运动正在进行中。"
+                let msg = "Cannot perform Action: BLE device sport is running."
                 SVProgressHUD.showInfo(withStatus: msg)
                 self.textConsole.text = msg
                 return
@@ -59,7 +59,7 @@ class SportVC: UIViewController {
         btn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if self.activeSportInitiator == .ble {
-                let msg = "Cannot perform Action: BLE device sport is running. / 无法操作：设备端运动正在进行中。"
+                let msg = "Cannot perform Action: BLE device sport is running."
                 SVProgressHUD.showInfo(withStatus: msg)
                 self.textConsole.text = msg
                 return
@@ -74,7 +74,7 @@ class SportVC: UIViewController {
         btn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if self.activeSportInitiator == .ble {
-                let msg = "Cannot perform Action: BLE device sport is running. / 无法操作：设备端运动正在进行中。"
+                let msg = "Cannot perform Action: BLE device sport is running."
                 SVProgressHUD.showInfo(withStatus: msg)
                 self.textConsole.text = msg
                 return
@@ -89,7 +89,7 @@ class SportVC: UIViewController {
         btn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if self.activeSportInitiator == .ble {
-                let msg = "Cannot perform Action: BLE device sport is running. / 无法操作：设备端运动正在进行中。"
+                let msg = "Cannot perform Action: BLE device sport is running."
                 SVProgressHUD.showInfo(withStatus: msg)
                 self.textConsole.text = msg
                 return
@@ -360,7 +360,7 @@ extension SportVC {
     }
     
     private func waitForLocationAuthorization() async -> Bool {
-        // 如果已经有权限，直接返回
+        // If permission is already granted, return directly
         if locationMgr.checkLocationAuthorization() {
             return true
         }
@@ -378,26 +378,26 @@ extension SportVC {
         }
     }
     
-    /// 开始准备运动
+    /// Start preparing for sport
     private func _prepareRun(operate: Int) async {
-        self.activeSportInitiator = .ble // 标记设备端为操作者锁定 / Target Initiator set to BLE
+        self.activeSportInitiator = .ble // Target Initiator set to BLE
         
-        //快速配置同步中
+        //Fast config sync in progress
         if (sdk.state.isFastSynchronizing) {
-            print("快速配置中，忽略设备联动")
+            print("Fast config in progress, ignoring device linkage")
             _notifyDeviceSportState(code: failCode, state: operate)
           return;
         }
         
-        // 注意：实际场景需添加以下拦截
-        if(/*安装表盘中*/ false) {
-            print("安装表盘中，忽略设备联动")
+        // Note: in real scenarios, add the following interceptions
+        if(/*installing watch face*/ false) {
+            print("Installing watch face, ignoring device linkage")
             _notifyDeviceSportState(code: failCode, state: operate)
           return;
         }
         
-        if (/*ota中*/ false) {
-            print("OTA中，忽略设备联动")
+        if (/*ota in progress*/ false) {
+            print("OTA in progress, ignoring device linkage")
             _notifyDeviceSportState(code: failCode, state: operate)
           return;
         }
@@ -405,17 +405,17 @@ extension SportVC {
         let granted = await waitForLocationAuthorization()
         
         if granted {
-            print("GPS权限通过")
+            print("GPS permission granted")
             _notifyDeviceSportState(code: successCode, state: operate)
         } else {
-            print("GPS权限未通过")
+            print("GPS permission not granted")
             _notifyDeviceSportState(code: failCode, state: operate)
         }
         
     }
     
-    /// code 0 成功 1 失败
-    /// state 1 = 准备运动,2 = 开始运动
+    /// code 0 succeeded 1 failed
+    /// state 1 = prepare sport,2 = start sport
     private func _notifyDeviceSportState(code: Int, state: Int) {
         isSportPrepareSuccess = (code != failCode || state != 1);
         let model = IDOBleStartReplyExchangeModel(operate: state, retCode: code)
@@ -428,24 +428,24 @@ extension SportVC {
 
 extension SportVC: IDOExchangeDataOCDelegate {
     
-    /// ble发起运动 app监听ble
-    /// - Parameter model: 监听ble执行数据实体
+    /// ble initiates sport, app listens to ble
+    /// - Parameter model: data entity from listening to ble execution
     /// ```
-    /// 数据实体包括：
-    /// ble设备发送交换运动数据开始 IDOBleStartExchangeModel
-    /// ble设备交换运动数据过程中 IDOBleIngExchangeModel
-    /// ble设备发送交换运动数据结束 IDOBleEndExchangeModel
-    /// ble设备发送交换运动数据暂停 IDOBlePauseExchangeModel
-    /// ble设备发送交换运动数据恢复 IDOBleRestoreExchangeModel
-    /// ble设备操作运动计划 IDOBleOperatePlanExchangeModel
-    /// app发起运动 app监听ble
-    /// ble设备发送交换运动数据暂停 IDOAppBlePauseExchangeModel
-    /// ble设备发送交换运动数据恢复 IDOAppBleRestoreExchangeModel
-    /// ble设备发送交换运动数据结束 IDOAppBleEndExchangeModel
+    /// Data entities include:
+    /// ble device sends sport data exchange start IDOBleStartExchangeModel
+    /// ble device sport data exchange in progress IDOBleIngExchangeModel
+    /// ble device sends sport data exchange end IDOBleEndExchangeModel
+    /// ble device sends sport data exchange pause IDOBlePauseExchangeModel
+    /// ble device sends sport data exchange resume IDOBleRestoreExchangeModel
+    /// ble device operates sport plan IDOBleOperatePlanExchangeModel
+    /// app initiates sport, app listens to ble
+    /// ble device sends sport data exchange pause IDOAppBlePauseExchangeModel
+    /// ble device sends sport data exchange resume IDOAppBleRestoreExchangeModel
+    /// ble device sends sport data exchange end IDOAppBleEndExchangeModel
     func appListenBleExec(model: NSObject) {
         if (model is IDOBleStartExchangeModel) {
             guard let obj = model as? IDOBleStartExchangeModel else {
-                print("异常：数据为空")
+                print("Exception: data is empty")
                 return
             }
             
@@ -459,7 +459,7 @@ extension SportVC: IDOExchangeDataOCDelegate {
             
             self.baseModel = obj.baseModel
             
-            // operate 1：请求app打开gps 2：发起运动请求  3:发起运动开始后台联动请求
+            // operate 1: request the app to turn on gps 2: initiate a sport request  3:initiate a sport start background-linkage request
             if (opt == 1) {
                 Task { [weak self] in
                     guard let self else { return }
@@ -467,7 +467,7 @@ extension SportVC: IDOExchangeDataOCDelegate {
                 }
             }else if(opt == 3) {
                 let sportType = IDOSportType(rawValue: obj.baseModel?.sportType ?? 0)
-                // 户外运动且运动已准备
+                // Outdoor sport and the sport is prepared
                 if ((sportType == .sportTypeOutdoorRun ||
                      sportType == .sportTypeOutdoorCycle ||
                      sportType == .sportTypeOnFoot ||
@@ -493,7 +493,7 @@ extension SportVC: IDOExchangeDataOCDelegate {
             sdk.dataExchange.appReplyExec(model: sendModel)
             exchangeType = .stopped
             self.baseModel = nil
-            activeSportInitiator = .none // 释放标记锁定 / Initiator target released
+            activeSportInitiator = .none // Initiator target released
         }
         else if (model is IDOBlePauseExchangeModel) {
             let obj = model as? IDOBlePauseExchangeModel
@@ -521,7 +521,7 @@ extension SportVC: IDOExchangeDataOCDelegate {
         }
         else if (model is IDOAppBleEndExchangeModel) {
             guard let obj = model as? IDOAppBleEndExchangeModel else {
-                print("异常：数据为空")
+                print("Exception: data is empty")
                 return
             }
             let sendModel = IDOAppBleEndReplyExchangeModel(baseModel: baseModel,
@@ -533,41 +533,41 @@ extension SportVC: IDOExchangeDataOCDelegate {
             exchangeType = .stopped
             sdk.dataExchange.getActivityHrData()
             sdk.dataExchange.getLastActivityData()
-            activeSportInitiator = .none // 释放标记锁定 / Initiator target released
+            activeSportInitiator = .none // Initiator target released
             isSportEnd = true
         }
     }
     
     func appListenAppExec(model: NSObject) {
         
-        /// app执行响应
-        /// - Parameter model: 监听app执行Ble响应实体
+        /// app execution response
+        /// - Parameter model: Ble response entity from listening to app execution
         /// ```
-        /// 响应实体包括：
-        /// app 开始发起运动 ble回复 IDOAppStartReplyExchangeModel
-        /// app 发起运动结束 ble回复 IDOAppEndReplyExchangeModel
-        /// app 交换运动数据 ble回复 IDOAppIngReplyExchangeModel
-        /// app 交换运动数据暂停 ble回复 IDOAppPauseReplyExchangeModel
-        /// app 交换运动数据恢复 ble回复 IDOAppRestoreReplyExchangeModel
-        /// app v3交换运动数据 ble回复 IDOAppIngV3ReplyExchangeModel
-        /// app 操作运动计划 ble回复 IDOAppOperatePlanReplyExchangeModel
-        /// app 获取v3多运动一次活动数据 ble回复 IDOAppActivityDataV3ExchangeModel
-        /// app 获取v3多运动一次心率数据 ble回复 IDOAppHrDataExchangeModel
-        /// app 获取v3多运动一次GPS数据 ble回复 IDOAppGpsDataExchangeModel
+        /// Response entities include:
+        /// app starts sport, ble replies IDOAppStartReplyExchangeModel
+        /// app ends sport, ble replies IDOAppEndReplyExchangeModel
+        /// app exchanges sport data, ble replies IDOAppIngReplyExchangeModel
+        /// app pauses sport data exchange, ble replies IDOAppPauseReplyExchangeModel
+        /// app resumes sport data exchange, ble replies IDOAppRestoreReplyExchangeModel
+        /// app v3 exchanges sport data, ble replies IDOAppIngV3ReplyExchangeModel
+        /// app operates sport plan, ble replies IDOAppOperatePlanReplyExchangeModel
+        /// app gets v3 multi-sport single activity data, ble replies IDOAppActivityDataV3ExchangeModel
+        /// app gets v3 multi-sport single heart rate data, ble replies IDOAppHrDataExchangeModel
+        /// app gets v3 multi-sport single GPS data, ble replies IDOAppGpsDataExchangeModel
         
         if (model is IDOAppStartReplyExchangeModel) {
             let obj = model as? IDOAppStartReplyExchangeModel
             print("sport started now : \(String(describing: obj))")
             SVProgressHUD.dismiss()
-            //* - 0:成功; 1:设备已经进入运动模式失败;
-            //* - 2:设备电量低失败;3:手环正在充电
-            //* - 4:正在使用Alexa 5:通话中
+            //* - 0:succeeded; 1:failed, device already in sport mode;;
+            //* - 2:failed, device battery low;3:band is charging
+            //* - 4:using Alexa 5:in a call
             guard obj?.retCode == 0 else {
                 textConsole.text = "sport failed to launch, because of \(String(describing: obj?.retCode))"
                 return
             }
             exchangeType = .started
-            activeSportInitiator = .app // 标记App端为操作者锁定 / Target Initiator set to App
+            activeSportInitiator = .app // Target Initiator set to App
             locationMgr.locationUpdateBlock = { [weak self] locations in
                 guard let self = self else { return }
                 self.distance = Int(self.locationMgr.totalDistance)
@@ -583,7 +583,7 @@ extension SportVC: IDOExchangeDataOCDelegate {
             baseModel = nil
             sdk.dataExchange.getActivityHrData()
             sdk.dataExchange.getLastActivityData()
-            activeSportInitiator = .none // 释放标记锁定 / Initiator target released
+            activeSportInitiator = .none // Initiator target released
             isSportEnd = true
         }
         else if (model is IDOAppIngReplyExchangeModel) {
@@ -616,8 +616,8 @@ extension SportVC: IDOExchangeDataOCDelegate {
             distance = max(distance, obj?.distance ?? 0)
             if (isSportEnd) {
                 isSportEnd = false
-                // TODO: 运动任务结束
-                print("运动任务结束!! / Sports mission completed!!")
+                // TODO: sport task ended
+                print("Sports mission completed!!")
             }
         }
         else if (model is IDOAppHrDataExchangeModel) {

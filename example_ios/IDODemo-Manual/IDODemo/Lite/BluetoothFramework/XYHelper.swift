@@ -8,9 +8,9 @@
 import UIKit
 
 class XYHelper: NSObject {
-    //MARK: 获取storyboard中的控制器
-    //storyboardStr: storyboard的名称，如果传nil则为Main
-    //viewController: 控制器的名称
+    //MARK: Get a view controller from the storyboard
+    //storyboardStr: storyboard name; nil means Main
+    //viewController: name of the view controller
     static func getViewController(storyboardStr: String?, viewController: String) -> UIViewController {
         var storyboard = UIStoryboard()
         if let storyboardStr = storyboardStr {
@@ -24,7 +24,7 @@ class XYHelper: NSObject {
 }
 
 extension UIView {
-    //MARK: UIView的width,height,x,y
+    //MARK: UIView's width,height,x,y
     var width: CGFloat {
         self.frame.size.width
     }
@@ -39,29 +39,29 @@ extension UIView {
     }
 }
 
-//MARK: 打印显示时间，类和行数
-//后面两个参数固定传 self和#line
-//printXY("连接成功", obj: self, line: #line)
+//MARK: Print with time, class and line number
+//The last two parameters are always self and #line
+//printXY("Connected", obj: self, line: #line)
 func printXY(_ any:Any,obj:Any,line:Int) {
     let date = Date()
      let timeFormatter = DateFormatter()
-     //日期显示格式，可按自己需求显示
+     //Date display format, adjust as needed
     let strNowTime = getCurrentTimeWithDateFormatString("HH:mm:ss.SSS")
      print("\(strNowTime) \(type(of: obj)) \(line) \(any)")
 }
 
-//MARK: 获取当前时间和日期
+//MARK: Get the current time and date
 func getCurrentTimeWithDateFormatString(_ dateFormat : String) -> String{
     let date = Date()
      let timeFormatter = DateFormatter()
-     //日期显示格式，可按自己需求显示
+     //Date display format, adjust as needed
      timeFormatter.dateFormat = dateFormat
      let strNowTime = timeFormatter.string(from: date) as String
     return strNowTime
 }
 
 extension Data {
-//MARK: Data转十六进制字符串
+//MARK: Data to hex string
     /// Create hexadecimal string representation of `Data` object.
     ///
     /// - returns: `String` representation of this `Data` object.
@@ -73,7 +73,7 @@ extension Data {
 }
 
 extension String {
-//MARK:十六进制字符串转Data
+//MARK:Hex string to Data
     /// Create `Data` from hexadecimal string representation
     ///
     /// This takes a hexadecimal representation and creates a `Data` object. Note, if the string has any spaces or non-hex characters (e.g. starts with '<' and with a '>'), those are ignored and only hex characters are processed.

@@ -18,12 +18,12 @@ let bleMgr = XYCentralManager.shared
 
 extension MainPageVC {
     
-    // Register sdk, 只执行一次
+    // Register sdk, run only once
     func registerSDK() {
-        // protocol library 注册（必需）（!!!重要）
+        // protocol library registration (required) (!!!important)
         sdk.bridge.setupBridge(delegate: self, logType: .debug)
         
-        // 如需使用Alexa， 需先注册
+        // To use Alexa, register it first
         sdk.alexa.setupAlexa(delegate: self, clientId: clientId)
         
         initEpoAutoUpdate()
@@ -54,13 +54,13 @@ extension MainPageVC {
 
 extension MainPageVC: IDOBridgeDelegate {
     
-    // 需要将指令数据发到蓝牙设备（!!!重要）
+    // The command data must be sent to the Bluetooth device (!!!important)
     func writeDataToBle(bleData: protocol_channel.IDOBleData) {
         guard let device = currentDeviceModel else { return }
         
         guard let data = bleData.data else { return }
         guard data.count >= 2 else {
-            print("空数据")
+            print("Empty data")
             return
         }
         let data0 = data[0]
@@ -70,16 +70,16 @@ extension MainPageVC: IDOBridgeDelegate {
         if (!isTrans) {
             bleMgr.write(peripheral: characteristic.0, characteristic: characteristic.1, data: data) { err in
                 if err != nil {
-                    print("写失败：\(err.debugDescription)")
+                    print("Write failed: \(err.debugDescription)")
                 }else {
-                    // 写完成 （!!!重要）
+                    // Write complete (!!!important)
                     sdk.bridge.writeDataComplete()
                 }
             }
         }else {
-            // 不需要响应
+            // No response needed
             bleMgr.writeWithoutResponse(peripheral: characteristic.0, characteristic: characteristic.1, data: data)
-            // 写完成 （!!!重要）
+            // Write complete (!!!important)
             sdk.bridge.writeDataComplete()
         }
     }
@@ -107,7 +107,7 @@ extension MainPageVC: IDOBridgeDelegate {
     
     func _otaMode() {
         SVProgressHUD.dismiss()
-        let alert = UIAlertController(title: "OTA Mode", message: "当前设备处理OTA模式，现在去升级？/ The current device handles OTA mode, upgrade now?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "OTA Mode", message: "The current device is in OTA mode. Upgrade now?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             let vc = TransferFileDetailVC(cmd: .ota)

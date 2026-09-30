@@ -2,7 +2,7 @@
 //  WalkRemindVC.swift
 //  Runner
 //
-//  走动提醒独立联调页：参数设置/查询下发；监听 07 40 dataType=134 弹窗展示状态/目标/达成。
+//  Standalone walk reminder integration test page: set/query parameters and send; listens for 07 40 dataType=134 and shows status/goal/achievement in a popup.
 //
 
 import UIKit
@@ -214,7 +214,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         return l
     }
 
-    /// 左标题 + 右控件；可选下方说明
+    /// Title on the left + control on the right; optional description below
     private func formRow(title: String, hint: String?, control: UIView) -> UIView {
         let titleL = UILabel()
         titleL.text = title
@@ -276,7 +276,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         content.axis = .vertical
         content.spacing = 16
 
-        // 状态条
+        // Status bar
         let chipCard = card()
         let chipStack = UIStackView(arrangedSubviews: [connChip, supportChip, UIView()])
         chipStack.spacing = 8
@@ -284,7 +284,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         chipCard.addSubview(chipStack)
         chipStack.snp.makeConstraints { $0.edges.equalToSuperview().inset(12) }
 
-        // 基础开关
+        // Basic switches
         let basicCard = card()
         let basicStack = UIStackView(arrangedSubviews: [
             formRow(title: L10n.walkRemindMasterSwitch, hint: L10n.walkRemindOnOffHint, control: swOnOff),
@@ -300,7 +300,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         etGoalStep.snp.makeConstraints { $0.width.equalTo(88) }
         etGoalTime.snp.makeConstraints { $0.width.equalTo(88) }
 
-        // 有效时段
+        // Active period
         let timeCard = card()
         let timeStack = UIStackView(arrangedSubviews: [
             timePair(h: etStartHour, m: etStartMinute, label: L10n.walkRemindStart),
@@ -318,7 +318,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         timeCard.addSubview(timeWrap)
         timeWrap.snp.makeConstraints { $0.edges.equalToSuperview().inset(14) }
 
-        // 通知类型
+        // Notification type
         let notifyCard = card()
         let notifyTitle = UILabel()
         notifyTitle.text = L10n.walkRemindNotifyType
@@ -334,7 +334,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         notifyCard.addSubview(notifyStack)
         notifyStack.snp.makeConstraints { $0.edges.equalToSuperview().inset(14) }
 
-        // 勿扰
+        // Do Not Disturb
         let dndCard = card()
         let dndStack = UIStackView(arrangedSubviews: [
             formRow(title: L10n.walkRemindDndSwitch, hint: L10n.walkRemindDndHint, control: swDnd),
@@ -354,7 +354,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         dndCard.addSubview(dndWrap)
         dndWrap.snp.makeConstraints { $0.edges.equalToSuperview().inset(14) }
 
-        // 重复
+        // Repeat
         let weekCard = card()
         let weekTitle = UILabel()
         weekTitle.text = L10n.walkRemindRepeat
@@ -374,7 +374,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         weekCard.addSubview(weekStack)
         weekStack.snp.makeConstraints { $0.edges.equalToSuperview().inset(14) }
 
-        // 操作
+        // Operations
         let btnRow = UIStackView(arrangedSubviews: [btnQuery, btnSet])
         btnRow.axis = .horizontal
         btnRow.spacing = 12
@@ -382,7 +382,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         btnQuery.snp.makeConstraints { $0.height.equalTo(48) }
         btnSet.snp.makeConstraints { $0.height.equalTo(48) }
 
-        // 通知结果
+        // Notification result
         let resultCard = card()
         resultCard.backgroundColor = UIColor(red: 0.89, green: 0.95, blue: 0.99, alpha: 1)
         let resultStack = UIStackView(arrangedSubviews: [notifyStatusLabel, notifyDetailLabel])
@@ -391,7 +391,7 @@ final class WalkRemindVC: UIViewController, UITextFieldDelegate, UNUserNotificat
         resultCard.addSubview(resultStack)
         resultStack.snp.makeConstraints { $0.edges.equalToSuperview().inset(14) }
 
-        // 日志（放在滚动区内，保证可见）
+        // Log (inside the scroll area so it stays visible)
         let logCard = card()
         self.logContainer = logCard
         let logTitle = UILabel()

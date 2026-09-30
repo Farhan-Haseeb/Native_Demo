@@ -14,7 +14,7 @@ class SportDualTableViewController: UIViewController {
     var screenSportDetai: IDOSportScreenInfoReplyModel?
     var didSelectCallBack: ((IDOSportScreenDataItemModel) -> Void)?
     
-    // 定义两个 TableView
+    // Define the left and right TableView
     private let leftTableView = UITableView()
     private let rightTableView = UITableView()
     var leftSelectIndex = 0
@@ -30,25 +30,25 @@ class SportDualTableViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .white
         
-        // 配置左侧 TableView
+        // Configure the left TableView
         leftTableView.dataSource = self
         leftTableView.delegate = self
-        leftTableView.tag = 0 // 标记左侧列表
+        leftTableView.tag = 0 // Marks the left list
         leftTableView.register(UITableViewCell.self, forCellReuseIdentifier: "LeftCell")
         
-        // 配置右侧 TableView
+        // Configure the right TableView
         rightTableView.dataSource = self
         rightTableView.delegate = self
-        rightTableView.tag = 1 // 标记右侧列表
+        rightTableView.tag = 1 // Marks the right list
         rightTableView.register(UITableViewCell.self, forCellReuseIdentifier: "RightCell")
         
-        // 使用 StackView 横向排列
+        // Use a StackView to arrange them horizontally
         let stackView = UIStackView(arrangedSubviews: [leftTableView, rightTableView])
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually // 等宽分布
+        stackView.distribution = .fillEqually // Equal widths
         stackView.spacing = 8
         
-        // 布局
+        // Layout
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -99,7 +99,7 @@ class SportDualTableViewController: UIViewController {
     }()
 }
 
-// MARK: - UITableView 数据源和代理
+// MARK: - UITableView data source and delegate
 extension SportDualTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView.tag == 0{
@@ -120,13 +120,13 @@ extension SportDualTableViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView.tag == 0 { // 左侧列表
+        if tableView.tag == 0 { // Left list
             let cell = tableView.dequeueReusableCell(withIdentifier: "LeftCell", for: indexPath)
             let dataType = self.screenSportDetai?.sportItems?.first?.supportDataTypes?[indexPath.row].dataType
             cell.textLabel?.text = IDODataTypDict[dataType ?? .none]?.i18n
             cell.textLabel?.font = .systemFont(ofSize: 16, weight: .bold)
             return cell
-        } else { // 右侧列表
+        } else { // Right list
             let cell = tableView.dequeueReusableCell(withIdentifier: "RightCell", for: indexPath)
             let dataSubValue =  self.screenSportDetai?.sportItems?.first?.supportDataTypes?[leftSelectIndex].dataValue[indexPath.row]
             cell.textLabel?.text = IDODataSubTypDict[dataSubValue ?? .none]?.i18n
@@ -136,10 +136,10 @@ extension SportDualTableViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44 // 统一行高
+        return 44 // Uniform row height
     }
     
-    // 点击事件示例
+    // Tap event example
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.tag == 0 {
             leftSelectIndex = indexPath.row

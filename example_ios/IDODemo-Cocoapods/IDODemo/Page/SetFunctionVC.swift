@@ -87,8 +87,8 @@ class SetFunctionVC: UIViewController {
         }
         
         add(SetCmd(type: .setWeatherSunTime, title: "setWeatherSunTime", desc: L10n.setWeatherSunTime), isSupported: sdk.funcTable.setSetV3WeatherSunrise)
-        //add(SetCmd(type: .setSleepPeriod, title: "setSleepPeriod", desc: L10n.setSleepPeriod), isSupported: true) // 暂未添加功能表
-        //add(SetCmd(type: .setDisplayMode, title: "setDisplayMode", desc: L10n.setDisplayMode), isSupported: true) // 暂未添加功能表
+        //add(SetCmd(type: .setSleepPeriod, title: "setSleepPeriod", desc: L10n.setSleepPeriod), isSupported: true) // Not yet added to the function table
+        //add(SetCmd(type: .setDisplayMode, title: "setDisplayMode", desc: L10n.setDisplayMode), isSupported: true) // Not yet added to the function table
         add(SetCmd(type: .setNoticeAppName, title: "setNoticeAppName", desc: L10n.setNoticeAppName), isSupported: sdk.funcTable.reminderMessageIcon)
         add(SetCmd(type: .setDateTime, title: "setDateTime", desc: L10n.setDateTime), isSupported: true)
         add(SetCmd(type: .setUserInfo, title: "setUserInfo", desc: L10n.setUserInfo), isSupported: true)
@@ -200,8 +200,8 @@ class SetFunctionVC: UIViewController {
             add(SetCmd(type: .setMenuList, title: "setMenuList", desc: L10n.setMenuList), isSupported: true)
         }
         
-        // 因为demo要适配所有设备，此处示例适配多种情况。
-        // 当只适配一台设备时，只需处理以下一种即可（根据功能表判断设备使用哪种）。
+        // Because the demo must support all devices, this example handles multiple cases.
+        // When supporting only one device, handle just one of the following cases (use the function table to determine which one the device uses).
         if (sdk.funcTable.setSmartHeartRate) {
             print("setSmartHeartRate")
             add(SetCmd(type: .setHeartMode, title: "setHeartMode", desc: L10n.setHeartMode), isSupported: true)
@@ -281,259 +281,193 @@ private struct SetCmd {
 
 
 private enum CmdType: CaseIterable{
-    /// 手机音量下发给ble
     /// Set phone volume for device event number
     case setBleVoice
-    /// 设置控制gps
     /// Control GPS event number
     case setGpsControl
-    /// 设置压力校准
     /// Set Stress Calibration Event Code
     case setStressCalibration
-    /// 设置洗手提醒
     /// Set Hand Washing Reminder Event
     case setHandWashingReminder
-    /// 设置运动目标
     /// Set exercise goal event
     case setSportGoal
-    /// 设置天气数据
     /// Set weather data event number
     case setWeatherData
-    /// 未读信息红点提示开关
     /// Unread message reminder switch event number
     case setUnreadAppReminder
-    /// 手机app通过这个命令开关，实现通知应用状态设置
     /// Notification app status setting event
     case setNotificationStatus
-    /// 设置科学睡眠开关
     /// Scientific sleep switch setting event
     case setScientificSleepSwitch
-    /// 血压校准
     /// Blood pressure calibration event number
     case setBpCalibration
-    /// 设置防丢
     /// Set Lost Find Event
     case setLostFind
-    /// 设置表盘
     /// Set watch face event number
     case setWatchDial
-    /// 设置天气开关
     /// Set weather switch event number
     case setWeatherSwitch
-    /// 设置单位
     /// Set Unit event number
     case setUnit
-    /// 设置寻找手机
     /// Set Find Phone
     case setFindPhone
-    /// 设置停止寻找手机
     /// Stop Find Phone
     case setOverFindPhone
-    /// 设置一键呼叫
     /// Set the one-touch calling event number
     case setOnekeySOS
-    /// 设置运动模式选择
     /// Set sport mode select event number
     case setSportModeSelect
-    /// 设置运动模式排序
     /// Set Sport Mode Sorting
     case setSportModeSort
-    /// 设置久坐
     /// Set Long Sit Event
     case setLongSit
-    /// 设置身体电量开关
     /// Set body power switch event number
     case setBodyPowerTurn
-    /// 设备电量提醒开关
     /// Battery reminder switch event number
     case setBatteryReminderSwitch
     case setAppSleepMode
-    /// 设置宠物信息
     /// Set pet info event number
     case setPetInfo
-    /// 设置呼吸率开关
     /// Respiration rate switch setting event
     case setRRespiRateTurn
-    /// 环境音量的开关和阀值
     /// Set Environmental Noise Volume On/Off and Threshold Event
     case setV3Noise
-    /// 设置日出日落时间
     /// Set sunrise and sunset time event number
     case setWeatherSunTime
-    /// 设置快捷方式
     /// Set shortcut
     case setShortcut
-    /// 设置通知中心 bt配对
     /// Set Notification Center Event, BT Pair
     case setNoticeStatusBtPair
-    /// 设置通知中心(全开)
     /// Set Notification Center Event(on)
     case setNoticeStatusAllOn
-    /// 设置通知中心(全关)
     /// Set Notification Center Event(all off)
     case setNoticeStatusAllOff
-    /// 设置夜间体温开关
     /// Set Night-time Temperature Switch Event Code
     case setTemperatureSwitch
-    /// 设置睡眠时间段
     /// Set sleep period event
     case setSleepPeriod
-    /// 设置抬手亮屏
     /// Raise-to-wake gesture event number
     case setUpHandGesture
-    /// 设置吃药提醒
     /// Set Taking Medicine Reminder Event Code
     case setTakingMedicineReminder
-    /// 设置血氧开关
     /// Set SpO2 switch event
     case setSpo2Switch
-    /// 设置运动模式识别开关
     /// Set activity detection switch event
     case setActivitySwitch
-    /// 设置天气城市名称
     /// Set weather city name event number
     case setWeatherCityName
-    /// app设置ble的闹钟
     /// Getting Alarms for V3APP Devices
     case setAlarm
-    /// 健身指导
     /// Fitness Guidance Event
     case setFitnessGuidance
-    /// 显示模式
     /// Display mode event number
     case setDisplayMode
-    /// 血压测量
     /// Blood pressure measurement event number
     case setBpMeasurement
-    /// 音乐开关
     /// Set Music On/Off Event
     case setMusicOnOff
-    /// app下发跑步计划(运动计划)
     /// App issued running plan (exercise plan) event number
     case setSendRunPlan
-    /// v3 下发v3天气协议
     /// Send the v3 weather protocol event number under v3
     case setWeatherV3
-    /// 控制音乐
     /// Music control event number
     case musicControl
-    /// 操作歌曲或者文件夹
     /// Operation for songs or folders event
     case setMusicOperate
-    /// 通知消息提醒
     /// Notification message reminder event number
     case noticeMessageV3
-    /// 设置消息通知状态
     /// Setting Notification Status for a Single App
     case setNoticeMessageState
-    /// 动态消息通知
     /// V3 dynamic notification message event number
     case setNoticeAppName
-    /// 下发v3世界时间
     /// v3 set v3 world time
     case setWorldTimeV3
-    /// 设置日程提醒
     /// Schedule Reminder
     case setSchedulerReminder
-    /// 血压校准控制
     /// Blood Pressure Calibration Control
     case setBpCalControlV3
-    /// 设置表盘
     /// Set Watch Face
     case setWatchFaceData
-    /// 同步常用联系人
     /// Synchronization Protocol Bluetooth Call Common Contacts
     case setSyncContact
-    /// 设置运动子项数据排列
     /// Set and Query Sports Sub-item Data Sorting
     case setSportParamSort
-    /// 新的100种运动排序
     /// Set and Query 100 Sports Sorting
     case setSport100Sort
-    /// 设置主界面控件排序
     /// Setting and Query Sorting of Main UI Controls
     case setMainUISortV3
-    /// 经期的历史数据下发
     /// Menstrual historical data delivery event number
     case setHistoricalMenstruation
-    /// 设置运动城市名称
     /// V3 Setting the Name of a Sports City event number
     case setLongCityNameV3
-    /// V3设置心率模式
     /// Set Heart Rate Mode V3
     case setHeartMode
-    /// 语音回复文本
     /// V3 voice reply text event number
     case setVoiceReplyText
-    /// 设置表盘顺序
     /// Set watch dial sort event
     case setWatchDialSort
-    /// 设置多个走动提醒的时间点
     /// Set multiple walk reminder times event number
     case setWalkRemindTimes
-    /// 设置壁纸表盘列表
     /// Set wallpaper dial list event number
     case setWallpaperDialReply
-    /// 设置时间
     /// Set Time
     case setDateTime
-    /// 设置用户信息
+    /// Set user information
     case setUserInfo
-    /// 控制寻找设备开始
+    /// Control find device start
     case findDeviceStart
-    /// 控制寻找设备结束
+    /// Control find device stop
     case findDeviceStop
-    /// 开始拍照 (app -> ble)
+    /// Start taking photo (app -> ble)
     case photoStart
-    /// 结束拍照 (app -> ble)
+    /// Stop taking photo (app -> ble)
     case photoStop
-    /// 设置左右手
+    /// Set left/right hand
     case setHand
-    /// 设置屏幕亮度
+    /// Set screen brightness
     case setScreenBrightness
-    /// 进入升级模式
+    /// Enter upgrade mode
     case otaStart
-    /// 设置心率区间
+    /// Set heart rate zone
     case setHeartRateInterval
-    /// 设置卡路里和距离目标(设置日常三环)
+    /// Set calorie and distance goals (set daily three rings)
     case setCalorieDistanceGoal
-    /// 设置走动提醒
+    /// Set walk reminder
     case setWalkRemind
-    /// 设置经期
+    /// Set menstrual cycle
     case setMenstruation
-    /// 恢复出厂设置
+    /// Factory reset
     case factoryReset
-    /// 重启设备
+    /// Reboot device
     case reboot
-    ///  设置压力开关
+    ///  Set stress switch
     case setStressSwitch
-    /// 设置热启动参数
     /// Set hot boot parameters
     case setHotStartParam
-    ///  设置默认的消息应用列表
+    ///  Set default message app list
     case setDefaultMsgList
-    /// 发送小程序操作
+    /// Send applet operation
     case setAppletControl
-    /// 运动列表修改、排序、删除
+    /// Modify, sort, delete sport list
     case setSportsTypeV3
-    ///  运动中设置提示音开关
+    ///  Set in-sport prompt sound switch
     case setDuringExercise
-    ///  简单心率区间设置
+    ///  Simple heart rate zone setting
     case setSimpleHeartRateZone
-    ///  运动中提醒设置
+    ///  In-sport reminder settings
     case setSportingRemindSetting
     case setDrinkWaterRemind
     case setNotDisturb
     case setMenuList
     case setCallQuickReplyOnOff
     case setMenuListV3
-    /// CGM：设置密钥与设备名（15.107）
+    /// CGM: set key and device name (15.107)
     case setCgmKeyAndDevice
-    /// CGM：删除密钥与设备名
+    /// CGM: delete key and device name
     case deleteCgmKeyAndDevice
-    /// CGM：连接
+    /// CGM: connect
     case connectCgm
-    /// CGM：断开
+    /// CGM: disconnect
     case disconnectCgm
 }
 
@@ -773,9 +707,9 @@ extension CmdType {
             let hour = calendar.component(.hour, from: currentDate)
             let minute = calendar.component(.minute, from: currentDate)
             let second = calendar.component(.second, from: currentDate)
-            // 系统默认：1 (周日) 到 7 (周六)
+            // System default: 1 (Sunday) to 7 (Saturday)
             let weekday = calendar.component(.weekday, from: currentDate)
-            // 调整为：0x00 (周日) 到 0x06 (周六)
+            // Adjusted to: 0x00 (Sunday) to 0x06 (Saturday)
             let adjustedWeekday = UInt8(weekday - 1)
             return IDOWeatherV3ParamModel(month: month,
                                           day: day,
@@ -962,7 +896,7 @@ extension CmdType {
                                                                                               ovulationAfterDay: 5)
                                                        ])
         case .setLongCityNameV3:
-            return OtherParamModel(dic: ["cityName": "北京"])
+            return OtherParamModel(dic: ["cityName": "Beijing"])
         case .setHeartMode:
             if (sdk.funcTable.setSmartHeartRate) {
                 return IDOHeartRateModeSmartParamModel(mode: 1,
@@ -976,22 +910,22 @@ extension CmdType {
                                                        endHour: 19,
                                                        endMinute: 0)
             }else if(sdk.funcTable.syncV3Hr) {
-                // 注：设置updateTime
+                // Note: set updateTime
                 let param = IDOHeartModeParamModel(updateTime: Int(Date().timeIntervalSince1970))
-                // 示例1
-                // 关闭 （注：单次运动开启默认进行心率实时监测，不受此开关影响）
+                // Example 1
+                // Off (Note: a single sport session turns on real-time heart rate monitoring by default and is not affected by this switch)
                 // param.mode = 3
                 
                 
-                // 示例2
-                // 持续监测 （比较耗电）
-                // param.mode = 5 // 固定5秒（ID206支持固定5秒的持续监测）
+                // Example 2
+                // Continuous monitoring (consumes more power)
+                // param.mode = 5 // Fixed 5 seconds (ID206 supports continuous monitoring at a fixed 5-second interval)
                 // param.measurementInterval = 5
                 
                 
-                // 示例3
-                // 自动监测
-                param.mode = 5 // 固定5分钟（ID206支持固定5分钟的自动监测）
+                // Example 3
+                // Automatic monitoring
+                param.mode = 5 // Fixed 5 minutes (ID206 supports automatic monitoring at a fixed 5-minute interval)
                 param.measurementInterval = 300
                 
                 return param
@@ -1547,7 +1481,7 @@ private class SetFunctionDetailVC: UIViewController {
             let items = [
                 IDOWorldTimeParamModel(id: 31,
                                        minOffset: 480,
-                                       cityName: "北京",
+                                       cityName: "Beijing",
                                        sunriseHour: 7,
                                        sunriseMin: 25,
                                        sunsetHour: 16,
@@ -1558,7 +1492,7 @@ private class SetFunctionDetailVC: UIViewController {
                                        latitude: 3990),
                 IDOWorldTimeParamModel(id: 148,
                                        minOffset: 0,
-                                       cityName: "伦敦",
+                                       cityName: "London",
                                        sunriseHour: 7,
                                        sunriseMin: 57,
                                        sunsetHour: 16,
@@ -1569,7 +1503,7 @@ private class SetFunctionDetailVC: UIViewController {
                                        latitude: 5151),
                 IDOWorldTimeParamModel(id: 197,
                                        minOffset: -300,
-                                       cityName: "纽约",
+                                       cityName: "New York",
                                        sunriseHour: 7,
                                        sunriseMin: 10,
                                        sunsetHour: 16,
@@ -1595,9 +1529,9 @@ private class SetFunctionDetailVC: UIViewController {
             }
         case .setWatchFaceData:
             //let obj = cmd.type.param() as! IDOWatchFaceParamModel
-            // 1. 先获取
+            // 1. Get first
             cancellable = Cmds.getWatchListV3().send { [weak self] res in
-                // 2. 执行设置
+                // 2. Perform the set
                 if case .success(let val) = res {
                     if let watchListModel = val {
                         let obj = watchListModel.items.count > 1 ? watchListModel.items[1] : watchListModel.items[0]
@@ -1643,7 +1577,7 @@ private class SetFunctionDetailVC: UIViewController {
             }
         case .setHeartMode:
             guard let obj = cmd.type.param() else {
-                print("需要配置参数")
+                print("Parameters need to be configured")
                 return
             }
             if (sdk.funcTable.setSmartHeartRate) {
@@ -1766,12 +1700,12 @@ private class SetFunctionDetailVC: UIViewController {
                 self?.doPrint(res)
             }
         case .setAppletControl:
-            // 步骤1：先获取小程序
+            // Step 1: get the applets first
             Cmds.setAppleControl(IDOAppletControlModel(operate: 3)).send { [weak self] res in
                 guard let self = self else { return }
                 if case .success(let val) = res {
                     if let appletItem = val?.infoItem?.first {
-                        // 步骤2：启动小程序
+                        // Step 2: launch the applet
                         self.cancellable = Cmds.setAppleControl(IDOAppletControlModel(operate: 1, appName: appletItem.appName)).send { [weak self] res in
                             self?.doPrint(res)
                         }
@@ -1783,12 +1717,12 @@ private class SetFunctionDetailVC: UIViewController {
                 }
             }
         case .setSportsTypeV3:
-            // 步骤1: 获取运动列表
+            // Step 1: get the sport list
             Cmds.getSportTypeV3().send { [weak self] res in
                 guard let self = self else { return }
                 if case .success(let val) = res {
                     if let item = val {
-                        item.sportTypes.shuffle() // 随机排序
+                        item.sportTypes.shuffle() // Random order
                         var items = [IDOSportModeSortParamModel]()
                         var i = 1
                         item.sportTypes.forEach {
@@ -1832,7 +1766,7 @@ private class SetFunctionDetailVC: UIViewController {
             cancellable = Cmds.getMenuList().send { [weak self] res in
                 if case .success(let val) = res {
                     guard let list = val?.items, let maxNum = val?.maxShowNum else { return }
-                    // 随机设置
+                    // Set randomly
                     let items = Array((list.shuffled().prefix(maxNum)).map { $0.value })
                     self?.cancellable = Cmds.setMenuList(IDOMenuListParamModel(items: items)).send { res2 in
                         self?.doPrint(res2)
@@ -1850,7 +1784,7 @@ private class SetFunctionDetailVC: UIViewController {
             cancellable = Cmds.getMenuListV3().send { [weak self] res in
                 if case .success(let val) = res {
                     guard let items = val?.itemList, let maxNum = val?.supportMaxNum else { return }
-                    // 随机设置
+                    // Set randomly
                     self?.cancellable = Cmds.setMenuListV3(Array(items.shuffled().prefix(maxNum))).send { res2 in
                         self?.doPrint(res2)
                     }

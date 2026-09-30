@@ -10,7 +10,7 @@ import Foundation
 class LanguageManager {
     static let shared = LanguageManager()
     static let keyNotifity = "key.languagemanager.changed"
-    // 支持的语言
+    // Supported languages
     enum Language: String {
         case english = "en"
         case chinese = "zh-Hans"

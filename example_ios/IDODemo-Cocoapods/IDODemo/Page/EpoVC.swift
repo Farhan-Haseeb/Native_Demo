@@ -148,7 +148,7 @@ extension EpoVC {
     
     private func refreshLastUpdateTime() {
         IDOEpoManager.shared.lastUpdateTimestamp(completion: { [weak self] sec in
-            self?.lblState.text = "Last update time："
+            self?.lblState.text = "Last update time: "
             if (sec != 0) {
                 self?.lblState.text! += secondsToDate(seconds: Double(sec/1000))
             } else {

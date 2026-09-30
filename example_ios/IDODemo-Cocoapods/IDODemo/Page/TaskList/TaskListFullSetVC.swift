@@ -2,8 +2,8 @@
 //  TaskListFullSetVC.swift
 //  Runner
 //
-//  15.114 任务清单 — 全量设置（operate=1）
-//  待发送列表 + 已发送列表；添加任务随机生成多条；底部全量下发
+//  15.114 Task list — full set (operate=1)
+//  Pending list + sent list; adding a task generates several random entries; full send at the bottom
 //
 
 import UIKit
@@ -13,14 +13,14 @@ import protocol_channel
 
 class TaskListFullSetVC: UIViewController {
 
-    /// 7.8 通知：任务清单状态变化
+    /// 7.8 Notification: task list status change
     private static let taskStatusDataType = 133
-    /// 每次「添加任务」随机条数范围
+    /// Range of random entries per 'Add task'
     private static let randomAddCountRange = 2...5
 
-    /// 已下发到设备的任务（本地缓存）
+    /// Tasks already sent to the device (local cache)
     private var sentItems: [TaskListItemDraft] = []
-    /// 待发送任务（仅本地，未下发）
+    /// Pending tasks (local only, not yet sent)
     private var pendingItems: [TaskListItemDraft] = []
 
     private var notifyObserver: NSObjectProtocol?
@@ -71,7 +71,7 @@ class TaskListFullSetVC: UIViewController {
         super.viewDidLoad()
         title = L10n.taskList
         view.backgroundColor = .systemGroupedBackground
-        // 右侧从外到内：添加任务、查询状态
+        // Right side, outer to inner: add task, query status
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(
                 title: L10n.taskListAddTask,
@@ -149,7 +149,7 @@ class TaskListFullSetVC: UIViewController {
 
     private func bootstrap() {
         loadCacheFromLocal()
-        // 查询状态不判断功能表，仅要求已连接
+        // Query status does not check the function table; only requires the device to be connected
         if sdk.state.isConnected {
             queryStatusChanges(showFeedback: false)
         }
@@ -164,7 +164,7 @@ class TaskListFullSetVC: UIViewController {
         TaskListStorage.save(macAddress(), items: sentItems)
     }
 
-    /// 解绑后本地缓存已清：同步清空页面内存列表
+    /// Local cache cleared after unbind: also clear the in-memory lists on the page
     private func onTaskListCacheCleared() {
         sentItems.removeAll()
         pendingItems.removeAll()
@@ -224,7 +224,7 @@ class TaskListFullSetVC: UIViewController {
         var root: [String: Any] = ["operate": model.operate]
         if let err = model.errorCode { root["error_code"] = err }
         if model.operate == 1 {
-            // 设置回复通常仅 operate + error_code
+            // The set reply usually contains only operate + error_code
         } else if model.operate == 2 {
             if let num = model.statusItemNum { root["status_item_num"] = num }
             var arr: [[String: Any]] = []
@@ -288,7 +288,7 @@ class TaskListFullSetVC: UIViewController {
             }
             usedIds.insert(taskId)
 
-            // 详情：本批互不相同；优先避开已有列表中的文案
+            // Detail: unique within this batch; prefer to avoid text already in the list
             let detail: String
             if i < detailChoices.count, !pickedDetails.contains(detailChoices[i]) {
                 detail = detailChoices[i]
@@ -299,7 +299,7 @@ class TaskListFullSetVC: UIViewController {
             }
             pickedDetails.insert(detail)
 
-            // 提醒时间：必须晚于当前；本批互不相同
+            // Reminder time: must be later than now; unique within this batch
             var remind = now + 600 + i * 900 + Int.random(in: 0..<300)
             var guardCount = 0
             while (remind <= now || usedReminds.contains(remind)) && guardCount < 40 {
@@ -321,7 +321,7 @@ class TaskListFullSetVC: UIViewController {
         SVProgressHUD.showSuccess(withStatus: String(format: L10n.taskListGeneratedPending, generated.count))
     }
 
-    /// task_id 为协议 uint32_t：从 1 起每次 +1，不超过 UInt32.max
+    /// task_id is a protocol uint32_t: starts at 1 and increments by 1, not exceeding UInt32.max
     private func allocUniqueTaskId(excluding used: inout Set<Int>) -> Int? {
         let next = (used.max() ?? 0) + 1
         guard TaskListItemDraft.isValidTaskId(next), !used.contains(next) else { return nil }
@@ -347,13 +347,13 @@ class TaskListFullSetVC: UIViewController {
     // MARK: - Full set
 
     @objc private func onFullSet() {
-        // 全量设置不判断功能表，仅要求已连接
+        // Full set does not check the function table; only requires a connection
         guard ensureConnected() else { return }
-        // 全量 = 已发送 + 待发送（operate=1 整体覆盖）
+        // Full = sent + pending (operate=1 overwrites everything)
         let fullList = sentItems + pendingItems
         sendFullSet(fullList) { [weak self] in
             guard let self else { return }
-            // 下发成功：待发送并入已发送，清空待发送，并缓存已下发列表
+            // Send succeeded: merge pending into sent, clear pending, and cache the sent list
             self.sentItems = fullList
             self.pendingItems.removeAll()
             self.persistSentItems()
@@ -410,13 +410,13 @@ class TaskListFullSetVC: UIViewController {
 
     // MARK: - Status query / notify
 
-    /// 按 task_id 刷新已发送列表中的任务状态与完成时间，并写回本地缓存
+    /// Refresh the task status and completion time in the sent list by task_id, and write back to the local cache
     @discardableResult
     private func applyStatusUpdate(taskId: Int, status: Int, completeTimestamp: Int = 0) -> Bool {
         guard let idx = sentItems.firstIndex(where: { $0.taskId == taskId }) else { return false }
         sentItems[idx].status = status
         if status == TaskListItemDraft.statusDone {
-            // 通知 133 不含完成时间；仅当查询带回有效时间戳时才覆盖
+            // Notification 133 has no completion time; only overwrite when the query returns a valid timestamp
             if completeTimestamp > 0 {
                 sentItems[idx].completeTimestamp = completeTimestamp
             }
@@ -443,7 +443,7 @@ class TaskListFullSetVC: UIViewController {
         appendLog(String(format: L10n.taskListNotifyLog, "\(taskId)", "\(status)"))
         let ok = applyStatusUpdate(taskId: taskId, status: status)
         commitStatusRefresh(updatedCount: ok ? 1 : 0, source: L10n.notification)
-        // 133 不含 complete_timestamp，自动查询补齐完成时间
+        // 133 does not include complete_timestamp; query automatically to fill in the completion time
         if sdk.state.isConnected {
             queryStatusChanges(showFeedback: false)
         }
@@ -454,7 +454,7 @@ class TaskListFullSetVC: UIViewController {
         queryStatusChanges(showFeedback: true)
     }
 
-    /// 查询任务状态变化列表：刷新 status + complete_timestamp；不判断功能表
+    /// Query the task status change list: refresh status + complete_timestamp; does not check the function table
     private func queryStatusChanges(showFeedback: Bool) {
         guard sdk.state.isConnected else { return }
         let param = IDOTaskListModel(operate: 2)
@@ -538,7 +538,7 @@ extension TaskListFullSetVC: UITableViewDataSource, UITableViewDelegate {
         guard let sec = Section(rawValue: section) else { return 0 }
         switch sec {
         case .pending:
-            return max(pendingItems.count, 1) // 空态占位一行
+            return max(pendingItems.count, 1) // one placeholder row for the empty state
         case .sent:
             return max(sentItems.count, 1)
         }
@@ -607,7 +607,7 @@ extension TaskListFullSetVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-// MARK: - 编辑待发送：本地年月日时分秒选择 + 任务详情（与 Android 一致）
+// MARK: - Edit pending: local date/time picker (year to second) + task detail (same as Android)
 
 private final class TaskListEditPendingVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate {
 
@@ -631,7 +631,7 @@ private final class TaskListEditPendingVC: UIViewController, UIPickerViewDataSou
         if #available(iOS 13.4, *) {
             p.preferredDatePickerStyle = .wheels
         }
-        // 与 Android 一致：按手机本地时区选墙钟时间，保存时再换算为 UTC 秒
+        // Same as Android: pick the wall-clock time in the phone's local time zone, then convert to UTC seconds when saving
         p.timeZone = .current
         p.locale = Locale(identifier: "zh_CN")
         p.calendar = Calendar.current
@@ -808,7 +808,7 @@ private final class TaskListEditPendingVC: UIViewController, UIPickerViewDataSou
         refreshPreview()
     }
 
-    /// 按本地墙钟取年月日时分 + 秒选择器，再换算为协议 UTC 秒时间戳
+    /// Take year/month/day/hour/minute from the local wall clock + seconds picker, then convert to the protocol UTC timestamp in seconds
     private func composedUtcTimestamp() -> Int {
         let cal = Calendar.current
         var comps = cal.dateComponents(
@@ -875,7 +875,7 @@ private final class TaskListEditPendingVC: UIViewController, UIPickerViewDataSou
         refreshDetailCount()
     }
 
-    // MARK: UIPickerView — 秒
+    // MARK: UIPickerView — Seconds
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
 

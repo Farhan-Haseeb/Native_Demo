@@ -47,7 +47,7 @@ class ScanInfo: NSObject {
 
 
 class XYCBBase: NSObject {
-    //创建单例
+    //Create the singleton
     static let shared = XYCBBase()
     override init() {
         super.init()
@@ -56,13 +56,13 @@ class XYCBBase: NSObject {
     }
     var xyCentralManager: CBCentralManager = CBCentralManager()
     var scanInfoArr = [ScanInfo]()
-    //蓝牙是否可以
+    //Whether Bluetooth is available
     var managerStateIsOn = false
     typealias FindPeripheral = (CBPeripheral) -> Void
     var findPeripheralClosure: FindPeripheral = {_ in }
     
     
-    //MARK: 第一步: 搜索外设
+    //MARK: Step 1: Scan for peripherals
     func startScan(findPeripheral: @escaping (CBPeripheral) -> Void) {
         scanInfoArr = [ScanInfo]()
         findPeripheralClosure = findPeripheral
@@ -77,7 +77,7 @@ class XYCBBase: NSObject {
     
     typealias Completion = (Bool,Error?) -> Void
     var connetCompletion: Completion?
-    //MARK: 第二步: 连接外设
+    //MARK: Step 2: Connect to the peripheral
     func connect(peripheral: CBPeripheral, completion: @escaping (Bool,Error?) -> Void) {
         connetCompletion = completion
         xyCentralManager.connect(peripheral, options: nil)
@@ -85,7 +85,7 @@ class XYCBBase: NSObject {
     
     typealias DisconnectCompletion = () -> Void
     var _dsconnectCompletion: DisconnectCompletion?
-    //是否disConnect方法被调用了，如果被调用了就不会自动重连了
+    //Whether disConnect was called; if it was, there is no auto-reconnect
     var isDisConnect = false
     func disConnect(_ peripheral: CBPeripheral, completion: @escaping () -> Void) {
         _dsconnectCompletion = completion
@@ -93,7 +93,7 @@ class XYCBBase: NSObject {
         xyCentralManager.cancelPeripheralConnection(peripheral)
     }
     
-    //maximum transmission unit: 最大传输单元
+    //maximum transmission unit: MTU
     private var privateMtu = 0
     var mtu: Int {
         set {
@@ -106,11 +106,11 @@ class XYCBBase: NSObject {
         }
     }
     var writeErrorClosure: ErrorClosure?
-    //MARK: 写write
+    //MARK: Write
     func write(peripheral: CBPeripheral, characteristic: CBCharacteristic, data: Data, errorClosure: ErrorClosure?){
         self.writeErrorClosure = errorClosure
         //printXY(peripheral.maximumWriteValueLength(for: .withResponse), obj: self, line: #line)
-        //printXY("发:\(NSData(data: data))", obj: self, line: #line)
+        //printXY("Send:\(NSData(data: data))", obj: self, line: #line)
         let bytes = [UInt8](data)
         var send:[UInt8] = [];
         let mode:Int = peripheral.maximumWriteValueLength(for: .withResponse)
@@ -131,8 +131,8 @@ class XYCBBase: NSObject {
                 let data:Data = Data.init(send);
                 let nsdata:NSData = NSData.init(bytes: send, length: send.count);
                 peripheral.writeValue(data, for: characteristic, type: .withResponse)
-                print("分包发:\(nsdata)");
-                //两包数据间间隔0.1毫秒
+                print("Send packet:\(nsdata)");
+                //Wait 0.1 ms between two packets
                 Thread.sleep(forTimeInterval: 0.0001)
                 i+=1;
             }
@@ -141,11 +141,11 @@ class XYCBBase: NSObject {
         }
     }
     
-    //MARK: 写无回复writeWithoutResponse
+    //MARK: Write without response - writeWithoutResponse
     func writeWithoutResponse(peripheral: CBPeripheral, characteristic: CBCharacteristic, data: Data){
 //        printXY(peripheral.maximumWriteValueLength(for: .withoutResponse), obj: self, line: #line)
 //        printXY(peripheral.canSendWriteWithoutResponse, obj: self, line: #line)
-        //printXY("发:\(NSData(data: data))", obj: self, line: #line)
+        //printXY("Send:\(NSData(data: data))", obj: self, line: #line)
 //        printXY(peripheral.canSendWriteWithoutResponse, obj: self, line: #line)
         let bytes = [UInt8](data)
         var send:[UInt8] = [];
@@ -168,9 +168,9 @@ class XYCBBase: NSObject {
                 let nsdata:NSData = NSData.init(bytes: send, length: send.count);
                 peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
 //                printXY(peripheral.canSendWriteWithoutResponse, obj: self, line: #line)
-                printXY("分包发:\(nsdata)", obj: self, line: #line)
+                printXY("Send packet:\(nsdata)", obj: self, line: #line)
 //                printXY(peripheral.canSendWriteWithoutResponse, obj: self, line: #line)
-                //两包数据间间隔0.1毫秒
+                //Wait 0.1 ms between two packets
                 Thread.sleep(forTimeInterval: 0.0001)
                 i+=1;
             }
@@ -181,19 +181,19 @@ class XYCBBase: NSObject {
     
     var notifyErrorClosure: ErrorClosure?
     var notifyClosure: DataClosure?
-    //MARK: 通知notify
-    //参数errorClosure:当errorClosure传回的参数为nil时表示订阅成功，否则Error参数会传回订阅失败的原因
-    //参数notifyClosure: notifyClosure的参数会传回收到的数据Data,当收到通知时notifyClosure会被调用
+    //MARK: Notify
+    //Parameter errorClosure: when the parameter passed to errorClosure is nil the subscription succeeded, otherwise the Error parameter carries the reason the subscription failed
+    //Parameter notifyClosure: notifyClosure receives the incoming Data, and notifyClosure is called whenever a notification is received
     func subscribeNotify(peripheral: CBPeripheral, characteristic: CBCharacteristic, errorClosure: ErrorClosure?, notifyClosure: @escaping DataClosure){
         self.notifyClosure = notifyClosure
         self.notifyErrorClosure = errorClosure
-        //characteristic的value变化时会收到通知
+        //characteristic sends a notification when its value changes
         peripheral.setNotifyValue(true, for: characteristic)
     }
     
     var readCallBack: DataClosure?
-    //MARK: 读read
-    //callBack会传回read到的数据
+    //MARK: Read
+    //callBack returns the data that was read
     func read(peripheral: CBPeripheral, characteristic: CBCharacteristic, callBack: @escaping DataClosure){
         readCallBack = callBack
         peripheral.readValue(for: characteristic)
@@ -213,8 +213,8 @@ extension XYCBBase: CBCentralManagerDelegate {
             return
         }
         let scanInfo = ScanInfo(peripheral: peripheral, advertisementData: advertisementData, rssi: RSSI)
-        //MARK: 第一步: 搜到了外设
-        //先remove后add,去重，而且保证数组里的是最新的
+        //MARK: Step 1: Peripheral found
+        //remove first, then add: de-duplicates and keeps the newest entry in the array
         scanInfoArr.removeAll { $0 == scanInfo }
         scanInfoArr.append(scanInfo)
         
@@ -232,7 +232,7 @@ extension XYCBBase: CBCentralManagerDelegate {
         }
         connect(peripheral: peripheral) { (bool, error) in
             if bool {
-//                printXY("重连成功", obj: self, line: #line)
+//                printXY("Reconnected", obj: self, line: #line)
             }else {
                 printXY(error, obj: self, line: #line)
             }
@@ -240,12 +240,12 @@ extension XYCBBase: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        //MARK: 第二步: 连接外设成功
+        //MARK: Step 2: Peripheral connected
 //        printXY(#function, obj: self, line: #line)
-        //MARK: 第三步: 搜索外设的服务
+        //MARK: Step 3: Discover the peripheral's services
         peripheral.delegate = self
-        //必须要搜索服务，搜到后peripheral.sevices数组中才会有值，否则是空的，搜到一个服务，才会多一个服务
-        //在这里po peripheral.services为nil
+        //Services must be discovered; only then does the peripheral.sevices array get values, otherwise it is empty. Each service discovered adds one more service
+        //At this point po peripheral.services is nil
         peripheral.discoverServices(nil)
     }
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -257,20 +257,20 @@ extension XYCBBase: CBCentralManagerDelegate {
 
 extension XYCBBase: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-//        print("发现外设的服务\(String(describing: peripheral.services))")
+//        print("Discovered peripheral services: \(String(describing: peripheral.services))")
         guard let services = peripheral.services else {
             return
         }
         for service in services {
-            //MARK: 第四步: 搜索外设的特征
+            //MARK: Step 4: Discover the peripheral's characteristics
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-//        print("发现服务的特征\(String(describing: service.characteristics))")
+//        print("Discovered service characteristics: \(String(describing: service.characteristics))")
         if peripheral.services?.last == service {
-            printXY("发现了外设的所有特征，准备就绪", obj: self, line: #line)
+            printXY("All peripheral characteristics discovered, ready", obj: self, line: #line)
             guard let closure = connetCompletion else {
                 return
             }
@@ -341,18 +341,18 @@ extension XYCBBase: CBPeripheralDelegate {
 
 extension CBCharacteristic {
     func dealCharacteristicProperties() -> String {
-        var str = "属性："
+        var str = "Properties:"
         if self.properties.contains(.write) {
-            str += "/可写"
+            str += "/writable"
         }
         if self.properties.contains(.read) {
-            str += "/可读"
+            str += "/readable"
         }
         if self.properties.contains(.notify) {
-            str += "/通知"
+            str += "/notify"
         }
         if self.properties.contains(.writeWithoutResponse) {
-            str += "/写无回复"
+            str += "/write without response"
         }
         return str
     }

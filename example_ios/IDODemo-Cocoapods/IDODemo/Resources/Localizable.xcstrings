@@ -8713,7 +8713,7 @@
         }
       }
     },
-    "导入ZIP文件": {
+    "Import ZIP file": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -8729,12 +8729,12 @@
         }
       }
     },
-    "确定": {
+    "Confirm": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Confrim"
+            "value": "Confirm"
           }
         },
         "zh-Hans": {
@@ -8745,7 +8745,7 @@
         }
       }
     },
-    "表盘定制工具": {
+    "Dial Customization Tool": {
       "localizations": {
         "en": {
           "stringUnit": {
