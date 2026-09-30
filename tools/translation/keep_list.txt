@@ -1,0 +1,4 @@
+# Exact (whitespace-stripped) lines that intentionally keep Chinese. Ignored by extract.py, apply.py and report.py.
+return "中文"
+IDONoticeMesaageParamItem(language: 1, name: "中文"),
+IDONoticeMesaageParamItem.fromJson({language: 1, name: "中文"}),
