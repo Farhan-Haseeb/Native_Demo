@@ -5,7 +5,7 @@ import { NavStackModel } from '../viewmodel/NavStackModel';
 
 let storage = LocalStorage.getShared()
 
-// 主应用组件
+// Main app component
 @Entry(storage)
 @ComponentV2
 struct BluetoothScanner {
@@ -13,7 +13,7 @@ struct BluetoothScanner {
   private viewModel: BluetoothViewModel = BluetoothViewModel.getInstance();
 
   aboutToAppear(): void {
-    console.debug("扫描页显示")
+    console.debug("Scan page shown")
   }
 
   aboutToDisappear(): void {
@@ -23,7 +23,7 @@ struct BluetoothScanner {
   build() {
     Navigation(this.pageInfos) {
       Column() {
-        // 状态指示器
+        // Status indicator
         StatusIndicator({ state: this.viewModel.bluetoothState })
           .margin({
             bottom: 16,
@@ -31,7 +31,7 @@ struct BluetoothScanner {
             right: 16
           })
 
-        // 错误提示
+        // Error message
         if (this.viewModel.bluetoothState.errorMessage) {
           Row() {
             Text(this.viewModel.bluetoothState.errorMessage)
@@ -39,7 +39,7 @@ struct BluetoothScanner {
               .fontColor('#F56C6C')
               .margin({ right: 8 })
 
-            Button('关闭')
+            Button('Close')
               .type(ButtonType.Capsule)
               .width(60)
               .height(32)
@@ -55,24 +55,24 @@ struct BluetoothScanner {
           .margin({ left: 16, right: 16, bottom: 16 })
         }
 
-        // 控制按钮
+        // Control buttons
         Row({ space: 16 }) {
           if (!this.viewModel.bluetoothState.hasPermission) {
-            Button('申请权限')
+            Button('Request permission')
               .width('100%')
               .height(50)
               .fontSize(18)
               .backgroundColor('#409EFF')
               .onClick(() => this.viewModel.requestPermission(getContext(this)))
           } else if (this.viewModel.bluetoothState.isScanning) {
-            Button('停止扫描')
+            Button('Stop scan')
               .width('100%')
               .height(50)
               .fontSize(18)
               .backgroundColor('#F56C6C')
               .onClick(() => this.viewModel.stopScan())
           } else {
-            Button('开始扫描')
+            Button('Start scan')
               .width('100%')
               .height(50)
               .fontSize(18)
@@ -83,10 +83,10 @@ struct BluetoothScanner {
         .width('100%')
         .padding({ left: 16, right: 16, bottom: 16 })
 
-        // 已绑定设备列表标题
+        // Bound device list title
         if (this.viewModel.bluetoothState. bindDeviceList.length > 0) {
           Row() {
-            Text(`绑定的设备`)
+            Text(`Bound devices`)
               .fontSize(18)
               .fontWeight(FontWeight.Medium)
               .fontColor('#303133')
@@ -94,7 +94,7 @@ struct BluetoothScanner {
           .padding({ left: 16, right: 16, bottom: 8 })
           .width('100%')
 
-          // 绑定设备列表
+          // Bound device list
           List({ space: 12 }) {
             ForEach(this.viewModel.bluetoothState.bindDeviceList, (device: IDOBleDeviceModel) => {
               ListItem() {
@@ -108,10 +108,10 @@ struct BluetoothScanner {
           }
         }
 
-        // ota设备列表标题
+        // ota device list title
         if (this.viewModel.bluetoothState.otaDeviceList.length > 0) {
           Row() {
-            Text(`以下 ${this.viewModel.bluetoothState.otaDeviceList.length} 个设备在 OTA 中`)
+            Text(`The following ${this.viewModel.bluetoothState.otaDeviceList.length} devices are in OTA`)
               .fontSize(18)
               .fontWeight(FontWeight.Medium)
               .fontColor('#303133')
@@ -119,7 +119,7 @@ struct BluetoothScanner {
           .padding({ left: 16, right: 16, bottom: 8 })
           .width('100%')
 
-          // ota设备列表
+          // ota device list
           List({ space: 12 }) {
             ForEach(this.viewModel.bluetoothState.otaDeviceList, (device: IDOBleDeviceModel) => {
               ListItem() {
@@ -137,9 +137,9 @@ struct BluetoothScanner {
           }
         }
 
-        // 设备列表标题
+        // Device list title
         Row() {
-          Text(`扫描到 ${this.viewModel.bluetoothState.deviceList.length} 个设备`)
+          Text(`Found ${this.viewModel.bluetoothState.deviceList.length} devices`)
             .fontSize(18)
             .fontWeight(FontWeight.Medium)
             .fontColor('#303133')
@@ -157,7 +157,7 @@ struct BluetoothScanner {
         .padding({ left: 16, right: 16, bottom: 8 })
         .width('100%')
 
-        // 设备列表
+        // Device list
         List({ space: 12 }) {
           ForEach(this.viewModel.bluetoothState.deviceList, (device: IDOBleDeviceModel) => {
             ListItem() {
@@ -181,7 +181,7 @@ struct BluetoothScanner {
 }
 
 
-// 设备列表项组件
+// Device list item component
 @ComponentV2
 struct DeviceListItem {
   @Param device: IDOBleDeviceModel | null = null;
@@ -225,20 +225,20 @@ struct DeviceListItem {
   }
 }
 
-// 状态指示器组件
+// Status indicator component
 @ComponentV2
 struct StatusIndicator {
   @Param state: BluetoothState | null = null;
 
   build() {
     Column() {
-      // 状态消息
+      // Status message
       Text(this.state?.statusMessage)
         .fontSize(18)
         .fontColor(this.state?.hasPermission ? '#67C23A' : '#F56C6C')
         .margin({ bottom: 8 })
 
-      // 权限和蓝牙状态指示
+      // Permission and Bluetooth status indicators
       Row({ space: 20 }) {
         Row() {
           Circle()
@@ -246,7 +246,7 @@ struct StatusIndicator {
             .height(12)
             .fill(this.state?.hasPermission ? '#67C23A' : '#F56C6C')
             .margin({ right: 8 })
-          Text('权限')
+          Text('Permission')
             .fontSize(14)
             .fontColor('#606266')
         }
@@ -257,7 +257,7 @@ struct StatusIndicator {
             .height(12)
             .fill(this.state?.bluetoothEnabled ? '#67C23A' : '#F56C6C')
             .margin({ right: 8 })
-          Text('蓝牙')
+          Text('Bluetooth')
             .fontSize(14)
             .fontColor('#606266')
         }
@@ -268,7 +268,7 @@ struct StatusIndicator {
             .height(12)
             .fill(this.state?.isScanning ? '#67C23A' : '#F56C6C')
             .margin({ right: 8 })
-          Text('扫描')
+          Text('Scanning')
             .fontSize(14)
             .fontColor('#606266')
         }

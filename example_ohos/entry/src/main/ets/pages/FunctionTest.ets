@@ -27,20 +27,20 @@ struct FunctionTestPage {
       return;
     }
 
-    // 清空上次的结果
+    // Clear the previous result
     this.viewModel.resStr = '';
 
     try {
       await this.viewModel.send();
     } catch (e) {
-      console.error('发送失败:', e);
+      console.error('Send failed:', e);
     }
   }
 
   build() {
     NavDestination() {
       Column() {
-        // 顶部固定内容区
+        // Fixed content area at the top
         Column({ space: 20 }) {
           Button($r('app.string.send'))
             .width('90%')
@@ -72,7 +72,7 @@ struct FunctionTestPage {
         }
         .width('100%')
 
-        // Response区域 - 使用Scroll组件包裹，支持滚动
+        // Response area - wrapped in a Scroll component to support scrolling
         Column({ space: 8 }) {
           Text($r('app.string.response'))
             .fontSize(16)
@@ -80,7 +80,7 @@ struct FunctionTestPage {
             .width('90%')
             .margin({ top: 20 })
 
-          // 使用Scroll组件实现滚动
+          // Use a Scroll component for scrolling
           Scroll() {
             Text(this.viewModel?.resStr ?? '')
               .width('100%')
@@ -92,14 +92,14 @@ struct FunctionTestPage {
               .textAlign(TextAlign.Start)
           }
           .width('90%')
-          .layoutWeight(1) // 占据剩余空间
+          .layoutWeight(1) // Take the remaining space
           .scrollable(ScrollDirection.Vertical)
           .scrollBar(BarState.Auto)
           .edgeEffect(EdgeEffect.Spring)
           .align(Alignment.TopStart)
         }
         .width('100%')
-        .layoutWeight(1) // 让Response区域占据剩余空间
+        .layoutWeight(1) // Let the Response area take the remaining space
         .alignItems(HorizontalAlign.Center)
         .padding({ bottom: 20 })
       }
@@ -107,7 +107,7 @@ struct FunctionTestPage {
       .height('100%')
       .backgroundColor($r('app.color.page_bg'))
     }
-    .title(this.params?.functionName ?? '测试')
+    .title(this.params?.functionName ?? 'Test')
     .onWillDisappear(() => {
       this.viewModel?.cancel();
     })

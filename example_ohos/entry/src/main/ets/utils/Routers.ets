@@ -1,4 +1,4 @@
-// // 导入所有页面的构建器函数
+// // Import the builder functions of all pages
 // import { FunctionPageBuilder } from '../pages/FunctionList';
 // import { GetFunctionListPageBuilder } from '../pages/GetFunctionList';
 // import { SetFunctionListPageBuilder } from '../pages/SetFunctionList';
@@ -12,7 +12,7 @@
 // import { NavPathModel } from '../viewmodel/NavStackModel';
 
 /**
- * 主功能列表页
+ * Main function list page
  */
 export const PAGE_FUNCTION_LIST = 'functionListPage';
 export const PAGE_GET_FUNCTION_LIST = 'getFunctionListPage';
@@ -29,7 +29,7 @@ export const PAGE_TRANSFER_FILE_DETAIL = 'transferFileDetail';
 export const PAGE_WATCH_FACE_DETAIL = 'watchFace';
 export const PAGE_MUSIC_PLAYER = 'musicPlayerPage';
 
-// // 创建一个路由构建器的映射表
+// // Create a map of route builders
 // export const ROUTER_BUILDER_MAP: Record<string, (name: string, navInfo: NavPathModel) => void> = {
 //   PAGE_FUNCTION_LIST: FunctionPageBuilder,
 //   PAGE_GET_FUNCTION_LIST: GetFunctionListPageBuilder,

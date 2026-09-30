@@ -56,7 +56,7 @@ export class NormalTransFileViewModel {
     this.progress = 0;
     this.resStr = '';
     this.isProcessing = true;
-    this.resStr += `[${new Date().toLocaleTimeString()}] 开始发送文件...\n`;
+    this.resStr += `[${new Date().toLocaleTimeString()}] Start sending file...\n`;
 
     let bleDevice = sdk.ble.getCurrentBleDevice();
     if (bleDevice && this.transType === IDOTransType.fw && (bleDevice.platform === 98 || bleDevice.platform === 99 || bleDevice.deviceId === 8170)) {
@@ -75,7 +75,7 @@ export class NormalTransFileViewModel {
 
     const newFilePath = await Tools.getInstance().copyFileToAppCache(this.abilityContext,filePath)
     if (newFilePath == null) {
-      console.error("文件操作失败");
+      console.error("File operation failed");
       return
     }
 
@@ -98,22 +98,22 @@ export class NormalTransFileViewModel {
       this.rejectFunc = undefined;
     }
     this.isProcessing = false;
-    this.resStr += `[${new Date().toLocaleTimeString()}] 停止发送文件。\n`;
+    this.resStr += `[${new Date().toLocaleTimeString()}] Stop sending file.\n`;
   }
 
   private async music(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.rejectFunc = reject;
-      // 示例代码（固定了musicId 1)
+      // Example code (fixed musicId 1)
       let fileSize = Tools.getInstance().getFileSize(this.filePath)
       const musicItem = new IDOMusicItem(1, fileSize, "m1.mp3", "singer1");
-      // 1、先删除设备上的该音乐（如果存在）
+      // 1. Delete the music from the device first (if it exists)
       const param = new IDOMusicOperateParamModel(1, 0, musicItem, null);
       const fileItem =
         new IDOTransMusicModel(this.filePath, musicItem.musicName, 0, musicItem.musicID, musicItem.singerName)
       Cmds.setMusicOperate(param, (rs) => {
         if (rs.success) {
-          // 2、创建音乐
+          // 2. Create the music
           const param = new IDOMusicOperateParamModel(2, 0, musicItem, null,);
           Cmds.setMusicOperate(param, (rs) => {
             if (rs.success) {
@@ -165,7 +165,7 @@ export class NormalTransFileViewModel {
         this.resStr += `${new Date().toLocaleTimeString()} result: ${results}\n`;
         resolve()
 
-        // 98平台设备传输失败（如中途关闭蓝牙），由于设备可能已断连，使用传输前保存的标志位
+        // 98 platform: if the transfer fails (e.g. Bluetooth turned off midway) the device may already be disconnected, so use the flag saved before the transfer
         if (this.isSiceOta && results[results.length - 1] === false) {
           this.retryOtaAlert();
         }
@@ -175,25 +175,25 @@ export class NormalTransFileViewModel {
   private retryOtaAlert() {
     promptAction.showDialog({
       title: 'OTA',
-      message: '升级失败，确认蓝牙开启后重试？\n\nUpgrade failed. Please confirm that Bluetooth is enabled and try again.',
+      message: 'Upgrade failed. Please confirm that Bluetooth is enabled and try again.',
       buttons: [
         { text: 'NO', color: '#000000' },
         { text: 'YES', color: '#000000' }
       ]
     }).then(data => {
       if (data.index === 1) { // YES
-        this.resStr += `[${new Date().toLocaleTimeString()}] 重试发送文件...\n`;
+        this.resStr += `[${new Date().toLocaleTimeString()}] Retry sending file...\n`;
         this.isProcessing = true;
         this.retryOta();
       }
     });
   }
 
-  // 当ota失败时，添加重试
+  // Add a retry when OTA fails
   private retryOta() {
     if (!this.devInfo) return;
 
-    //思澈平台 ota 需要传入设备的虚拟 mac ，该 mac 地址在蓝牙库中检测到设备处于 ota 状态后赋值
+    //SICE platform OTA needs the virtual MAC of the device, which is assigned after the Bluetooth library detects that the device is in OTA state
     sdk.bridge.markOtaMode(this.devInfo.address, this.devInfo.uuid,
       this.devInfo.platform, this.devInfo.deviceId, this.devInfo.otaMacAddress,
       (success: boolean) => {

@@ -10,18 +10,18 @@ export function SportPageBuilder(name: string, navInfo: NavStackModel) {
 
 @Component
 struct SportPage {
-  // 使用 @ObservedObject 链接 ViewModel 实例
-  // 当 ViewModel 中 @Published 的属性改变时，UI 会自动重建
+  // Use @ObservedObject to link the ViewModel instance
+  // When a property of the ViewModel marked @Published changes, the UI is rebuilt automatically
   @State private vm: SportViewModel | null = null;
 
-  // 页面即将显示时调用
+  // Called when the page is about to appear
   aboutToAppear() {
     this.vm = new SportViewModel(getContext(this) as common.UIAbilityContext);
   }
 
-  // 页面即将销毁时调用
+  // Called when the page is about to be destroyed
   aboutToDisappear() {
-    this.vm?.destroy(); // 清理 ViewModel 中的资源，如定时器
+    this.vm?.destroy(); // Clean up resources in the ViewModel, such as timers
   }
 
   @Builder
@@ -38,13 +38,13 @@ struct SportPage {
   build() {
     NavDestination() {
       Column() {
-        // 标题
+        // Title
         Text('Sport')
           .fontSize(24)
           .fontWeight(FontWeight.Bold)
           .padding({ top: 20, bottom: 20 });
 
-        // 控制按钮
+        // Control buttons
         // this.ControlButton("Start", () => this.vm?.sportStart(),
         //   this.vm?.exchangeType === SportStatus.Stopped);
         // this.ControlButton("Pause", (): void => this.vm?.sportPause(),
@@ -66,15 +66,15 @@ struct SportPage {
           .textAlign(TextAlign.Start)
           .width('90%');
 
-        // // 控制台输出
+        // // Console output
         // TextArea({ text: this.vm!.consoleLog })
-        //   .layoutWeight(1) // 占据剩余空间
+        //   .layoutWeight(1) // Take the remaining space
         //   .width('90%')
         //   .margin({ top: 10 })
         //   .backgroundColor(0xEDEDED)
         //   .fontSize(13)
         //   .fontColor(Color.Gray)
-        //   .enabled(false); // 不可编辑
+        //   .enabled(false); // Not editable
 
         Scroll() {
           Text(this.vm?.consoleLog)

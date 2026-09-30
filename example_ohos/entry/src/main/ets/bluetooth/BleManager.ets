@@ -13,7 +13,7 @@ import {
 import { Tools } from '../utils/Tools';
 
 /**
- * app端业务用来处理对应的事件，根据需要监听对应的对调
+ * app-side business logic handles the corresponding events; listen to the corresponding callbacks as needed
  */
 export class AppDelegate {
   listenStatusNotification?: (status: IDOStatusNotification) => void
@@ -25,23 +25,23 @@ export class AppDelegate {
 }
 
 class BleManager {
-  // 私有属性
+  // Private fields
   private mBleState: IDODeviceStateModel | null = null;
   private delegates: AppDelegate[] = [];
 
-  // 获取连接状态
+  // Get the connection state
   getConnectState(): IDODeviceStateModel | null {
     return this.mBleState;
   }
 
-  // 注册委托
+  // Register a delegate
   registerBleDelegate(delegate: AppDelegate): void {
     if (!this.delegates.includes(delegate)) {
       this.delegates.push(delegate);
     }
   }
 
-  // 注销委托
+  // Unregister a delegate
   unregisterBleDelegate(delegate: AppDelegate): void {
     const index = this.delegates.indexOf(delegate);
     if (index !== -1) {
@@ -68,7 +68,7 @@ class BleManager {
 
     },
     checkDeviceBindState: (macAddress: string): boolean => {
-      //app端缓存的该设备的绑定状态，由 app 提供
+      //app-side cached bind state of this device, provided by the app
       let isBind = Tools.getInstance().getBindState(macAddress);
       console.debug("checkDeviceBindState: " + macAddress + ", isBind: " + isBind)
       return isBind;
@@ -83,7 +83,7 @@ class BleManager {
 
     }
   }
-  // 内部委托实现
+  // Internal delegate implementation
   public  bleDelegateImp: IDOBleDelegate = {
     // writeState: (state) => {
     //   this.delegates.forEach(it => it.writeState?.(state));
@@ -99,8 +99,8 @@ class BleManager {
   };
 
   /**
-   * 搜索设备结果回调
-   * @param list 搜索到的设备模型数组，或在无设备时为 null
+   * Device scan result callback
+   * @param list Array of found device models; when there are no devices, null
    */
   scanResult(list: IDOBleDeviceModel[] | null): void {
     this.delegates.forEach(it => {
@@ -111,8 +111,8 @@ class BleManager {
   }
 
   /**
-   * 蓝牙状态变化回调
-   * @param state 当前的蓝牙状态模型
+   * Bluetooth state change callback
+   * @param state The current Bluetooth state model
    */
   bluetoothState(state: IDOBluetoothStateModel): void {
     this.delegates.forEach(it => {
@@ -123,8 +123,8 @@ class BleManager {
   }
 
   /**
-   * 设备连接状态变化回调
-   * @param state 当前的设备状态模型
+   * Device connection state change callback
+   * @param state The current device state model
    */
   deviceState(state: IDODeviceStateModel): void {
     this.mBleState = state;
@@ -148,5 +148,5 @@ class BleManager {
   }
 }
 
-// 导出单例访问点
+// Export the singleton access point
 export default BleManager.getInstance();

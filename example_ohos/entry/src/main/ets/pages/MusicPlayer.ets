@@ -1,5 +1,5 @@
 // MusicPlayer.ets
-// 音乐播放 + 手表联动示例页面
+// Music playback + watch linkage example page
 
 import { NavStackModel } from '../viewmodel/NavStackModel';
 import { MusicPlayerViewModel, SongInfo } from '../viewmodel/MusicPlayerViewModel';
@@ -25,7 +25,7 @@ struct MusicPlayerPage {
   build() {
     NavDestination() {
       Column() {
-        // === 歌曲信息 ===
+        // === Song info ===
         Column({ space: 4 }) {
           Text(this.vm?.currentSongName ?? '-')
             .fontSize(22)
@@ -43,7 +43,7 @@ struct MusicPlayerPage {
         .padding({ top: 30, bottom: 16, left: 24, right: 24 })
         .alignItems(HorizontalAlign.Center)
 
-        // === 进度条 ===
+        // === Progress bar ===
         Column({ space: 6 }) {
           Slider({
             value: this.vm?.currentTimeMs ?? 0,
@@ -71,9 +71,9 @@ struct MusicPlayerPage {
         .width('100%')
         .padding({ left: 24, right: 24 })
 
-        // === 播放控制按钮 ===
+        // === Playback control buttons ===
         Row({ space: 24 }) {
-          // 上一首
+          // Previous track
           Button('⏮')
             .width(56).height(56)
             .fontSize(24)
@@ -82,7 +82,7 @@ struct MusicPlayerPage {
             .fontColor('#333333')
             .onClick(() => this.vm?.playPrev())
 
-          // 播放/暂停
+          // Play/pause
           Button(this.vm?.isPlaying ? '⏸' : '▶')
             .width(72).height(72)
             .fontSize(28)
@@ -91,7 +91,7 @@ struct MusicPlayerPage {
             .fontColor('#FFFFFF')
             .onClick(() => this.vm?.togglePlay())
 
-          // 下一首
+          // Next track
           Button('⏭')
             .width(56).height(56)
             .fontSize(24)
@@ -104,7 +104,7 @@ struct MusicPlayerPage {
         .justifyContent(FlexAlign.Center)
         .padding({ top: 20, bottom: 12 })
 
-        // === 音量控制 ===
+        // === Volume control ===
         Row({ space: 8 }) {
           Text('🔉')
             .fontSize(16)
@@ -131,9 +131,9 @@ struct MusicPlayerPage {
         .width('90%')
         .padding({ bottom: 12 })
 
-        // === 播放列表 ===
+        // === Playlist ===
         Column() {
-          Text('播放列表')
+          Text('Playlist')
             .fontSize(14)
             .fontColor('#666666')
             .fontWeight(FontWeight.Medium)
@@ -172,9 +172,9 @@ struct MusicPlayerPage {
         .backgroundColor($r('app.color.component_bg'))
         .borderRadius(12)
 
-        // === 日志区域 ===
+        // === Log area ===
         Column() {
-          Text('SDK 日志')
+          Text('SDK log')
             .fontSize(12)
             .fontColor('#999999')
             .width('100%')
@@ -201,6 +201,6 @@ struct MusicPlayerPage {
       .height('100%')
       .backgroundColor($r('app.color.page_bg'))
     }
-    .title('音乐控制')
+    .title('Music control')
   }
 }
