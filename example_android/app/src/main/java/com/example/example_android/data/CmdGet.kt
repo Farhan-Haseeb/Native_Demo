@@ -7,7 +7,7 @@ import com.idosmart.protocol_sdk.IDOCancellable
  * @author tianwei
  * @date 2023/11/21
  * @time 10:14
- * 用途:获取指令
+ * Purpose: get commands
  */
 object CmdGet {
 
@@ -88,7 +88,7 @@ object CmdGet {
         if (evtType == CustomEvtType.GETHIDINFO || evtType == CustomEvtType.GETSNINFO || evtType == CustomEvtType.GETBTCONNECTPHONEMODEL
             || evtType == CustomEvtType.GETBTNAME || evtType == CustomEvtType.GETDEVICENAME
         ) {
-            //非返回IDOBaseModel对象结果
+            //Does not return an IDOBaseModel object result
             request(cmds?.json ?: "")
             return cmds?.send {
                 if (it.error.code == 0) {
@@ -100,7 +100,7 @@ object CmdGet {
                 }
             }
         } else {
-            //返回IDOBaseModel对象结果
+            //Returns an IDOBaseModel object result
             request(cmd?.json ?: "")
             return cmd?.send {
                 if (it.error.code == 0) {

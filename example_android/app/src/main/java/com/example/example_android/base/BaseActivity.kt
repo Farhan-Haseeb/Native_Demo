@@ -28,7 +28,7 @@ import java.util.Locale
 abstract class BaseActivity : AppCompatActivity() {
 
     companion object {
-        /** 当前处于 resumed 的页面，用于判断是否已在文件传输页等 */
+        /** The page currently resumed, used to check whether we are already on the file transfer page, etc. */
         @JvmStatic
         @Volatile
         var resumedActivity: BaseActivity? = null
@@ -144,9 +144,9 @@ abstract class BaseActivity : AppCompatActivity() {
                         var file = File(filePath)
                         if (file.exists()) {
                             if (file.isDirectory) {
-                                file.deleteRecursively() // 删除目录及其内容
+                                file.deleteRecursively() // Delete the directory and its contents
                             } else {
-                                file.delete() // 删除文件
+                                file.delete() // Delete the file
                             }
                         }
                         ZipUtil.zip(path, filePath, fileName.plus("_log.zip"))
@@ -180,13 +180,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private val mConnectCallback = object : ConnectCallback {
         override fun deviceState(state: IDODeviceStateModel) {
-            println("设备状态变化：$state")
+            println("Device state changed: $state")
             super.deviceState(state)
             updateBleStatus(state)
         }
 
         override fun receiveData(data: IDOReceiveData) {
-            println("收到数据：$data")
+            println("Received data: $data")
         }
 
     }

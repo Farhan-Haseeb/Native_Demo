@@ -412,7 +412,7 @@ public class BleBluetooth {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             super.onConnectionStateChange(gatt, status, newState);
-            BleLog.i("BluetoothGattCallback：onConnectionStateChange "
+            BleLog.i("BluetoothGattCallback: onConnectionStateChange "
                     + '\n' + "status: " + status
                     + '\n' + "newState: " + newState
                     + '\n' + "currentThread: " + Thread.currentThread().getId());
@@ -447,7 +447,7 @@ public class BleBluetooth {
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             super.onServicesDiscovered(gatt, status);
-            BleLog.i("BluetoothGattCallback：onServicesDiscovered "
+            BleLog.i("BluetoothGattCallback: onServicesDiscovered "
                     + '\n' + "status: " + status
                     + '\n' + "currentThread: " + Thread.currentThread().getId());
 
@@ -563,7 +563,7 @@ public class BleBluetooth {
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicWrite(gatt, characteristic, status);
-            BleLog.i("写完成："+HexUtil.formatHexString(characteristic.getValue(),true));
+            BleLog.i("Write done: "+HexUtil.formatHexString(characteristic.getValue(),true));
             Iterator iterator = bleWriteCallbackHashMap.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry entry = (Map.Entry) iterator.next();

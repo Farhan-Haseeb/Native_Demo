@@ -243,18 +243,18 @@
 
     <string name="music_tips_query_first">Please click \"Query Song Information\"</string>
     <string name="music_tips_no_sheet">You haven\'t created playlist yet</string>
-    <string name="music_tips_delete_success">Song deleted successfully！</string>
-    <string name="music_tips_delete_failed">Song deletion failed！</string>
-    <string name="music_tips_add_success">Song added successfully！</string>
-    <string name="music_tips_add_failed">Failed to add song！</string>
-    <string name="music_tips_delete_sheet_success">Playlist deleted successfully！</string>
-    <string name="music_tips_delete_sheet_failed">Failed to delete playlist！</string>
-    <string name="music_tips_new_sheet_success">Playlist created successfully！</string>
-    <string name="music_tips_new_sheet_failed">Failed to create playlist！</string>
+    <string name="music_tips_delete_success">Song deleted successfully!</string>
+    <string name="music_tips_delete_failed">Song deletion failed!</string>
+    <string name="music_tips_add_success">Song added successfully!</string>
+    <string name="music_tips_add_failed">Failed to add song!</string>
+    <string name="music_tips_delete_sheet_success">Playlist deleted successfully!</string>
+    <string name="music_tips_delete_sheet_failed">Failed to delete playlist!</string>
+    <string name="music_tips_new_sheet_success">Playlist created successfully!</string>
+    <string name="music_tips_new_sheet_failed">Failed to create playlist!</string>
     <string name="music_tips_edit_sheet_success">Playlist updated successfully!</string>
     <string name="music_tips_edit_sheet_failed">Failed to update playlist!</string>
-    <string name="music_tips_import_success">Song imported successfully！</string>
-    <string name="music_tips_import_failed">Song import failed！</string>
+    <string name="music_tips_import_success">Song imported successfully!</string>
+    <string name="music_tips_import_failed">Song import failed!</string>
     <string name="music_tips_delete_sheet_music_success">Deleted successfully!</string>
     <string name="music_tips_delete_sheet_music_failed">Delete failed!</string>
     <string name="music_tips_empty_music">No song information available for transfer!</string>
@@ -271,9 +271,9 @@
     <string name="music_tips_file_not_exist">Song file does not exist!</string>
     <string name="music_tips_input_music_id">Please enter the song ID</string>
     <string name="music_tips_musid_id_only_digst">Song ID must be numeric. Refer to the song information!</string>
-    <string name="music_tips_new_sheet_first">Please create playlist first！</string>
+    <string name="music_tips_new_sheet_first">Please create playlist first!</string>
     <string name="music_tips_music_not_exist">Song does not exist!</string>
-    <string name="music_tips_music_exist_in_sheet">The song already exists in the playlist！</string>
+    <string name="music_tips_music_exist_in_sheet">The song already exists in the playlist!</string>
     <string name="music_start_query_music">Loading playlists...</string>
 
     <string name="music_control">Music Control</string>

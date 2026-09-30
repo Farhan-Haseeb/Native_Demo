@@ -19,8 +19,8 @@ import com.idosmart.pigeon_implement.Cmds
 import com.idosmart.protocol_channel.sdk
 
 /**
- * 15.82 手势控制联调页（对齐 PulseBand GestureActivity）：
- * 进页 03→02；动态能力树；功能多选一；同功能子功能手势互斥；设置走 01。
+ * 15.82 Gesture control integration-test page (aligned with PulseBand GestureActivity):
+ * On entering: 03→02; dynamic capability tree; one function selected at a time; gestures of sub-functions within the same function are mutually exclusive; set via 01.
  */
 class GestureControlActivity : BaseActivity() {
 
@@ -106,7 +106,7 @@ class GestureControlActivity : BaseActivity() {
         return true
     }
 
-    /** 进页：03 → 成功后自动 02 */
+    /** On entering: 03 → automatically followed by 02 */
     private fun enterPage() {
         tvStatus.text = getString(R.string.gesture_control_status_loading_support)
         awaitCurrentAfterSupport = true
@@ -396,7 +396,7 @@ class GestureControlActivity : BaseActivity() {
         suppressSpinnerCallback = false
     }
 
-    /** 以 support 树为骨架，叠 UI 状态，组装设置 Model */
+    /** Use the support tree as the skeleton, overlay the UI state, and assemble the settings Model */
     private fun buildSetModelFromUi(support: IDOGestureControlModel): IDOGestureControlModel? {
         val enabledType = funcUis.firstOrNull { it.switch.isChecked }?.functionType
         val items = support.gestureFunctionItems ?: return null
@@ -439,35 +439,35 @@ class GestureControlActivity : BaseActivity() {
         private const val TYPE_ARM_VERTICAL = 4
 
         fun gestureFuncLabel(type: Int): String = when (type) {
-            FUNC_CALL -> "控制通话"
-            FUNC_PHOTO -> "遥控拍照"
-            FUNC_MUSIC -> "音乐控制"
-            else -> "功能$type"
+            FUNC_CALL -> "Call control"
+            FUNC_PHOTO -> "Remote photo capture"
+            FUNC_MUSIC -> "Music control"
+            else -> "Function $type"
         }
 
         fun gestureSubLabel(funcType: Int, subType: Int): String = when (funcType) {
             FUNC_CALL -> when (subType) {
-                SUB_ANSWER -> "接听电话"
-                SUB_HANG_UP -> "挂断电话"
-                else -> "子功能$subType"
+                SUB_ANSWER -> "Answer call"
+                SUB_HANG_UP -> "Hang up call"
+                else -> "Sub-function $subType"
             }
             FUNC_PHOTO -> when (subType) {
-                SUB_PHOTO -> "遥控拍照"
-                else -> "子功能$subType"
+                SUB_PHOTO -> "Remote photo capture"
+                else -> "Sub-function $subType"
             }
             FUNC_MUSIC -> when (subType) {
-                SUB_MUSIC_NEXT -> "下一曲"
-                else -> "子功能$subType"
+                SUB_MUSIC_NEXT -> "Next song"
+                else -> "Sub-function $subType"
             }
-            else -> "子功能$subType"
+            else -> "Sub-function $subType"
         }
 
         fun gestureTypeLabel(type: Int): String = when (type) {
-            TYPE_FLIP_PALM -> "手掌翻转90°×2"
-            TYPE_PLAY_TWICE -> "弹两下"
-            TYPE_ARM_HORIZONTAL -> "手臂水平旋转90°×2"
-            TYPE_ARM_VERTICAL -> "手臂垂直旋转90°×2"
-            else -> "手势$type"
+            TYPE_FLIP_PALM -> "Palm flip 90°×2"
+            TYPE_PLAY_TWICE -> "Flick twice"
+            TYPE_ARM_HORIZONTAL -> "Arm horizontal rotation 90°×2"
+            TYPE_ARM_VERTICAL -> "Arm vertical rotation 90°×2"
+            else -> "Gesture $type"
         }
     }
 }

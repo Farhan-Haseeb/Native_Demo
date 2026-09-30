@@ -96,7 +96,7 @@ class OtaFileTransferActivity : BaseActivity() {
             val uri = data?.data ?: return
             val filePath = GetFilePathFromUri.getFileAbsolutePath(this, uri) ?: return
 
-            // 校验文件后缀
+            // Validate the file extension
             val fileName = File(filePath).name
             if (!TransType.OTA.isExtensionValid(fileName)) {
                 val supported = TransType.OTA.allowedExtensions().joinToString(", ") { ".$it" }

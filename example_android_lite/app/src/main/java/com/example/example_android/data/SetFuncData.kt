@@ -764,14 +764,14 @@ class SetFuncData(
             }
 
             if (sdk.funcTable.setSupportControlMiniProgram) {
-                //获取小程序列表
+                //Get applet list
                 mutableListOf.add(
                     SetFuncData(
                         CustomEvtType.SETAPPLETCONTROL,
                         context.getString(R.string.getapplet)
                     )
                 )
-                //设置之前需要先获取小程序列表，然后根据获取的小程序列表名称进行设置操作
+                //Get the applet list first, then set based on the applet names from that list
                 mutableListOf.add(
                     SetFuncData(
                         CustomEvtType.SETAPPLETCONTROL,

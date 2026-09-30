@@ -70,13 +70,13 @@ class OtaFileTransferActivity : BaseActivity() {
             }
         }
 
-        // 检查是否已经授予 WRITE_EXTERNAL_STORAGE 权限
-            // 已经具有权限，执行读写操作
+        // Check whether the WRITE_EXTERNAL_STORAGE permission has been granted
+            // Permission already granted, perform read/write
              copiedFile = copyRawZipFile(this, rawZipFileName,FileExtension)
 //        try {
 
             val filePath = copiedFile?.path
-            // 获取文件长度
+            // Get file length
             val fileLength = filePath?.length
             cancelPre =true
             tasks.add(

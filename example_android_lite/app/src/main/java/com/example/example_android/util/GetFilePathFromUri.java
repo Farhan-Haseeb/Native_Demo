@@ -27,7 +27,7 @@ public class GetFilePathFromUri {
 
 
     /**
-     * 根据Uri获取文件绝对路径，解决Android4.4以上版本Uri转换 兼容Android 10
+     * Get the absolute file path from a Uri; handles Uri conversion on Android4.4 and above, compatible with Android 10
      *
      * @param context
      * @param imageUri
@@ -37,12 +37,12 @@ public class GetFilePathFromUri {
             return null;
         }
 
-        //4.4以下的版本
+        //4.4 and below
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return getRealFilePath(context, imageUri);
         }
 
-        //大于4.4，小于10
+        //Above 4.4, below 10
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
                 && DocumentsContract.isDocumentUri(context, imageUri)) {
@@ -76,7 +76,7 @@ public class GetFilePathFromUri {
             }
         }
 
-        // MediaStore (and general)  大于等于10
+        // MediaStore (and general)  at or above 10
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
             return uriToFileApiQ(context,imageUri);
         }
@@ -87,7 +87,7 @@ public class GetFilePathFromUri {
             }
             if (Build.VERSION.SDK_INT >= 24)
             {
-                return getFilePathFromUri(context,imageUri); //content 类型
+                return getFilePathFromUri(context,imageUri); //content type
             }else {
                 return getDataColumn(context, imageUri, null, null);
             }
@@ -178,7 +178,7 @@ public class GetFilePathFromUri {
 
 
     /**
-     * Android 10 以上适配 另一种写法
+     * Android 10 and above adaptation, alternative implementation
      * @param context
      * @param uri
      * @return
@@ -206,7 +206,7 @@ public class GetFilePathFromUri {
     }
 
     /**
-     * Android 10 以上适配
+     * Android 10 and above adaptation
      * @param context
      * @param uri
      * @return
@@ -214,11 +214,11 @@ public class GetFilePathFromUri {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private static String uriToFileApiQ(Context context, Uri uri) {
         File file = null;
-        //android10以上转换
+        //android10 and above conversion
         if (uri.getScheme().equals(ContentResolver.SCHEME_FILE)) {
             file = new File(uri.getPath());
         } else if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-            //把文件复制到沙盒目录
+            //Copy the file to the sandbox directory
             ContentResolver contentResolver = context.getContentResolver();
             Cursor cursor = contentResolver.query(uri, null, null, null, null);
             if (cursor.moveToFirst()) {
@@ -246,7 +246,7 @@ public class GetFilePathFromUri {
 
     private static String getFilePathFromUri(Context context,Uri uri)
     {
-        String realFilePath = getRealFilePath(context,uri); //防止获取不到真实的地址，因此这里需要进行判断
+        String realFilePath = getRealFilePath(context,uri); //The real path may not be obtainable, so check it here
         if (!TextUtils.isEmpty(realFilePath))
         {
             return realFilePath;
@@ -318,7 +318,7 @@ public class GetFilePathFromUri {
         return count;
     }
     /**
-     * 获取文件大小，单位字节
+     * Get the file size, in bytes
      */
     public static long getFileSize(String path) {
 

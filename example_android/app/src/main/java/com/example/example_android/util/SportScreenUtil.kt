@@ -5,7 +5,7 @@ import com.example.example_android.R
 import com.idosmart.model.IDOSportScreenDataItemModel
 
 object SportScreenUtil {
-    //判断指定位是否为1
+    //Check whether the given bit is 1
     fun isBitSet(number: Int, bitPosition: Int): Boolean {
         return ((number shr bitPosition) and 1) == 1
     }

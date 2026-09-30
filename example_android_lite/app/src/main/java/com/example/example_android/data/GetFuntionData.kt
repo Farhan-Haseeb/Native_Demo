@@ -4,8 +4,6 @@ import android.content.Context
 import com.example.example_android.R
 import com.idosmart.protocol_channel.sdk
 /**
- * 此类做用是统一管理各功能列表操作
- * 实际开发时，根据事件类型，关注单个功能直接调用接口即可，在使用前请参考该类中的功能表判断逻辑
  * This class is used to manage the list of functions in a unified manner
  * In actual development, you can directly invoke the interface of a single function based on the event type.
  * You can refer to the function table in this class to determine the logic before using it
@@ -17,7 +15,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
         fun getFunctions(context: Context): MutableList<GetFuntionData> {
 
             var mutableListOf = mutableListOf<GetFuntionData>(
-//                 GetFuntionData(CustomEvtType.GETMAC,"获取mac地址",""),
+//                 GetFuntionData(CustomEvtType.GETMAC,"Get MAC address",""),
 //                GetFuntionData(
 //                    CustomEvtType.OTASTART,
 //                    context.getString(R.string.enter_upgrade_mode),
@@ -45,17 +43,17 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getdeviceinfo),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETFUNCTABLE,"获取功能表",""),
-//                 GetFuntionData(CustomEvtType.GETFUNCTABLEEX," 获取功能表 扩展",""),
+//                 GetFuntionData(CustomEvtType.GETFUNCTABLE,"Get function table",""),
+//                 GetFuntionData(CustomEvtType.GETFUNCTABLEEX," Get function table (extended)",""),
 
                 GetFuntionData(
                     CustomEvtType.GETNOTICESTATUS,
                     context.getString(R.string.getnoticestatus),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETHRSENSORPARAM,"获取心率传感器参数",""),
-//                 GetFuntionData(CustomEvtType.GETGSENSORPARAM,"获取加速度传感器参数",""),
-//                 GetFuntionData(CustomEvtType.GETACTIVITYCOUNT,"获取同步时间轴来计算百分比",""),
+//                 GetFuntionData(CustomEvtType.GETHRSENSORPARAM,"Get heart rate sensor parameters",""),
+//                 GetFuntionData(CustomEvtType.GETGSENSORPARAM,"Get accelerometer parameters",""),
+//                 GetFuntionData(CustomEvtType.GETACTIVITYCOUNT,"Get sync timeline to calculate percentage",""),
 //                GetFuntionData(
 //                    CustomEvtType.GETHIDINFO,
 //                    context.getString(R.string.gethidinfo),
@@ -75,7 +73,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getnotdisturbstatus),
                     ""
                 ),
-                 GetFuntionData(CustomEvtType.GETDEFAULTSPORTTYPE,"获取默认的运动类型",""),
+                 GetFuntionData(CustomEvtType.GETDEFAULTSPORTTYPE,"Get default sport type",""),
 
 
                 GetFuntionData(
@@ -99,7 +97,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getsupportedlist),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETREALMEDEVINFO,"获取realme项目的硬件信息",""),
+//                 GetFuntionData(CustomEvtType.GETREALMEDEVINFO,"Get hardware info of the realme project",""),
                 GetFuntionData(
                     CustomEvtType.GETSCREENBRIGHTNESS,
                     context.getString(R.string.getscreenbrightness),
@@ -110,7 +108,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getuphandgesture),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETENCRYPTEDCODE,"获取授权数据",""),
+//                 GetFuntionData(CustomEvtType.GETENCRYPTEDCODE,"Get authorization data",""),
 
 
                 GetFuntionData(
@@ -133,7 +131,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getallhealthswitchstate),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETDATATRANCONFIG,"文件传输配置传输获取",""),
+//                 GetFuntionData(CustomEvtType.GETDATATRANCONFIG,"Get file transfer config",""),
                 GetFuntionData(
                     CustomEvtType.GETACTIVITYSWITCH,
                     context.getString(R.string.getactivityswitch),
@@ -159,7 +157,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     "getSportAutoPauseEndTypes",
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETFIRMWAREBTVERSION,"获得固件三级版本和bt的3级版本",""),
+//                 GetFuntionData(CustomEvtType.GETFIRMWAREBTVERSION,"Get 3-part firmware version and 3-part BT version",""),
 
 
                 GetFuntionData(
@@ -167,8 +165,8 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getstepgoal),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETLIBVERSION,"获取lib版本号",""),
-//                 GetFuntionData(CustomEvtType.GETAPPID,"获取appid ios only",""),
+//                 GetFuntionData(CustomEvtType.GETLIBVERSION,"Get lib version number",""),
+//                 GetFuntionData(CustomEvtType.GETAPPID,"Get appid ios only",""),
                 GetFuntionData(
                     CustomEvtType.GETWATCHFACELIST,
                     context.getString(R.string.getwatchfacelist),
@@ -179,7 +177,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getbtnotice),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETSPORTTYPEV3,"v3 获取运动默认的类型",""),
+//                 GetFuntionData(CustomEvtType.GETSPORTTYPEV3,"v3 Get default sport type",""),
                 GetFuntionData(
                     CustomEvtType.GETALARMV3,
                     context.getString(R.string.getalarmv3),
@@ -195,9 +193,9 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getwatchlistv3),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETALEXAALARMV3,"v3 alexa获取v3的闹钟",""),
-//                 GetFuntionData(CustomEvtType.GETACTIVITYEXCHANGEGPSDATA,"v3 多运动数据数据交换中获取一段时间的gps数据",""),
-//                 GetFuntionData(CustomEvtType.GETHISTORICALMENSTRUATION,"经期的历史数据下发",""),
+//                 GetFuntionData(CustomEvtType.GETALEXAALARMV3,"v3 alexa get v3 alarm",""),
+//                 GetFuntionData(CustomEvtType.GETACTIVITYEXCHANGEGPSDATA,"v3 Get a period of GPS data during multi-sport data exchange",""),
+//                 GetFuntionData(CustomEvtType.GETHISTORICALMENSTRUATION,"Send menstrual cycle history data",""),
 
 
                 GetFuntionData(
@@ -206,7 +204,7 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     ""
                 ),
 
-//                 GetFuntionData(CustomEvtType.GETMTULENGTHSPP,"获取固件spp mtu长度   新增  spp蓝牙专用",""),
+//                 GetFuntionData(CustomEvtType.GETMTULENGTHSPP,"Get firmware spp mtu length (new, spp Bluetooth only)",""),
                 GetFuntionData(
                     CustomEvtType.GETUNREADAPPREMINDER,
                     context.getString(R.string.getunreadappreminder),
@@ -217,8 +215,8 @@ class GetFuntionData(type: CustomEvtType, title: String? = null, sub_title: Stri
                     context.getString(R.string.getcontactrevisetime),
                     ""
                 ),
-//                 GetFuntionData(CustomEvtType.GETFLASHLOGSTART,"开始获取flash log",""),
-//                 GetFuntionData(CustomEvtType.GETBATTERYLOG,"获取电池日志",""),
+//                 GetFuntionData(CustomEvtType.GETFLASHLOGSTART,"Start getting flash log",""),
+//                 GetFuntionData(CustomEvtType.GETBATTERYLOG,"Get battery log",""),
 
                 GetFuntionData(
                     CustomEvtType.GETBTCONNECTPHONEMODEL,

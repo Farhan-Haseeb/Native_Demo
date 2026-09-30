@@ -75,7 +75,7 @@ public class SplitWriter {
         mSendNextWhenLastSuccess = sendNextWhenLastSuccess;
         mIntervalBetweenTwoPackage = intervalBetweenTwoPackage;
         mCallback = callback;
-        Log.e("Splite","发送数据："+HexUtil.formatHexString(data,true));
+        Log.e("Splite","Send data: "+HexUtil.formatHexString(data,true));
         splitWrite(data, writeType);
     }
 

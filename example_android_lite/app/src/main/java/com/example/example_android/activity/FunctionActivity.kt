@@ -160,9 +160,9 @@ class FunctionActivity : BaseActivity() {
             } else {
                 showProgressDialog("bind...")
                 sdk.cmd.bind(15, {
-                    println("获取到设备信息 state$it");
+                    println("Got device info state$it");
                 }, {
-                    println("获取到功能表 functableinterface state$it");
+                    println("Got function table functableinterface state$it");
                 }, {
                     closeProgressDialog()
                     when (it) {
@@ -299,7 +299,7 @@ class FunctionActivity : BaseActivity() {
         if (sdk.funcTable.supportOperateGestureControl) {
             startActivity(Intent(this, GestureControlActivity::class.java))
         } else {
-            toast("此设备不支持 / this device is not support")
+            toast("This device is not supported")
         }
     }
 
@@ -307,7 +307,7 @@ class FunctionActivity : BaseActivity() {
         if (sdk.funcTable.supportOperateSetSportScreen) {
             startActivity(Intent(this, EditSportListActivity::class.java))
         } else {
-            toast("此设备不支持 / this device is not support")
+            toast("This device is not supported")
         }
     }
 

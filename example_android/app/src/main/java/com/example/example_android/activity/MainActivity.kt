@@ -24,7 +24,7 @@ import com.idosmart.pigeon_implement.IDOOtaGpsInfo
 import com.idosmart.protocol_channel.sdk
 
 /**
- * 首页：已绑定设备列表。添加设备进入 [ScanActivity]。
+ * Home page: list of bound devices. Adding a device opens [ScanActivity].
  */
 class MainActivity : BaseActivity() {
     private var lvBoundDevice: RecyclerView? = null
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity() {
 
     inner class EpoListen : IDOEpoManagerDelegate {
         override fun getAppGpsInfo(): IDOOtaGpsInfo {
-            // !!!: 此处的经纬度是伪代码 | The latitude and longitude here are pseudocode
+            // !!!: The latitude and longitude here are pseudocode
             return IDOOtaGpsInfo(114.0579f, 22.5431f, 10.0f)
         }
     }
@@ -54,7 +54,7 @@ class MainActivity : BaseActivity() {
 
     override fun initView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        title = "已绑定设备"
+        title = "Bound devices"
         layoutBoundContent = findViewById(R.id.layout_bound_content)
         layoutEmpty = findViewById(R.id.layout_empty)
         lvBoundDevice = findViewById(R.id.lv_bound_device)
@@ -131,7 +131,7 @@ class MainActivity : BaseActivity() {
             return
         }
         isUnbinding = true
-        showProgressDialog("解绑中...")
+        showProgressDialog("Unbinding...")
         sdk.cmd.unbind(mac, true) { success ->
             runOnUiThread {
                 closeProgressDialog()
@@ -139,10 +139,10 @@ class MainActivity : BaseActivity() {
                 if (success) {
                     TaskListStorage.clearOnUnbind(mac)
                     FunctionUtils.upDataDeviceMac(mac)
-                    toast("解绑成功")
+                    toast("Unbind succeeded")
                     refreshBoundList()
                 } else {
-                    toast("解绑失败")
+                    toast("Unbind failed")
                     mBoundAdapter?.notifyItemChanged(position)
                 }
             }

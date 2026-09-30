@@ -50,7 +50,7 @@ class FileTransferModuleActivity : BaseActivity(), View.OnClickListener {
                         ).putExtra("isRingOta", true)
                     )
                 }else {
-                    toast("不支持 / not support")
+                    toast("Not supported")
                 }
             }
         }

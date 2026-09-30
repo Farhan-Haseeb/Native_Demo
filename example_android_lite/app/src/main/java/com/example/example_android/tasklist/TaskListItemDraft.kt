@@ -8,19 +8,19 @@ import java.util.Locale
 import java.util.TimeZone
 
 /**
- * 15.114 任务清单 — Example 联调用条目（非对外 API）
- * 对齐 iOS TaskListModels / Dart task_list_models
- * 协议 task_id / remind_timestamp / complete_timestamp 均为 uint32_t
+ * 15.114 Task list — Example integration-test entry (not a public API)
+ * Aligned with iOS TaskListModels / Dart task_list_models
+ * Protocol fields task_id / remind_timestamp / complete_timestamp are all uint32_t
  */
 data class TaskListItemDraft(
-    /** 任务 ID（协议 uint32_t：0…4294967295） */
+    /** Task ID (protocol uint32_t: 0…4294967295) */
     var taskId: Long,
-    /** 提醒时间：UTC 时间戳（秒），协议 uint32_t */
+    /** Reminder time: UTC timestamp (seconds), protocol uint32_t */
     var remindTimestamp: Long,
     var taskDetail: String = "",
-    /** 0 未完成；1 已完成 */
+    /** 0 not completed; 1 completed */
     var status: Int = STATUS_PENDING,
-    /** 完成时间：UTC 时间戳（秒）；status=0 时为 0，协议 uint32_t */
+    /** Completion time: UTC timestamp (seconds); 0 when status=0, protocol uint32_t */
     var completeTimestamp: Long = 0,
 ) {
     init {
@@ -47,27 +47,27 @@ data class TaskListItemDraft(
             .put("complete_timestamp", completeTimestamp)
     }
 
-    fun statusLabel(): String = if (status == STATUS_DONE) "已完成" else "未完成"
+    fun statusLabel(): String = if (status == STATUS_DONE) "Completed" else "Not completed"
 
     fun listDisplayText(): String {
-        val detail = taskDetail.trim().ifEmpty { "(无详情)" }
+        val detail = taskDetail.trim().ifEmpty { "(no details)" }
         val sb = StringBuilder()
-        sb.append("任务ID：").append(taskId).append('\n')
-        sb.append("任务状态：").append(statusLabel()).append('\n')
-        sb.append("提醒时间UTC 时间戳：").append(remindTimestamp).append('\n')
-        sb.append("日期（本地）：").append(formatLocalDateTime(remindTimestamp)).append('\n')
-        sb.append("任务详情：").append(detail)
+        sb.append("Task ID:").append(taskId).append('\n')
+        sb.append("Task status:").append(statusLabel()).append('\n')
+        sb.append("Reminder time UTC timestamp:").append(remindTimestamp).append('\n')
+        sb.append("Date (local):").append(formatLocalDateTime(remindTimestamp)).append('\n')
+        sb.append("Task details:").append(detail)
         if (status == STATUS_DONE && completeTimestamp > 0L) {
             sb.append('\n')
-                .append("完成时间UTC 时间戳：").append(completeTimestamp).append('\n')
-                .append("完成日期（本地）：").append(formatLocalDateTime(completeTimestamp))
+                .append("Completion time UTC timestamp:").append(completeTimestamp).append('\n')
+                .append("Completion date (local):").append(formatLocalDateTime(completeTimestamp))
         }
         return sb.toString()
     }
 
     fun summary(): String = listDisplayText()
 
-    /** 下发 SDK：channel Model 用 Long 承载协议 uint32_t */
+    /** Send to SDK: the channel Model uses Long to carry the protocol uint32_t */
     fun taskIdForSdk(): Long = taskId and UINT32_MAX
 
     fun remindTimestampForSdk(): Long = remindTimestamp and UINT32_MAX
@@ -78,24 +78,24 @@ data class TaskListItemDraft(
         const val TASK_DETAIL_MAX_CHARS = 70
         const val STATUS_PENDING = 0
         const val STATUS_DONE = 1
-        /** 协议 uint32_t 最大值（task_id / remind_timestamp / complete_timestamp） */
+        /** Protocol uint32_t max value (task_id / remind_timestamp / complete_timestamp) */
         const val UINT32_MAX = 0xFFFFFFFFL
-        /** 兼容旧名 */
+        /** Legacy name kept for compatibility */
         const val TASK_ID_MAX = UINT32_MAX
 
         private val DETAILS = listOf(
-            "开会提醒",
-            "吃药提醒",
-            "运动打卡",
-            "喝水提醒",
-            "回电客户",
-            "提交日报",
-            "取快递",
-            "健身训练",
-            "超市采购",
-            "整理邮件",
-            "午休闹钟",
-            "家人通话",
+            "Meeting reminder",
+            "Medication reminder",
+            "Workout check-in",
+            "Drink-water reminder",
+            "Call customer back",
+            "Submit daily report",
+            "Pick up package",
+            "Fitness training",
+            "Grocery shopping",
+            "Sort emails",
+            "Lunch break alarm",
+            "Call family",
         )
 
         fun detailPool(): List<String> = DETAILS
@@ -142,7 +142,7 @@ data class TaskListItemDraft(
             return TaskListItemDraft(
                 taskId = taskId,
                 remindTimestamp = nowSec + 600L,
-                taskDetail = "示例任务 $taskId",
+                taskDetail = "Sample task $taskId",
             )
         }
 
@@ -164,7 +164,7 @@ data class TaskListItemDraft(
 
         fun formatUtcDateTime(sec: Long): String = formatLocalDateTime(sec)
 
-        /** UTC 秒 → 本地 Calendar（用于日期时间选择器） */
+        /** UTC seconds → local Calendar (for the date-time picker) */
         fun localCalendarFromUtcSec(sec: Long): Calendar {
             return Calendar.getInstance().apply {
                 timeInMillis = sec.coerceIn(0L, UINT32_MAX) * 1000L
@@ -172,8 +172,8 @@ data class TaskListItemDraft(
         }
 
         /**
-         * 本地墙钟年月日时分秒 → UTC 秒时间戳。
-         * [month] 为 1…12（与用户选择一致，内部转 Calendar 0-based）。
+         * Local wall-clock year/month/day hour:minute:second → UTC seconds timestamp.
+         * [month] is 1…12 (matching the user selection; converted to Calendar 0-based internally).
          */
         fun utcSecFromLocal(
             year: Int,

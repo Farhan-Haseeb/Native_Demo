@@ -12,7 +12,7 @@ import com.idosmart.protocol_sdk.IDOBleDelegate
  * @author tianwei
  * @date 2023/11/23
  * @time 9:50
- * 用途:
+ * Purpose:
  */
 interface ConnectCallback : IDOBleDelegate {
 

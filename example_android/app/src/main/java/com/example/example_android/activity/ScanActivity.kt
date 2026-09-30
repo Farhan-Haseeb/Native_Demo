@@ -27,7 +27,7 @@ import com.idosmart.protocol_channel.sdk
 import com.idosmart.protocol_sdk.IDOBleDelegate
 
 /**
- * 扫描添加设备页。
+ * Scan and add device page.
  */
 class ScanActivity : BaseActivity(), ScanDeviceAdapter.onSelectDeviceListenter {
     private var requestPermissionCount = 0
@@ -125,7 +125,7 @@ class ScanActivity : BaseActivity(), ScanDeviceAdapter.onSelectDeviceListenter {
         fun _otaMode() {
             val alertDialog = AlertDialog.Builder(this@ScanActivity)
                 .setTitle("OTA Mode")
-                .setMessage("当前设备处理OTA模式，现在去升级？/ The current device handles OTA mode, upgrade now?")
+                .setMessage("The current device is in OTA mode, upgrade now?")
                 .setPositiveButton("YES") { _, _ ->
                     startActivity(Intent(this@ScanActivity, OtaFileTransferActivity::class.java))
                 }
@@ -152,7 +152,7 @@ class ScanActivity : BaseActivity(), ScanDeviceAdapter.onSelectDeviceListenter {
     }
 
     override fun initView() {
-        title = "添加设备"
+        title = "Add device"
         lvDevice = findViewById(R.id.lv_device)
         BleManager.registerBleDelegate(bleListen)
         intPermission()

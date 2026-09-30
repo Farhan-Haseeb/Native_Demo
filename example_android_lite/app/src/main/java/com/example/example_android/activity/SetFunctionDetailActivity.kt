@@ -175,7 +175,7 @@ class SetFunctionDetailActivity : BaseActivity() {
                         if (it.error.code == 0) {
                             tv_response.text = it.res?.toJsonString()
                         } else {
-                            tv_response.text = "设置失败 / Setup failure"
+                            tv_response.text = "Setup failure"
                         }
                     }
                 }
@@ -247,59 +247,13 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = noticeMessageV3.json
     }
 
     /**
-     *  app下发跑步计划(运动计划)
-     * [IDORunPlanParamModel]
-     * 属性	类型	说明
-     * verison	Int	协议库版本号
-     * operate	Int	操作
-     * 1：启动计划
-     * 2：发送计划数据
-     * 3：结束计划
-     * 4：查询运行计划
-     * type	Int	计划类型
-     * 1：3公里跑步计划
-     * 2：5公里跑步计划
-     * 3：10公里跑步计划
-     * 4：半程马拉松训练（第二阶段）
-     * 5：马拉松训练（阶段2）
-     * dayNum	Int	计划天数
-     * 运行2天时适用
-     * year	Int	运动计划开始时间
-     * month	Int	运动计划开始时间
-     * day	Int	运动计划开始时间
-     * hour	Int	运动计划开始时间
-     * min	Int	运动计划开始时间
-     * sec	Int	运动计划开始时间
-     * items	List    [IDOGpsInfoModelItem] 集合
-     *
-     * [IDOGpsInfoModelItem]
-     * 属性	类型	说明
-     * type	Int	训练类型
-     * 186：休息计划
-     * 187：户外跑步计划
-     * 188：室内跑步计划
-     * 189：室内健身计划
-     * num	Int	动作次数
-     * 注意：休息时动作次数为零，其他动作时动作次数非零
-     * items	List    [IDOItemItem]集合
-     * IDOItemItem
-     * 属性	类型	说明
-     * type	Int	动作类型
-     * 1：快走
-     * 2：慢跑
-     * 3：中速跑
-     * 4：快跑
-     * time	Int	目标时间 单位：秒
-     * heightHeart	Int	低心率范围
-     * lowHeart	Int	高心率范围
-     *
      *Running plan issued by app (Exercise plan)
      * [IDORunPlanParamModel]
      * Attribute type declaration
@@ -374,7 +328,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = sendRunPlan.json
@@ -382,37 +336,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置走动提醒
-     * [IDOWalkRemindModel]
-     * 属性	类型	说明
-     * onOff	Int	0 关，1 开
-     * goalStep	Int	每小时标步数（废弃）
-     * startHour	Int	开始时间（小时）
-     * startMinute	Int	开始时间（分钟）
-     * endHour	Int	结束时间（小时）
-     * endMinute	Int	结束时间（分钟）
-     * repeats	Set	重复IDOWeek
-     * isOpen	Bool	重复开关
-     * goalTime	Int	目标时间（小时）（废弃）
-     * notifyFlag	Int	通知类型
-     * 0：无效
-     * 1：允许通知
-     * 2：静默通知
-     * 3：关闭通知
-     * 需要固件启用setWalkReminderAddNotify
-     * doNotDisturbOnOff	Int	请勿打扰开关
-     * 0 关闭
-     * 1 开启
-     * 需要固件启用 getSupportSetGetNoReminderOnWalkReminderV2
-     * noDisturbStartHour	Int	请勿打扰开始时间（小时）
-     * 需要固件启用 getSupportSetGetNoReminderOnWalkReminderV2
-     * noDisturbStartMinute	Int	请勿打扰开始时间（分钟）
-     * 需要固件启用 getSupportSetGetNoReminderOnWalkReminderV2
-     * noDisturbEndHour	Int	请勿打扰结束时间（小时）
-     * 需要固件启用 getSupportSetGetNoReminderOnWalkReminderV2
-     * noDisturbEndMinute	Int	请勿打扰结束时间（分钟）
-     * 需要固件启用 getSupportSetGetNoReminderOnWalkReminderV2
-     *
      *
      * Set a walk alert
      * [IDOWalkRemindModel]
@@ -469,7 +392,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = walkReminder.json
@@ -478,18 +401,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置表盘顺序
-     * [IDOWatchDialSortParamModel]
-     * 属性	类型	说明
-     * sortItemNumb	Int	表盘排序列表中的项目数
-     * pSortItem    [IDOWatchDialSortItem]	表盘排序列表内容
-     *
-     * [IDOWatchDialSortItem]
-     * 属性	类型	说明
-     * type	Int	手表表盘类型 1：普通表盘，2：壁纸表盘，3：云表盘
-     * sortNumber	Int	序列号，从0开始，不超过支持的手表表盘总数
-     * name	String	表盘 ID，最大 29 字节
-     *
      * Set the dial order
      * [IDOWatchDialSortParamModel]
      * Attribute type declaration
@@ -519,7 +430,7 @@ class SetFunctionDetailActivity : BaseActivity() {
                 if (it.error.code == 0) {
                     tv_response.text = it.res?.toJsonString()
                 } else {
-                    tv_response.text = "设置失败 / Setup failure"
+                    tv_response.text = "Setup failure"
                 }
             }
             paramter_tv.text = watchDialSort.json
@@ -529,97 +440,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 下发v3天气协议
-     *
-     * [IDOWeatherV3ParamModel]
-     * 属性	类型	说明
-     * month	int	服务器最新一次同步的月
-     * day	int	服务器最后一次同步的日
-     * hour	int	服务器最后一次同步的时
-     * min	int	服务器最后一次同步的分
-     * sec	int	服务器最后一次同步的秒
-     * week	Int	星期几
-     * bit0：星期一
-     * bit1：星期二，依此类推直到星期日
-     * weatherType	Int	天气类型
-     * 0：其他
-     * 1：晴
-     * 2：多云
-     * 3：阴
-     * 4：雨
-     * 5：大雨
-     * 6 ：雷暴
-     * 7：雪
-     * 8：雨夹雪
-     * 9：台风
-     * 10：沙尘暴
-     * 11：夜间晴
-     * 12：夜间多云
-     * 13：热
-     * 14：冷
-     * 15：微风
-     * 16：大风
-     * 17：阴霾
-     * 18：阵雨
-     * 19：阴转晴< br/>48：雷声
-     * 49：冰雹
-     * 50：风沙
-     * 51：龙卷风（realme自定义天气类型idw02）
-     * todayTmp	Int	当前温度（摄氏度）
-     * 对于负温度，将温度加 100 并传输
-     * todayMaxTemp	Int	最高温度（摄氏度）
-     * 对于负温度，将温度加 100 并传输
-     * todayMinTemp	Int	最低温度（摄氏度）
-     * 对于负温度，将温度加 100 并传输
-     * cityName	String	城市名称
-     * 最多 74 字节
-     * airQuality	Int	空气质量
-     * 乘以10进行传输
-     * precipitationProbability	Int	降水概率
-     * 0-100%
-     * humidity	int	湿度
-     * todayUvIntensity	int	紫外线强度
-     * 扩大10倍传输
-     * windSpeed	int	风速
-     * windSpeed	int	风力
-     * sunriseHour	int	日出时间 时
-     * sunriseMin	int	日出时间 分
-     * sunsetHour	int	日出时间 时
-     * sunsetMin	int	日出时间 分
-     * sunriseItemNum	Int	日出日落时间详情数
-     * 目前最大天数设置为7
-     * airGradeItem	String	空气质量等级内容
-     * hoursWeatherItems	集合	未来48小时的天气数据集合（可选）
-     * [IDOHoursWeatherItem]
-     * futureItems	集合	未来七天的天气数据（可选），不需要包含当天数据
-     * [IDOFutureItem]
-     * sunriseItem	集合	日出日落时间详情（可选），需要包含当天数据
-     * [IDOSunriseItem]
-     * [IDOHoursWeatherItem]
-     * 属性	类型	说明
-     * weatherType	int	天气类型
-     * temperature	int	温度
-     * 温度加100传输
-     * probability	int	降水出现的概率
-     * 0-100 百分比
-     * [IDOFutureItem]
-     * 属性	类型	说明
-     * weatherType	int	天气类型
-     * maxTemp	int	最大温度
-     * 温度加100传输
-     * minTemp	int	最小温度
-     * 温度加100传输
-     * [IDOSunriseItem]
-     * 属性	类型	说明
-     * sunriseHour	int	日出时间 时
-     * version为1无效
-     * sunriseMin	int	日出时间 分
-     * version为1无效
-     * sunsetHour	int	日落时间 时
-     * version为1无效
-     * sunsetMin	int	日落时间 分
-     * version为1无效
-     *
      *
      * v3 Delivers the v3 weather protocol
      * [IDOWeatherV3ParamModel]
@@ -712,7 +532,7 @@ class SetFunctionDetailActivity : BaseActivity() {
      */
 
     private fun setWeatherV3() {
-        // 获取当前时间
+        // Get the current time
         val now = LocalDateTime.now()
         var weatherV3 = Cmds.setWeatherV3(
             IDOWeatherV3ParamModel(
@@ -775,7 +595,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
 
@@ -785,25 +605,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * v3 设置主界面控件排序
-     * [IDOMainUISortParamModel]
-     * 属性	类型	说明
-     * operate	Int	操作
-     * 0：无效 1：查询 2：设置
-     * locationX	Int	坐标x轴，从1开始
-     * locationY	Int	坐标y轴，从1开始
-     * 一个y轴代表一个水平网格
-     * sizeType	Int	0：无效 1：大图标 2：小图标
-     * widgetsType	Int	控制类型
-     * 0：无效
-     * 1：周/日期
-     * 2：步数
-     * 3：距离
-     * 4：卡路里
-     * 5：心率
-     * 6：电池
-     * items	List	int 集合
-     *
      * v3 Sets the home screen control sort
      * [IDOMainUISortParamModel]
      * Attribute type declaration
@@ -833,7 +634,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = mainUISortV3.json
@@ -841,19 +642,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置表盘
-     * [IDOWatchFaceParamModel]
-     * 属性	类型	说明
-     * operate	Int	操作：
-     * 0 - 查询当前使用的表盘
-     * 1 - 设置表盘
-     * 2 - 删除表盘
-     * 3 - 动态请求空间设置对应的空间大小
-     * fileName	String	表盘名称，最大29字节
-     * watchFileSize	Int	未压缩的文件长度
-     * 固件打开功能表getWatchDailSetAddSize后，应用程序需要发送该字段
-     * 在表盘传输之前，固件需要分配相应的空间来保存，未压缩的文件长度需要传输的文件长度
-     *
      * Dial setting
      * [IDOWatchFaceParamModel]
      * Attribute type declaration
@@ -877,7 +665,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = watchFaceData.json
@@ -885,14 +673,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 手机app通过这个命令开关，实现通知应用状态设置
-     * [IDONotificationStatusParamModel]
-     * 属性	类型	说明
-     * notifyFlag	Int	通知类型：
-     * 1：允许通知
-     * 2：静默通知
-     * 3：禁用通知
-     *
      * Mobile app through this command switch to achieve notification application status Settings
      * [IDONotificationStatusParamModel]
      * Attribute type declaration
@@ -907,7 +687,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
 
@@ -916,28 +696,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 健身指导
-     * [IDOFitnessGuidanceParamModel]
-     * 属性	类型	说明
-     * mode	Int	健身指导模式开关
-     * 1：开
-     * 0：关
-     * startHour	Int	开始时间
-     * startMinute	Int	开始分钟
-     * endHour	Int	结束时间
-     * endMinute	Int	结束分钟
-     * notifyFlag	Int	通知类型
-     * 0：无效
-     * 1：允许
-     * 2：静默
-     * 3：禁用
-     * goMode	Int	移动开关提醒
-     * 1：开
-     * 0：关
-     * repeats	Set	重复IDOWeek 集合
-     * isOpen	Bool	总开关
-     * targetSteps	Int	目标步数
-     *
      * Fitness instruction
      * [IDOFitnessGuidanceParamModel]
      * Attribute type declaration
@@ -978,7 +736,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
 
         }
@@ -987,17 +745,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     *
-     * 设置科学睡眠开关
-     * [IDOScientificSleepSwitchParamModel]
-     * 属性	类型	说明
-     * mode	Int	模式
-     * 2：科学睡眠
-     * 1：正常睡眠
-     * startHour	Int	开始时间 - 小时
-     * startMinute	Int	开始时间 - 分钟
-     * endHour	Int	结束时间 - 小时
-     * endMinute	Int	结束时间-分钟
      *
      * Set the scientific sleep switch
      * [IDOScientificSleepSwitchParamModel]
@@ -1020,7 +767,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = scientificSleepSwitch.json
@@ -1028,20 +775,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置夜间体温开关
-     * [IDOTemperatureSwitchParamModel]
-     * 属性	类型	说明
-     * mode	Int	模式：
-     * 1：开
-     * 0：关
-     * startHour	Int	开始时间、小时
-     * startMinute	Int	开始时间，分钟
-     * endHour	Int	结束时间，小时
-     * endMinute	Int	结束时间，分钟
-     * unit	Int	温度单位设置：
-     * 1：摄氏度
-     * 2：华氏度
-     *
      * Set the night temperature switch
      * [IDOTemperatureSwitchParamModel]
      * Attribute type declaration
@@ -1066,7 +799,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = temperatureSwitch.json
@@ -1074,21 +807,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 环境音量的开关和阀值
-     * [IDOV3NoiseParamModel]
-     * 属性	类型	说明
-     * mode	Int	全天环境噪音音量开关
-     * 1：开
-     * 0：关
-     * startHour	Int	开始时间（小时）
-     * startMinute	Int	开始时间（分钟）
-     * endHour	Int	结束时间（小时）
-     * endMinute	Int	结束时间（分钟）
-     * highNoiseOnOff	Int	阈值开关
-     * 1：开
-     * 0：关
-     * highNoiseValue	Int	阈值
-     *
      * Ambient volume switch and threshold
      * [IDOV3NoiseParamModel]
      * Attribute type declaration
@@ -1114,7 +832,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = v3Noise.json
@@ -1122,45 +840,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置心率模式
-     * [IDOHeartModeParamModel]
-     * 属性	类型	说明
-     * updateTime	Int	更新时间为 Unix 时间戳（以秒为单位）。如果等于0，表示获取当前UTC时间戳。
-     * mode	Int	模式
-     * 0：关闭
-     * 1：自动（5 分钟）
-     * 2：连续监控（5 秒）
-     * 3：手动模式（禁用自动）
-     * 4：默认类型，设置后固件自动设置为默认模式
-     * 5：设置相应的测量间隔
-     * 6：智能心率模式（ID206）
-     * 注意：
-     * 1.如果配置了setSetV3HeartInterval函数，则模式0、模式1、模式2无效。
-     * 2．使用快速设置进行配置时，设置 setSetV3HeartInterval 将激活模式 5
-     * 3。设置连续心率时，如果配置了setSetV3HeartInterval函数，则对应的模式为模式5。
-     * hasTimeRange	Int	是否有时间范围。 0：否，1：是
-     * measurementInterval	Int	测量间隔（以秒为单位）
-     * startHour	Int	开始时间，时
-     * startMinute	Int	开始时间，分
-     * endHour	Int	结束时间，时
-     * endMinute	Int	结束时间，分
-     * notifyFlag	Int	通知类型：
-     * 0：无效
-     * 1：允许通知
-     * 2：静默通知
-     * 3：关闭通知
-     * 注意：如果固件未启用v3HeartSetRateModeCustom，则此功能无效
-     * highHeartMode	Int	1：开启智能高心率提醒
-     * 0：关闭
-     * 注：如果固件没有开启v3HeartSetRateModeCustom则此功能无效
-     * lowHeartMode	Int	1：开启智能低心率提醒
-     * 0：关闭
-     * 注：如果固件没有开启v3HeartSetRateModeCustom则此功能无效
-     * highHeartValue	Int	智能高心率提醒阈值
-     * 注意：如果固件没有启用v3HeartSetRateModeCustom，则此功能无效
-     * lowHeartValue	Int	智能低心率提醒阈值
-     * 注意：如果固件没有启用v3HeartSetRateModeCustom，则此功能无效
-     *
      * Set heart rate mode
      * [IDOHeartModeParamModel]
      * Attribute type declaration
@@ -1210,7 +889,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = heartMode.json
@@ -1219,28 +898,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 智能心率模式设置
-     * [IDOHeartRateModeSmartParamModel]
-     * 属性	类型	说明
-     * mode	Int	开关
-     * 0：关
-     * 1：开
-     * notifyFlag	Int	通知类型
-     * 0：无效
-     * 1：允许通知
-     * 2：静默通知
-     * 3：禁用通知
-     * highHeartMode	Int	1：启用智能高心率警报
-     * 0：禁用
-     * lowHeartMode	Int	1：启用智能低心率警报
-     * 0：禁用
-     * highHeartValue	Int	智能高心率警报阈值
-     * lowHeartValue	Int	智能低心率警报阈值
-     * startHour	Int	心率监测开始时间（小时）
-     * startMinute	Int	心率监测开始时间（分钟）
-     * endHour	Int	心率监测结束时间（小时）
-     * endMinute	Int	心率监测结束时间（分钟）
-     *
      * Smart heart rate mode setting
      * [IDOHeartRateModeSmartParamModel]
      * Attribute type declaration
@@ -1283,7 +940,7 @@ class SetFunctionDetailActivity : BaseActivity() {
                 if (it.error.code == 0) {
                     tv_response.text = it.res?.toJsonString()
                 } else {
-                    tv_response.text = "设置失败 / Setup failure"
+                    tv_response.text = "Setup failure"
                 }
             }
         })
@@ -1292,28 +949,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置吃药提醒
-     * [IDOTakingMedicineReminderParamModel]
-     * 属性	类型	说明
-     * takingMedicineId	Int	ID范围为1到5
-     * onOff	Int	0 表示关闭
-     * 1 表示开启
-     * startHour	Int	提醒的开始时间
-     * startMinute	Int	提醒的起始分钟
-     * endHour	Int	提醒结束时间
-     * endMinute	Int	提醒的结束分钟
-     * repeats	Set	重复IDOWeek
-     * interval	Int	提醒间隔（分钟）
-     * 默认为 60 分钟
-     * doNotDisturbOnOff	Int	请勿打扰时间段开关
-     * 0为关
-     * 1为开
-     * 默认为关
-     * doNotDisturbStartHour	Int	请勿打扰开始时间
-     * doNotDisturbStartMinute	Int	请勿打扰开始分钟
-     * doNotDisturbEndHour	Int	请勿打扰结束时间
-     * doNotDisturbEndMinute	Int	请勿打扰结束分钟
-     *
      * Set a pill reminder
      * [IDOTakingMedicineReminderParamModel]
      * Attribute type declaration
@@ -1354,7 +989,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = takingMedicineReminder.json
@@ -1362,12 +997,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 手机音量下发给ble
-     * [IDOBleVoiceParamModel]
-     * 属性	类型	说明
-     * totalVolume	Int	总容积
-     * currentVolume	Int	当前音量
-     *
      * Send ble at phone volume
      * [IDOBleVoiceParamModel]
      * Attribute type declaration
@@ -1380,7 +1009,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = bleVoice.json
@@ -1389,19 +1018,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置久坐
-     * [IDOLongSitParamModel]
-     * 属性	类型	说明
-     * startHour	Int	久坐提醒开始时间（小时）
-     * startMinute	Int	久坐提醒开始时间（分钟）
-     * endHour	Int	久坐提醒结束时间（小时）
-     * endMinute	Int	久坐提醒结束时间（分钟）
-     * interval	Int	间隔（以分钟为单位）
-     * 值应大于 15 分钟
-     * repetitions	Int	重复与开关
-     * bit0：0表示关闭，1表示打开
-     * bit1-7：0表示不重复，1表示重复
-     *
      * sedentary
      * [IDOLongSitParamModel]
      * Attribute type declaration
@@ -1425,7 +1041,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = longSit.json
@@ -1433,15 +1049,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置防丢
-     * [IDOLostFindParamModel]
-     * 属性	类型	说明
-     * mode	Int	模式
-     * 0：无防丢
-     * 1：近距离防丢
-     * 2：中距离防丢
-     * 3：远距离防丢
-     *
      * Set up anti-lose
      * [IDOLostFindParamModel]
      * Attribute type declaration
@@ -1457,7 +1064,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = lostFind.json
@@ -1465,17 +1072,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置运动目标
-     * [IDOSportGoalParamModel]
-     * 属性	类型	说明
-     * sportStep	Int	锻炼目标的步数
-     * walkGoalSteps	Int	每小时步行目标步数设置
-     * targetType	Int	目标类型设置
-     * 0：无效
-     * 1：每日目标
-     * 2：每周目标
-     * 需要菜单getStepDataTypeV2支持
-     *
      * Set moving goals
      * [IDOSportGoalParamModel]
      * Attribute type declaration
@@ -1499,7 +1095,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = sportGoal.json
@@ -1507,60 +1103,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置单位
-     * [IDOUnitParamModel]
-     * 属性	类型	说明
-     * distUnit	Int	距离单位：
-     * 0：无效
-     * 1：公里（公制）
-     * 2：英里（英制）
-     * weightUnit	Int	重量单位：
-     * 0：无效
-     * 1：kg
-     * 2：lb
-     * temp	Int	温度单位：
-     * 0：无效
-     * 1：℃
-     * 2：℉
-     * stride	Int	步行步幅：
-     * 0：无效
-     * 0：厘米
-     * language	Int	语言
-     * is12HourFormat	Int	时间格式：
-     * 0：无效
-     * 1：24小时格式
-     * 2：12小时格式
-     * strideRun	Int	跑步步幅：
-     * 0：无效
-     * 1：cm
-     * 男性默认值：90cm
-     * strideGpsCal	Int	通过 GPS 步幅校准开/关：
-     * 0：无效
-     * 1：开
-     * 2：关
-     * weekStartDate	Int	一周的开始日期：
-     * 0：星期一
-     * 1：星期日
-     * 3：星期六
-     * calorieUnit	Int	卡路里单位设置：
-     * 0：无效
-     * 1：默认kCal
-     * 2：Cal
-     * 3：kJ
-     * swimPoolUnit	Int	泳池单位设置：
-     * 0：无效
-     * 1：默认米
-     * 2：码
-     * cyclingUnit	Int	骑行单位：
-     * 0：无效
-     * 1：公里
-     * 2：英里
-     * walkingRunningUnit	Int	步行或跑步单位（公里/英里）设置：
-     * 0：无效
-     * 1：公里
-     * 2：英里
-     * 需要设备固件 setSupportWalkRunUnit 支持
-     *
      *
      * Set unit
      * [IDOUnitParamModel]
@@ -1638,7 +1180,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = unit.json
@@ -1646,21 +1188,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 抬手亮屏
-     * [IDOUpHandGestureParamModel]
-     * 属性	类型	说明
-     * onOff	Int	开关
-     * 1：开
-     * 0：关
-     * showSecond	Int	屏幕保持开启的持续时间（以秒为单位）
-     * hasTimeRange	Int	是否有时间范围
-     * 1：有
-     * 0：无
-     * startHour	Int	时间范围的开始时间
-     * startMinute	Int	时间范围的起始分钟
-     * endHour	Int	时间范围的结束小时
-     * endMinute	Int	时间范围的结束分钟
-     *
      * Raise your hand to light the screen
      * [IDOUpHandGestureParamModel]
      * Attribute type declaration
@@ -1692,7 +1219,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = upHandGesture.json
@@ -1700,16 +1227,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 音乐开关
-     * [IDOMusicOnOffParamModel]
-     * 属性	类型	说明
-     * onOff	Int	1：开
-     * 0：关
-     * showInfoStatus	Int	显示歌曲信息开关
-     * 1：开
-     * 0：关
-     * 需要固件支持菜单：supportV2SetShowMusicInfoSwitch
-     *
      * Music switch
      * [IDOMusicOnOffParamModel]
      * Attribute type declaration
@@ -1731,7 +1248,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = musicOnOff.json
@@ -1739,15 +1256,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 显示模式
-     * [IDODisplayModeParamModel]
-     * 属性	类型	说明
-     * mode	Int	模式
-     * 0：默认
-     * 1：横向
-     * 2：纵向
-     * 3：翻转（180度）
-     *
      * Display mode
      * [IDODisplayModeParamModel]
      * Attribute type declaration
@@ -1767,7 +1275,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = displayMode.json
@@ -1775,85 +1283,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置运动模式选择
-     * [IDOSportModeSelectParamModel]
-     * 属性	类型	说明
-     * flag	Int	0：无效
-     * 1：设置快速运动类型 - sport_type1 & sport_type2 & sport_type3 & sport_type4
-     * 2：设置具体运动类型
-     * sportType1	Int	快速运动类型1
-     * 标志：1有效
-     * sportType2	Int	快速运动类型2
-     * 标志：1有效
-     * sportType3	Int	快速运动类型3
-     * 标志：1有效
-     * sportType4	Int	快速运动类型4
-     * 标志：1有效
-     * sportType0Walk	Bool	类型：步行，0不支持，1支持
-     * 标志：2有效
-     * sportType0Run	Bool	类型：正在运行，0不支持，1支持
-     * 标志：2有效
-     * sportType0ByBike	Bool	类型：骑行，0不支持，1支持
-     * 标志：2有效
-     * sportType0OnFoot	Bool	类型：步行（步行），0不支持，1支持
-     * 标志：2有效
-     * sportType0Swim	Bool	类型：游泳，0不支持，1支持
-     * 标志：2有效
-     * sportType0MountainClimbing	Bool	类型：登山，0不支持，1支持
-     * flag：2有效
-     * sportType0Badminton	Bool	类型：羽毛球，0不支持，1支持
-     * 标志：2有效
-     * sportType0Other	Bool	类型：其他，0不支持，1支持
-     * 标志：2有效
-     * sportType1Fitness	Bool	类型：健身，0不支持，1支持
-     * 标志：2有效
-     * sportType1Spinning	Bool	类型：旋转，0不支持，1支持
-     * 标志：2有效
-     * sportType1Ellipsoid	Bool	类型：椭球体，0不支持，1支持
-     * 标志：2有效
-     * sportType1Treadmill	Bool	类型：跑步机，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType1SitUp	Bool	类型：仰卧起坐，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType1PushUp	Bool	类型：俯卧撑，0不支持，1支持
-     * 标志：2有效
-     * sportType1Dumbbell	Bool	类型：哑铃，0不支持，1支持
-     * 标志：2有效
-     * sportType1Weightlifting	Bool	类型：举重，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType2BodybuildingExercise	Bool	类型：健身运动，0不支持，1支持
-     * 标志：2有效
-     * sportType2Yoga	Bool	类型：瑜伽，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType2RopeSkipping	Bool	类型：跳绳，0不支持，1支持
-     * 标志：2有效
-     * sportType2TableTennis	Bool	类型：乒乓球，0不支持，1支持
-     * 标志：2有效
-     * sportType2Basketball	Bool	类型：篮球，0不支持，1支持
-     * 标志：2有效
-     * sportType2Football	Bool	类型：足球，0不支持，1支持
-     * 标志：2有效
-     * sportType2Volleyball	Bool	类型：排球，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType2Tennis	Bool	类型：网球，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType3Golf	Bool	类型：高尔夫，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType3Baseball	Bool	类型：棒球，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType3Skiing	Bool	类型：滑雪，0 不支持，1 支持
-     * 标志：2 有效
-     * sportType3RollerSkating	Bool	类型：轮滑，0不支持，1支持
-     * 标志：2有效
-     * sportType3Dance	Bool	类型：舞蹈，0不支持，1支持
-     * 标志：2有效
-     * sportType3StrengthTraining	Bool	类型：力量训练，0不支持，1支持
-     * 标志：2有效
-     * sportType3CoreTraining	Bool	类型：核心训练，0不支持，1支持
-     * 标志：2有效
-     * sportType3TidyUpRelax	Bool	类型：整理放松，0 不支持，1 支持
-     * 标志：2 有效
-     *
      * Set motion mode selection
      * [IDOSportModeSelectParamModel]
      * Attribute type declaration
@@ -1979,7 +1408,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
 
@@ -1988,17 +1417,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置睡眠时间段
-     * [IDOSleepPeriodParamModel]
-     * 属性	类型	说明
-     * onOff	Int	开关
-     * 1 开
-     * 0 关
-     * startHour	Int	开始时间（小时）
-     * startMinute	Int	开始时间（分钟）
-     * endHour	Int	结束时间（小时）
-     * endMinute	Int	结束时间（分钟）
-     *
      * Set a sleep schedule
      * [IDOSleepPeriodParamModel]
      * Attribute type declaration
@@ -2024,7 +1442,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = sleepPeriod.json
@@ -2032,14 +1450,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置日出日落时间
-     * [IDOWeatherSunTimeParamModel]
-     * 属性	类型	说明
-     * sunriseHour	Int	日出时刻
-     * sunriseMin	Int	日出时刻
-     * sunsetHour	Int	日落时分
-     * sunsetMin	Int	日落一分钟
-     *
      * Set sunrise and sunset times
      * [IDOWeatherSunTimeParamModel]
      * Attribute type declaration
@@ -2061,7 +1471,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = weatherSunTime.json
@@ -2069,13 +1479,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置表盘
-     * [IDOWatchDialParamModel]
-     * 属性	类型	说明
-     * dialId	Int	需要设置的表盘ID
-     * 拨号id
-     * 0无效，目前支持1~4
-     *
      * Dial setting
      * [IDOWatchDialParamModel]
      * Attribute type declaration
@@ -2093,7 +1496,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = watchDial.json
@@ -2101,15 +1504,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置快捷方式
-     * [IDOShortcutParamModel]
-     * 属性	类型	说明
-     * mode	Int	快捷键1功能
-     * 0：无效
-     * 1：快速进入摄像头控制
-     * 2：快速进入运动模式
-     * 3：快速进入请勿打扰
-     *
      * Set a shortcut
      * [IDOShortcutParamModel]
      * Attribute type declaration
@@ -2129,7 +1523,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = shortcut.json
@@ -2138,29 +1532,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 设置血氧开关
-     * [IDOSpo2SwitchParamModel]
-     * 属性	类型	说明
-     * onOff	Int	SpO2 全天开关
-     * 1 开
-     * 0 关
-     * startHour	Int	开始时间（小时）
-     * startMinute	Int	开始时间（分钟）
-     * endHour	Int	结束时间（小时）
-     * endMinute	Int	结束时间（分钟）
-     * lowSpo2OnOff	Int	低 SpO2 开关
-     * 1 开
-     * 0 关
-     * 需要菜单 setSpo2AllDayOnOff 的支持
-     * lowSpo2Value	Int	低 SpO2 阈值
-     * 需要菜单“v3SupportSetSpo2LowValueRemind”的支持
-     * notifyFlag	Int	通知类型
-     * 0：无效
-     * 1：允许通知
-     * 2：静默通知
-     * 3：禁用通知
-     * 需要菜单“getSpo2NotifyFlag”的支持
-     *
      * Set the blood oxygen switch
      * [IDOSpo2SwitchParamModel]
      * Attribute type declaration
@@ -2194,7 +1565,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = spo2Switch.json
@@ -2202,24 +1573,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * V3动态消息通知
-     * [IDONoticeMesaageParamModel]
-     * 属性	类型	说明
-     * verison	Int	协议库版本号
-     * osPlatform	Int	系统0：无效，1：Android，2：iOS
-     * evtType	Int	当前模式 0：无效，1：消息提醒
-     * notifyType	Int	消息枚举类型 最大值：20000
-     * msgID	Int	消息ID 仅当evt_type为消息提醒且msg_ID不为0时有效
-     * appItemsLen	Int	国家/地区数量和语言详细信息
-     * contact	String	联系人姓名（最大 63 字节）
-     * phoneNumber	String	电话号码（最大 31 字节）
-     * msgData	String	消息内容（最大249字节）
-     *
-     * [IDONoticeMesaageParamItem]
-     * 属性	类型	说明
-     * language	Int	语言类型
-     * name	String	国家对应的应用名称（最大49字节）
-     *
      * V3 Dynamic message notification
      * [IDONoticeMesaageParamModel]
      * Attribute type declaration
@@ -2251,7 +1604,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = noticeAppName.json
@@ -2259,19 +1612,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 同步常用联系人
-     * [IDOSyncContactParamModel]
-     * 属性	类型	说明
-     * operat	Int	操作
-     * 0：无效
-     * 1：设置联系人
-     * 2：查询联系人
-     * 3：设置紧急联系人（需要菜单中getSupportSetGetEmergencyContactV3支持）
-     * 4：查询紧急联系人（需要菜单中支持getSupportSetGetEmergencyContactV3）
-     * version	int	协议版本 （不需要赋值）
-     * itemsNum	Int	item 个数 （不需要赋值）
-     * items	List	IDOContactItem 集合
-     *
      * Synchronize frequent contacts
      * [IDOSyncContactParamModel]
      * Attribute type declaration
@@ -2299,7 +1639,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = syncContact.json
@@ -2307,13 +1647,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 控制音乐 v3协议
-     * [IDOMusicControlParamModel]
-     * 类型	属性	说明
-     * Int	status	状态： 0：无效 1：播放 2：暂停 3：停止
-     * Int	curTimeSecond	当前播放时间 单位：秒
-     * Int	totalTimeSecond	总播放时间 单位：秒
-     * String	musicName	音乐名称（最大 63 字节）
      * String	singerName
      *
      * Control music v3 protocol
@@ -2336,7 +1669,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = musicControl.json
@@ -2345,33 +1678,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * v3 设置日程提醒
-     * [IDOSchedulerReminderParamModel]
-     * Attribute	Type	Description
-     * operate	Int	Operation type
-     * 0: Invalid
-     * 1: Add
-     * 2: Delete
-     * 3: Query
-     * 4: Modify
-     * items    [IDOSchedulerReminderItem]	提醒事件详情
-     * 最大设置1个数据
-     *
-     * [IDOSchedulerReminderItem]
-     * 属性	类型	说明
-     * id	Int	提醒事件 ID。应用程序发送的增量值，从0开始
-     * repeatType	Int	重复时间
-     * 如果使用
-     * getSupportSetRepeatWeekTypeOnScheduleReminderV3启用，则设置基于周的重复的bit1-bit7（周一到周日，位0作为通用开关）
-     * 设置重复类型（0：无效， 1：一次、2：每天、3：每周、4：每月、5：每年）（如果通过
-     * getSupportSetRepeatTypeOnScheduleReminderV3启用）
-     * remindOnOff	Int	每日提醒开关
-     * 0：关，1：开
-     * state	Int	状态码
-     * 0：无效，1：已删除，2：启用
-     * title	String	标题内容。最大 74 字节
-     * note	String	提醒内容。最大 149 字节
-     *
      * v3 Set schedule notification
      * [IDOSchedulerReminderParamModel]
      * Attribute	Type	Description
@@ -2413,8 +1719,8 @@ class SetFunctionDetailActivity : BaseActivity() {
                         255,
                         1,
                         2,
-                        "提醒事项1",
-                        "记得完成工作",
+                        "Reminder 1",
+                        "Remember to finish work",
                     )
                 )
             )
@@ -2423,7 +1729,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = schedulerReminder.json
@@ -2431,14 +1737,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 新的100种运动排序
-     * [IDOSport100SortParamModel]
-     * 属性	类型	说明
-     * operate	Int	操作
-     * 0：无效 1：查询 2：设置
-     * nowUserLocation	Int	显示的添加运动的当前位置
-     * items    [Int]	运动排序列表 最大值150个
-     *
      * v3 new 100 sports sort
      * [IDOSport100SortParamModel]
      * Attribute type declaration
@@ -2459,7 +1757,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = sport100Sort.json
@@ -2467,17 +1765,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 设置壁纸表盘列表
-     * [IDOWallpaperDialReplyV3ParamModel]
-     * 属性	类型	说明
-     * operate	Int	操作：0为查询，1为设置，2为删除壁纸表盘
-     * location	Int	设置位置信息，参考9格布局
-     * hideType	Int	隐藏类型：0表示全部显示，1表示隐藏子控件（图标和数字）
-     * timeColor	Int	时间控制颜色（保留1字节+R（1字节）+G（1字节）+B（1字节））
-     * widgetType	Int	控制类型：1 表示周/日期、2 表示步数、3 表示距离、4 表示卡路里、5 表示心率、6 表示电池
-     * widgetIconColor	Int	小部件图标的颜色（保留 1 个字节 + R（1 个字节）+ G（1 个字节）+ B（1 个字节））
-     * widgetNumColor	Int	小部件编号的颜色（保留 1 个字节 + R（1 个字节）+ G（1 个字节）+ B（1 个字节））
-     *
      * v3 Specifies the wallpaper dial list
      * [IDOWallpaperDialReplyV3ParamModel]
      * Attribute type declaration
@@ -2505,7 +1792,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = wallpaperDialReply.json
@@ -2513,14 +1800,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 语音回复文本
-     * [IDOVoiceReplyParamModel]
-     * 属性	类型	说明
-     * flagIsContinue	Int	继续录音标志
-     * 0：停止录音，1：继续录音
-     * title	String	标题数据，最大 31 字节
-     * textContent	String	内容数据，最大511字节
-     *
      * v3 Voice reply text
      * [IDOVoiceReplyParamModel]
      * Attribute type declaration
@@ -2539,7 +1818,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = voiceReplyText.json
@@ -2547,18 +1826,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置时间
-     * [IDODateTimeParamModel]
-     * 属性	类型	说明
-     * year	Int	年
-     * monuth	Int	月
-     * day	Int	日
-     * hour	Int	小时
-     * minute	Int	分钟
-     * second	Int	秒
-     * week	Int	周：周一至周日 0-6
-     * timeZone	Int	24 小时格式的时区：0-12 为东，13-24 为西 (未启用，赋值0)
-     *
      * Set time
      * [IDODateTimeParamModel]
      * Attribute type declaration
@@ -2581,7 +1848,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = dateTime.json
@@ -2589,29 +1856,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     *
-     * 设置屏幕亮度
-     * [IDOScreenBrightnessModel]
-     * 属性	类型	说明
-     * level	Int	亮度级别
-     * (0-100)
-     * opera	Int	0 自动
-     * 1 手动
-     * 如果是自动同步配置，请发送00；如果是用户调整，请发送01
-     * mode	Int	0 指定级别
-     * 1 使用环境光传感器
-     * 2 级别无关紧要
-     * autoAdjustNight	Int	夜间自动亮度调节
-     * 0 无效，由固件定义
-     * 1 关闭
-     * 2 夜间自动亮度调节
-     * 3 夜间亮度降低使用设定时间
-     * startHour	Int	开始时间 小时
-     * startMinute	Int	开始时间 分钟
-     * endHour	Int	结束时间 小时
-     * endMinute	Int	结束时间分钟
-     * nightLevel	Int	夜间亮度
-     * showInterval	Int	显示间隔
      *
      * Set screen brightness
      * [IDOScreenBrightnessModel]
@@ -2655,7 +1899,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = screenBrightness.json
@@ -2663,50 +1907,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 运动开关设置
-     * [IDOActivitySwitchParamModel]
-     * 属性	类型	说明
-     * autoIdentifySportWalk	Int	自动识别走路开关
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoIdentifySportRun	Int	自动识别跑步开关
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoIdentifySportBicycle	Int	自动识别自行车开关
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoPauseOnOff	Int	运动自动暂停
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoEndRemindOnOffOnOff	Int	结束提醒
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoIdentifySportElliptical	Int	自动识别椭圆机开关
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoIdentifySportRowing	Int	自动识别划船机开关
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoIdentifySportSwim	Int	自动识别游泳开关
-     * 0 关闭
-     * 1 开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoIdentifySportSmartRope	Int	自动识别智能跳绳开关
-     * 0关闭
-     * 1开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     * autoIdentifyGeneralActivity	Int?	自动识别通用运动开关（可选，不传表示不修改）
-     * 0关闭
-     * 1开
-     * 功能表getAutoActivitySetGetUseNewStructExchange
-     *
      * Motion switch setting
      * [IDOActivitySwitchParamModel]
      * Attribute type declaration
@@ -2766,7 +1966,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = activitySwitch.json
@@ -2775,46 +1975,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 设置心率区间
-     * [IDOHeartRateIntervalModel]
-     * 属性	类型	说明
-     * burnFatThreshold	int	脂肪训练心率区间
-     * 计算规则:最大心率的50%-69%
-     * 单位:次/分钟
-     * aerobicThreshold	int	心肺训练心率区间
-     * 计算规则:最大心率的70%-84%
-     * 单位:次/分钟
-     * limitThreshold	int	峰值训练心率区间
-     * 计算规则:最大心率的85%-100%
-     * 单位:次/分钟
-     * userMaxHr	int	心率上限,最大心率提醒
-     * 单位:次/分钟
-     * range1	int	热身运动心率区间
-     * 计算规则：(220-年龄) * 50
-     * 单位:次/分钟
-     * range2	int	脂肪燃烧心率区间
-     * 计算规则：(220-年龄) * 60
-     * 单位:次/分钟
-     * range3	int	有氧运动心率区间
-     * 计算规则：(220-年龄) * 70
-     * 单位:次/分钟
-     * range4	int	无氧运动心率区间
-     * 计算规则：(220-年龄) * 80
-     * 单位:次/分钟
-     * range5	int	极限锻炼心率区间
-     * 计算规则：(220-年龄) * 90
-     * 单位:次/分钟
-     * minHr	int	心率最小值
-     * 单位:次/分钟
-     * maxHrRemind	int	最大心率提醒
-     * 0 关闭,1 开启
-     * minHrRemind	int	最小心率提醒
-     * 0 关闭,1 开启
-     * remindStartHour	int	提醒开始 时
-     * remindStartMinute	int	提醒开始 分
-     * remindStopHour	int	提醒结束 时
-     * remindStopMinute	int	提醒结束 分
-     *
      * Set heart rate interval
      * [IDOHeartRateIntervalModel]
      * Attribute type declaration
@@ -2877,7 +2037,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
 
@@ -2886,28 +2046,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置经期
-     * [IDOMenstruationModel]
-     * 属性	类型	说明
-     * onOff	int	经期开关 1开 0关闭
-     * menstrualLength	int	经期长度
-     * menstrualCycle	int	经期周期
-     * lastMenstrualYear	int	最近一次经期开始时间 年
-     * lastMenstrualMonth	int	最近一次经期开始时间 月
-     * lastMenstrualDay	int	最近一次经期开始时间 日
-     * ovulationIntervalDay	int	从下一个经期开始前到排卵日的间隔,一般为14天
-     * ovulationBeforeDay	int	排卵日之前易孕期的天数,一般为5
-     * ovulationAfterDay	int	排卵日之后易孕期的天数,一般为5
-     * notifyFlag	int	通知类型
-     * 0：无效
-     * 1：允许通知
-     * 2：静默通知
-     * 3：关闭通知 需要固件开启功能表支持 getMenstrualAddNotifyFlagV3
-     * menstrualReminderOnOff	int	经期提醒开关开关
-     * 1:开
-     * 0:关闭
-     * 需要固件开启功能表支持 getSupportSetMenstrualReminderOnOff 该开关无效时，功能开启就默认提醒。
-     *
      * Set period
      * [IDOMenstruationModel]
      * Attribute type declaration
@@ -2941,7 +2079,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = menstruation.json
@@ -2950,22 +2088,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 卡路里和距离目标
-     * [IDOMainSportGoalModel]
-     * 属性	类型	说明
-     * calorie	Int	活动卡路里目标（以千卡为单位）
-     * 需要固件启用功能表“setCalorieGoal”
-     * distance	Int	目标距离（米）
-     * calorieMin	Int	最低活动热量值
-     * calorieMax	Int	最大活动热量值
-     * midHighTimeGoal	Int	中高运动时间目标（以秒为单位）
-     * 需要固件启用功能表“setMidHighTimeGoal”
-     * walkGoalTime	Int	目标时间（小时）
-     * timeGoalType	Int	0：无效
-     * 1：每日目标
-     * 2：每周目标
-     * 需要固件启用功能表getSupportSetGetTimeGoalTypeV2
-     *
      * Calorie and distance goals
      * [IDOMainSportGoalModel]
      * Attribute type declaration
@@ -2992,7 +2114,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = calorieDistanceGoal.json
@@ -3000,18 +2122,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     *  v3 下发v3世界时间
-     *
-     * [IDOWorldTimeParamModel]
-     * 属性	类型	说明
-     * id	Int	详细ID，唯一性
-     * minOffset	Int	从当前时间到 UTC 0 的分钟偏移量
-     * cityName	String	城市名称，最多 59 字节
-     * longitudeFlag	Int	1：东经 2：西经
-     * longitude	Int	经度，乘以 100，保留 2 位小数
-     * latitudeFlag	Int	1：北纬 2：南纬
-     * latitude	Int	纬度，乘以 100，保留 2 位小数
-     *
      * [IDOWorldTimeParamModel]
      * Attribute type declaration
      * id Int Detailed ID, unique
@@ -3028,7 +2138,7 @@ class SetFunctionDetailActivity : BaseActivity() {
                 IDOWorldTimeParamModel(
                     1,
                     2,
-                    "东京",
+                    "Tokyo",
                     3,
                     4,
                     5,
@@ -3044,7 +2154,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = worldTimeV3.json
@@ -3052,19 +2162,16 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 设置运动城市名称
-     * cityName String 城市名称
-     *
      * v3 Specifies the sports city name
      * cityName String City name
      * */
     private fun setLongCityNameV3() {
-        var longCityNameV3 = Cmds.setLongCityNameV3("深圳")
+        var longCityNameV3 = Cmds.setLongCityNameV3("Shenzhen")
         longCityNameV3.send {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = longCityNameV3.json
@@ -3072,24 +2179,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 经期的历史数据下发
-     * [IDOHistoricalMenstruationParamModel]
-     * 属性	类型	说明
-     * avgMenstrualDay	Int	平均月经周期长度 单位：天
-     * avgCycleDay	Int	平均月经周期长度 单位：天
-     * items	List	IDOHistoricalMenstruationParamItem 集合
-     *
-     * [IDOHistoricalMenstruationParamItem]
-     * 属性	类型	说明
-     * year	Int	经期开始的年
-     * mon	Int	经期开始的月
-     * day	Int	经期开始的天
-     * menstrualDay	Int	月经长度（天）
-     * cycleDay	Int	周期长度(天)
-     * ovulationIntervalDay	Int	从下次月经开始到排卵日的间隔通常为14天。
-     * ovulationBeforeDay	Int	排卵日之前的受孕天数通常为5天，此时
-     * ovulationAfterDay	Int	排卵日后的受孕天数通常为5天，此时
-     *
      * Menstrual history data delivery
      * [IDOHistoricalMenstruationParamModel]
      * Attribute type declaration
@@ -3119,7 +2208,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = historicalMenstruation.json
@@ -3127,18 +2216,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置用户信息
-     * [IDOUserInfoPramModel]
-     * 属性	类型	说明
-     * year	int	出生日期 年
-     * month	int	出生日期 月
-     * day	int	出生日期 日
-     * height	int	身高 单位厘米
-     * weight	int	体重 单位千克 值需要x100
-     * gender	int	性别
-     * 1：女
-     * 0：男
-     *
      * Set user information
      * [IDOUserInfoPramModel]
      * Attribute type declaration
@@ -3157,7 +2234,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = userInfo.json
@@ -3165,45 +2242,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 勿扰模式
-     * [IDONotDisturbParamModel]
-     * Attribute	Type	Description
-     * switchFlag	int	开关
-     * 1 开启
-     * 0 关闭
-     * startHour	int	开始时间
-     * 时
-     * startMinute	int	开始时间
-     * 分
-     * endHour	int	结束时间
-     * 时
-     * endMinute	int	结束时间
-     * 分
-     * haveTimeRange	int	是否有时间范围
-     * 0 无效
-     * 1 表示无时间范围
-     * 2 表示有时间范围
-     * 功能表getSupportDisturbHaveRangRepeat开启有效
-     * noontimeRESTOnOff	int	白天勿扰开关
-     * 1 开启
-     * 0 关闭
-     * noontimeRESTStartHour	int	开始时间
-     * 时
-     * noontimeRESTStartMinute	int	开始时间
-     * 分
-     * noontimeRESTEndHour	int	结束时间
-     * 时
-     * noontimeRESTEndMinute	int	结束时间
-     * 分
-     * allDayOnOff	int	全天勿扰
-     * 1 开启
-     * 0 关闭
-     * 功能表setOnlyNoDisturbAllDayOnOff开启有效
-     * intelligentOnOff	int	智能勿扰开关
-     * 1 开启
-     * 0 关闭
-     * 功能表setOnlyNoDisturbSmartOnOff开启有效
-     *
      * Do not disturb mode
      * [IDONotDisturbParamModel]
      * Attribute	Type	Description
@@ -3251,7 +2289,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = notDisturb.json
@@ -3259,17 +2297,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置经期提醒
-     * [IDOMenstruationRemindParamModel]
-     * 属性	类型	说明
-     * startDay	int	开始日提醒 提前天数
-     * ovulationDay	int	排卵日提醒 提前天数
-     * hour	int	提醒时间 时
-     * minute	int	提醒时间 分
-     * pregnancyDayBeforeRemind	int	易孕期 开始的时候 提前多少天提醒
-     * pregnancyDayEndRemind	int	易孕期 结束的时候 提前多少天提醒
-     * menstrualDayEndRemind	int	经期结束 提前多少天提醒
-     *
      * Set period reminders
      * [IDOMenstruationRemindParamModel]
      * Attribute type declaration
@@ -3289,7 +2316,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = menstruationRemind.json
@@ -3298,30 +2325,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     *
-     * 设置压力开关
-     * [IDOStressSwitchParamModel]
-     * Attribute	Type	Description
-     * onOff	int	总开关
-     * 1开 0关闭
-     * startHour	int	开始时间 时
-     * startMinute	int	开始时间 分
-     * endHour	int	结束时间 时
-     * endMinute	int	结束时间 分
-     * remindOnOff	int	压力提醒开关
-     * 1开 0关
-     * on_off为关则提醒不起作用
-     * interval	int	提醒间隔,单位分钟 默认60分钟
-     * highThreshold	int	压力过高阈值
-     * stressThreshold	int	压力校准阈值，默认是80
-     * 需要固件开启功能表支持 setSendCalibrationThreshold
-     * notifyFlag	int	通知类型
-     * 0：无效
-     * 1：允许通知
-     * 2：静默通知
-     * 3：关闭通知
-     * 需要固件开启功能表支持 getPressureNotifyFlagMode
-     * repeats	Set	重复IDOWeek
      *
      * Set pressure switch
      * [IDOStressSwitchParamModel]
@@ -3365,7 +2368,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = stressSwitch.json
@@ -3373,37 +2376,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置喝水提醒
-     *
-     * [IDODrinkWaterRemindModel]
-     * Attribute	Type	Description
-     * onOff	int	开关
-     * 0 关
-     * 1 开
-     * startHour	int	开始时间 时
-     * startMinute	int	开始时间 分
-     * endHour	int	结束时间 时
-     * endMinute	int	结束时间 分
-     * repeats	Set	重复IDOWeek 集合
-     * interval	int	提醒间隔
-     * 单位分钟
-     * notifyFlag	int	通知类型
-     * 0：无效
-     * 1：允许通知
-     * 2：静默通知
-     * 3：关闭通知
-     * 需要固件开启功能表支持 setDrinkWaterAddNotifyFlag
-     * doNotDisturbOnOff	int	免提醒开关 00关 01开
-     * 需要固件开启功能表支持 setNoReminderOnDrinkReminder
-     * noDisturbStartHour	int	免提醒开始时间 时
-     * 需要固件开启功能表支持 setNoReminderOnDrinkReminder
-     * noDisturbStartMinute	int	免提醒开始时间 分
-     * 需要固件开启功能表支持 setNoReminderOnDrinkReminder
-     * noDisturbEndHour	int	免提醒结束时间 时
-     * 需要固件开启功能表支持 setNoReminderOnDrinkReminder
-     * noDisturbEndMinute	int	免提醒结束时间 分
-     * 需要固件开启功能表支持 setNoReminderOnDrinkReminder
-     *
      * Set a drink reminder
      * [IDODrinkWaterRemindModel]
      * Attribute	Type	Description
@@ -3451,7 +2423,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = drinkWaterRemind.json
@@ -3459,17 +2431,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置菜单列表
-     * [IDOMenuListParamModel]
-     * 属性	类型	说明
-     * items    [int]	菜单列表且自带排序
-     * 无排序情况,有值则显示,无值则不现实
-     * 有排序情况,需要按照数组从0开始
-     * 0 无效 1 步数 2 心率 3 睡眠 4 拍照5 闹钟 6 音乐 7 秒表 8 计时器 9 运动模式 10 天气
-     * 11 呼吸锻炼 12 查找手机 13 压力 14 数据三 15 时间界面 16 最近一次活动 17 健康数据 18 血氧 19 菜单设置
-     * 20 (20)alexa语音依次显示 21 X屏（gt01pro-X新增）22 卡路里 （Doro Watch新增）23 距离 （Doro Watch新增）
-     * 24 一键测量 (IDW05新增) 25 renpho health(润丰健康)(IDW12新增) 26 指南针 (mp01新增) 27 气压高度计(mp01新增)
-     *
      * Set menu list
      * [IDOMenuListParamModel]
      * Attribute type declaration
@@ -3487,7 +2448,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = menuList.json
@@ -3495,27 +2456,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置闹钟
-     * [IDOAlarmModel]
-     * 属性	类型	说明
-     * items	List	IDOAlarmItem 集合
-     *
-     * [IDOAlarmItem]
-     * 属性	类型	说明
-     * alarmID	Int	报警ID，从1开始，1~支持的最大报警数
-     * delayMin	Int	延迟几分钟
-     * hour	Int	闹钟 时钟
-     * minute	Int	闹钟 分钟
-     * name	String	报警名称，最大23字节
-     * isOpen	Bool	开关
-     * repeats	HashSet
-     * Set()	重复IDOWeek 集合
-     * repeatTimes	Int	闹钟重复次数
-     * 闹钟重复的次数，延时开关，设置为0则关闭，
-     * 设置为某个数字则重复该次数
-     * status	IDOAlarmStatus	0：隐藏（删除） 1：显示 -1：无效
-     * type	IDOAlarmType	报警类型
-     *
      * Set alarm
      * [IDOAlarmModel]
      * Attribute type declaration
@@ -3614,7 +2554,7 @@ class SetFunctionDetailActivity : BaseActivity() {
                 if (it.error.code == 0) {
                     tv_response.text = it.res?.toJsonString()
                 } else {
-                    tv_response.text = "设置失败 / Setup failure"
+                    tv_response.text = "Setup failure"
                 }
             }
             paramter_tv.text = alarmV3.json
@@ -3622,12 +2562,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置运动模式排序
-     * [IDOSportModeSortParamModel]
-     * 属性	类型	说明
-     * index	Int	排序索引（从1开始，0无效）
-     * type	IDOSportType	运动类型
-     *
      * Set the motion mode sort
      * [IDOSportModeSortParamModel]
      * Attribute type declaration
@@ -3647,7 +2581,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = sportModeSort.json
@@ -3655,17 +2589,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 app设置回复快速信息
-     * [IDOFastMsgSettingModel]
-     * 属性	类型	说明
-     * type	Int	0其它（默认）， 1来电消息版本号
-     * fastItems	List	快速消息详情
-     *
-     * [IDOFastMsgItem]
-     * 属性	类型	说明
-     * msgId	Int	快速消息id 1开始
-     * msgData	String	快速消息内容最大68个字节
-     *
      * v3 app set the quick reply message
      * [IDOFastMsgSettingModel]
      * Attribute type declaration
@@ -3688,23 +2611,15 @@ class SetFunctionDetailActivity : BaseActivity() {
         )
         Cmds.setDefaultQuickMsgReplyList(param).send {
             if (it.error.code == 0) {
-                // 成功
+                // Succeeded
                 // it.res is IDOCmdSetResponseModel
             } else {
-                // 失败
+                // Failed
             }
         }
     }
 
     /**
-     *快捷消息回复使用详情参考NotificationIconTransferActivity.kt
-     *[IDOFastMsgUpdateParamModel]
-     * 属性	类型	说明
-     * isSuccess	int	0app发送信息失败，1app发送信息成功
-     * msgID	int	回复的ID :每个消息对应一个ID
-     * msgType	int	消息类型
-     * msgNotice	int	0是没有对应的短信回复，对应回复列表
-     *
      * Quick reply message with details reference NotificationIconTransferActivity. Kt
      * [IDOFastMsgUpdateParamModel]
      * Attribute type declaration
@@ -3719,7 +2634,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = fastMsgUpdate.json
@@ -3728,45 +2643,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
     /**
      * [IDOMusicOpearteParamModel]
-     * 属性	类型	说明
-     * musicOperate	Int	音乐操作
-     * 0：无效操作
-     * 1：删除音乐
-     * 2：添加音乐
-     * folderOperate	Int	文件夹（播放列表）操作
-     * 0：无效操作
-     * 1：删除文件夹
-     * 2：添加文件夹
-     * 3：修改播放列表
-     * 4：导入播放列表
-     * 5 ：删除音乐
-     * folderItems	IDOMusicFolderItem	音乐详情
-     * musicItems	IDOMusicItem	(歌单)文件夹详情
-     *
-     * [IDOMusicOperateModel]
-     * 属性	类型	说明
-     * operateType	Int	操作类型：
-     * 0：无效操作
-     * 1：删除音乐
-     * 2：添加音乐
-     * 3：删除文件夹
-     * 4：添加文件夹
-     * 5：修改播放列表
-     * 6：导入播放列表
-     * 7：删除播放列表中的音乐
-     * version	Int	固件SDK卡信息
-     * 总空间
-     * errCode	Int	0：成功；非零：失败
-     * musicId	Int	添加音乐成功返回音乐id
-     * folderItems	List	IDOMusicFolderItem 集合
-     *
-     * [IDOMusicFolderItem]
-     * 属性	类型	说明
-     * folderID	Int	播放列表（文件夹）id，范围从1到10
-     * musicNum	Int	播放列表中的歌曲数，最多 100 首
-     * folderName	String	播放列表（文件夹）名称，最大 19 字节
-     * musicIndex	List	歌单中对应歌曲的id，按照添加的先后顺序，依次排列
-     *
      * [IDOMusicOpearteParamModel]
      * Attribute type declaration
      * musicOperate Int Indicates the music operation
@@ -3818,7 +2694,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = musicOperate.json
@@ -3826,41 +2702,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     *
-     * 设置天气数据
-     * [IDOWeatherDataParamModel]
-     * type	Int	天气类型
-     *          0x00 其他
-     *          0x01 晴
-     *          0x02 阴
-     *          0x03 阴
-     *          0x04 雨
-     *          0x05 大雨
-     *          0x06 雷雨
-     *          0x07雪
-     *          0x08雨夹雪
-     *          0x09台风
-     *          0x0A沙尘暴
-     *          0x0B晴夜
-     *          0x0C阴夜
-     *          0x0D炎热
-     *          0x0E寒冷
-     *          0x0F微风
-     *          0x10大风
-     *          0x11阴霾
-     *          0x12阵雨
-     *          0x13阴转晴
-     *          0x30雷
-     *          0x31冰雹
-     *          0x32沙尘
-     *          0x33 龙卷风
-     * temp	Int	当前温度
-     * maxTemp	Int	当日最高气温
-     * minTemp	Int	当日最低气温
-     * humidity	Int	当前湿度
-     * uvIntensity	Int	当前紫外线强度
-     * aqi	Int	当前空气质量指数（AQI）
-     * future    [IDOWeatherDataFuture]	未来三天的天气情况
      *
      * Set weather data
      * [IDOWeatherDataParamModel]
@@ -3912,7 +2753,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = weatherData.json
@@ -3921,12 +2762,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 血压测量
-     * [IDOBpMeasurementParamModel]
-     * flag	Int	1：开始测量
-     * 2：结束测量
-     * 3：获取血压数据
-     *
      * Blood pressure measurement
      * [IDOBpMeasurementParamModel]
      * flag Int 1: Start measurement
@@ -3943,7 +2778,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
 
@@ -3952,13 +2787,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 血压校准
-     * [IDOBpCalibrationParamModel]
-     * flag	Int	1：血压校准设置
-     * 2：血压校准查询结果
-     * diastolic	Int	收缩压
-     * systolic	Int	舒张压
-     *
      * Blood pressure calibration
      * [IDOBpCalibrationParamModel]
      * flag Int 1: Blood pressure calibration Settings
@@ -3976,7 +2804,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = bpCalibration.json
@@ -3984,19 +2812,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 设置洗手提醒
-     * [IDOHandWashingReminderParamModel]
-     * onOff	Int	0：关闭
-     * 1：打开
-     * 默认关闭
-     * startHour	Int	提醒的开始时间
-     * startMinute	Int	提醒的开始分钟
-     * endHour	Int	提醒结束时间
-     * endMinute	Int	提醒结束分钟
-     * repeats	Set	重复IDOWeek 集合
-     * interval	Int	提醒间隔（分钟）
-     * 默认为 60 分钟
-     *
      * Set reminders to wash your hands
      * [IDOHandWashingReminderParamModel]
      * onOff Int 0: off
@@ -4028,7 +2843,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = handWashingReminder.json
@@ -4036,21 +2851,6 @@ class SetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3血压校准控制
-     * [IDOBpCalControlModel]
-     * errorCode	Int	错误代码：0 表示成功，非 0 表示失败
-     * operate	Int	操作
-     * 0：无效
-     * 1：开始血压校准
-     * 2：停止血压校准
-     * 3：获取特征向量
-     * sbpPpgFeatureNum	Int	高血压PPG特征向量个数
-     * operate=3时有效
-     * dbpPpgFeatureNum	Int	低血压PPG特征向量个数
-     * operate=3时有效
-     * sbpPpgFeatureItems	List	高血压PPG特征向量集合
-     * dbpPpgFeatureItems	List	低血压PPG特征向量集合
-     *
      * v3 Blood pressure calibration control
      * [IDOBpCalControlModel]
      * errorCode Int Error codes: 0 indicates success, and non-0 indicates failure
@@ -4080,7 +2880,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = bpCalControlV3.json
@@ -4089,12 +2889,6 @@ class SetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * v3 设置运动子项数据排列
-     * operate	Int	操作
-     * 0：无效 1：查询 2：设置
-     * sportType	IDOSportType	运动类型
-     * nowUserLocation	Int	显示的添加运动的当前位置
-     * items    [Int]	运动排序列表 最大值150个
      * -------------------------------------
      * v3 Sets the motion subitem data arrangement
      * operate Int Operate int
@@ -4119,7 +2913,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = sportParamSort.json
@@ -4136,7 +2930,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = callQuickReplyOnOff.json
@@ -4153,7 +2947,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = voiceAssistantOnOff.json
@@ -4181,7 +2975,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
         paramter_tv.text = sportSortV3.json
@@ -4210,7 +3004,7 @@ class SetFunctionDetailActivity : BaseActivity() {
             if (it.error.code == 0) {
                 tv_response.text = it.res?.toJsonString()
             } else {
-                tv_response.text = "设置失败 / Setup failure"
+                tv_response.text = "Setup failure"
             }
         }
 

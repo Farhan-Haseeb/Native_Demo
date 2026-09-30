@@ -27,7 +27,7 @@ class GetFunctionDetailActivity : BaseActivity() {
         val myType = getFunctionData?.type ?: return
         send_btn.setOnClickListener {
 
-            //根据功能列表传入过来的事件类型进行不同操作
+            //Perform different operations based on the event type passed in from the function list
             //Different operations are performed depending on the type of event passed in from the function list
             when (myType) {
                 CustomEvtType.GETACTIVITYSWITCH -> getActivitySwitch()
@@ -76,7 +76,7 @@ class GetFunctionDetailActivity : BaseActivity() {
                 CustomEvtType.FINDDEVICESTOP -> getFindDeviceStop()
                 CustomEvtType.GETDEFAULTSPORTTYPE -> getDefaultSportType()
                 CustomEvtType.GETSPORTTYPEV3 -> getSportTypeV3()
-                //这几个方法与上面的的逻辑有一点区别，使用时请注意，参考给出代码逻辑编写
+                //These methods differ slightly from the logic above; take care when using them and follow the provided code logic
                 //These methods have a little difference from the above logic, please note when using, refer to the code logic written
                 CustomEvtType.GETHIDINFO -> getHidInfo()
                 CustomEvtType.GETSNINFO -> getSn()
@@ -96,7 +96,7 @@ class GetFunctionDetailActivity : BaseActivity() {
         }
     }
     private fun deviceTransFileToApp(task: IDODeviceFileToAppTask) {
-        println("收到设备传输文件 名称：${task.deviceTransItem.fileName} 大小：${task.deviceTransItem.fileSize} 到App")
+        println("Received file transferred from device, name: ${task.deviceTransItem.fileName} size: ${task.deviceTransItem.fileSize}, to App")
                 task.acceptReceiveFile(onProgress = { progress ->
                     // Handle progress updates here
                     println("Progress: $progress")
@@ -116,14 +116,14 @@ class GetFunctionDetailActivity : BaseActivity() {
                 // Note: Receiving can be terminated at any time
                 // Abort receiving file
                 task.stopReceiveFile { rs ->
-                    println("已终止接收文件${task.deviceTransItem.fileName)")
+                    println("Stopped receiving file ${task.deviceTransItem.fileName)")
                 }
                  */
             }
 
     /**
      * Request firmware algorithm file information (ACC/GPS)
-     * type: 1:ACC file 、2:GPS file
+     * type: 1:ACC file , 2:GPS file
      *
      * */
     private fun requestAlgFile() {
@@ -163,7 +163,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     *  v3 app获取ble的闹钟
      *  v3 app obtains the ble alarm clock
      * */
     private fun getAlarm() {
@@ -182,7 +181,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取所有的健康监测开关
      * Access all health monitoring switches
      * */
     private fun getAllHealthSwitchState() {
@@ -201,7 +199,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取电池信息
      * Get Battery Information
      * */
     private fun getBatteryInfo() {
@@ -220,7 +217,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * v3获取固件本地提示音文件信息
      * v3 obtains firmware local tone file information
      * */
     private fun getBleBeep() {
@@ -238,7 +234,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取固件的歌曲名和文件夹
      * Get firmware for song names and folders
      * */
     private fun getBleMusicInfo() {
@@ -256,7 +251,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取血压算法三级版本号信息事件号
      * Get blood pressure algorithm version 3 information event number
      * */
     private fun getBpAlgVersion() {
@@ -275,7 +269,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 查询bt配对开关、连接、a2dp连接、hfp连接状态(仅支持带bt蓝牙的设备)
      * Query the status of bt pairing switch, connection, a2dp connection, hfp connection (only for devices with bt Bluetooth)
      * */
     private fun getBtNotice() {
@@ -293,7 +286,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取固件本地保存联系人文件修改时间
      * Obtain the modification time of the locally saved contact file in the firmware
      * */
     private fun getContactReviseTime() {
@@ -311,7 +303,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取设备的日志状态
      * Obtain the log status of the device
      * */
     private fun getDeviceLogState() {
@@ -329,7 +320,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取下载语言支持
      * Get download language support
      * */
     private fun getDownloadLanguage() {
@@ -347,7 +337,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取错误记录
      * Get error record
      * */
     private fun getErrorRecord() {
@@ -365,7 +354,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取字库信息
      * Get font information
      * */
     private fun getFlashBinInfo() {
@@ -384,7 +372,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取gps信息
      * Get gps information
      * */
     private fun getGpsInfo() {
@@ -402,7 +389,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取gps状态
      * Get gps status
      * */
     private fun getGpsStatus() {
@@ -420,7 +406,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3获取固件本地提示音文件信息
      * v3 obtains firmware local tone file information
      * */
     private fun getHabitInfo() {
@@ -439,7 +424,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取心率监测模式
      * Get heart rate monitoring mode
      * */
     private fun getHeartRateMode() {
@@ -457,7 +441,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取热启动参数
      * Obtain hot start parameters
      * */
     private fun getHotStartParam() {
@@ -475,7 +458,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 获取设备字库列表
      * v3 Gets the device font list
      * */
     private fun getLanguageLibrary() {
@@ -493,7 +475,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取设备支持的列表
      * Gets a list of supported devices
      * */
     private fun getMenuList() {
@@ -511,7 +492,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取mtu信息
      * Obtaining mtu Information
      * */
     private fun getMtuInfo() {
@@ -529,7 +509,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取通知中心的状态
      * Gets the status of the notification center
      * */
     private fun getNoticeStatus() {
@@ -547,7 +526,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取勿扰模式状态
      * Get the Do not disturb mode status
      * */
     private fun getNotDisturbStatus() {
@@ -565,7 +543,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取屏幕亮度
      * Get screen brightness
      * */
     private fun getScreenBrightness() {
@@ -583,7 +560,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取全天步数目标
      * Get an all-day step goal
      * */
     private fun getStepGoal() {
@@ -602,7 +578,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取压力值
      * Obtain pressure value
      * */
     private fun getStressVal() {
@@ -620,7 +595,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取固件支持的详情最大设置数量
      * Get maximum number of Settings supported by firmware details
      * */
     private fun getSupportMaxSetItemsNum() {
@@ -639,7 +613,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取固件不可删除的快捷应用列表
      * Obtain a list of shortcut applications whose firmware cannot be deleted
      * */
     private fun getUnerasableMeunList() {
@@ -657,7 +630,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取红点提醒开关
      * Get the red dot reminder switch
      * */
     private fun getUnreadAppReminder() {
@@ -676,7 +648,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取设备升级状态
      * Obtain the upgrade status of the device
      * */
     private fun getUpdateStatus() {
@@ -695,7 +666,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取抬腕数据
      * Obtain wrist lift data
      * */
     private fun getUpHandGesture() {
@@ -713,7 +683,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取版本信息
      * Get version information
      * */
     private fun getVersionInfo() {
@@ -731,7 +700,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取走动提醒
      * Get a walk alert
      * */
     private fun getWalkRemind() {
@@ -749,7 +717,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取表盘id
      * Gets the dial id
      * */
     private fun getWatchDialId() {
@@ -767,7 +734,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取屏幕信息
      * Get screen information
      * */
     private fun getWatchDialInfo() {
@@ -785,7 +751,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * V2 获取表盘列表
      * V2 Obtains the dial list
      *
      * */
@@ -804,7 +769,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 获取表盘列表
      * v3 Obtains the dial list
      * */
     private fun getWatchListV3() {
@@ -822,7 +786,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获得实时数据
      * Get real-time data
      * flag :
      * */
@@ -842,7 +805,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取设置的卡路里/距离/中高运动时长 主界面
      * Get the calorie/distance/medium/high exercise duration set main screen
      * timeGoalType:
      * */
@@ -861,7 +823,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 进入升级模式
      * Enter upgrade mode
      * */
     private fun otaStart() {
@@ -879,7 +840,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 重启设备
      * Restart the device
      * */
     private fun reboot() {
@@ -897,7 +857,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * v3 获取运动默认的类型
      * v3 Gets the default type of motion
      * */
     private fun getSportTypeV3() {
@@ -915,7 +874,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取活动开关
      * get Activity Switch
      * */
     private fun getActivitySwitch() {
@@ -933,7 +891,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取默认运动类型
      * get Activity Switch
      * */
     private fun getDefaultSportType() {
@@ -951,7 +908,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 恢复出厂设置
      * factory data reset
      * */
     private fun getFactoryreset() {
@@ -969,7 +925,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 开始查找设备
      * Start looking for equipment
      * */
     private fun getFindDeviceStart() {
@@ -987,7 +942,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 停止查找设备
      * Stop looking for equipment
      * */
     private fun getFindDeviceStop() {
@@ -1005,7 +959,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取hid信息
      * get hid information
      * */
     private fun getHidInfo() {
@@ -1022,7 +975,6 @@ class GetFunctionDetailActivity : BaseActivity() {
         paramter_tv?.text = hidInfo?.json
     }
     /**
-     * 获取sn
      * get sn
      * */
     private fun getSn() {
@@ -1040,7 +992,6 @@ class GetFunctionDetailActivity : BaseActivity() {
     }
 
     /**
-     * 获取BT连接手机型号
      * Get BT connected phone model
      * */
     private fun getBtConnectPhoneModel() {
@@ -1059,7 +1010,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取bt蓝牙名称
      * Get the bt Bluetooth name
      * */
     private fun getBtName() {
@@ -1079,7 +1029,6 @@ class GetFunctionDetailActivity : BaseActivity() {
 
 
     /**
-     * 获取手表名字
      * get watch name
      * */
     private fun getDeviceName() {
