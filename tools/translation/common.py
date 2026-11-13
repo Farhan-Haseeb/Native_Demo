@@ -81,6 +81,8 @@ def scope_files():
             continue
         if is_excluded(rel):
             continue
+        if not (REPO / rel).is_file():  # sparse / partial checkouts
+            continue
         if is_binary(REPO / rel):
             continue
         files.append(rel)

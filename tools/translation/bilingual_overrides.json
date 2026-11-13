@@ -1,0 +1,8 @@
+{
+ "【连接】${if (sdk.state.isConnected) \"已连接\" else \"未连接\"}": "【连接 / Connection】${if (sdk.state.isConnected) \"已连接 / Connected\" else \"未连接 / Disconnected\"}",
+ "text += \" | \\(Self.gestureFuncLabel(f.functionType))=\\(f.uiSwitch.isOn ? \"开\" : \"关\")\"": "text += \" | \\(Self.gestureFuncLabel(f.functionType))=\\(f.uiSwitch.isOn ? \"开 / On\" : \"关 / Off\")\"",
+ "text += \" | 启用=\\(enabled.map { Self.gestureFuncLabel($0.functionType) } ?? \"无\")\"": "text += \" | 启用 / Enabled=\\(enabled.map { Self.gestureFuncLabel($0.functionType) } ?? \"无 / None\")\"",
+ "【连接】\\(sdk.state.isConnected ? \"已连接\" : \"未连接\")": "【连接 / Connection】\\(sdk.state.isConnected ? \"已连接 / Connected\" : \"未连接 / Disconnected\")",
+ "NSLog(@\"手动刷新设备信息：%d\", rs);": "NSLog(@\"手动刷新设备信息 / Manually refresh device info：%d\", rs);",
+ "tv_log.text.toString().startsWith(\"操作后会在此显示\")": null
+}

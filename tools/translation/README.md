@@ -16,6 +16,7 @@ to English, and to re-apply that translation after merging a new upstream releas
 | `apply.py` | Rewrites every in-scope line that has an entry in `tm.json`, with structural validation |
 | `report.py` | Lists residual CJK lines; `--glossary-lint` also checks wording and the WalkRemind invariant |
 | `apply_review.py` | Applies reviewer suggestions (`{file, line, current, suggested}`) to the files and to `tm.json` |
+| `apply_bilingual.py` | Bilingual mode for upstream contributions: keeps the Chinese and adds the English from `tm.json` next to it; `--verify` proves the change is insert-only |
 
 ## Re-syncing with upstream
 
@@ -31,6 +32,26 @@ python3 tools/translation/merge.py /tmp/batches /tmp/filled
 python3 tools/translation/apply.py --report /tmp/apply_report.json
 python3 tools/translation/report.py --glossary-lint            # must print 0 residual lines
 ```
+
+## Bilingual mode (upstream contributions)
+
+`english` replaces the Chinese. For a pull request to idoosmart/Native_Demo the Chinese stays and the
+English is added next to it, built from a clean upstream checkout:
+
+```bash
+git worktree add ../Native_Demo-bilingual -b feature/bilingual-zh-en upstream/main
+cp -R tools/translation ../Native_Demo-bilingual/tools/     # untracked there, never committed
+cd ../Native_Demo-bilingual
+python3 tools/translation/extract.py --out /tmp/batches     # new upstream lines -> translate, validate, merge
+python3 tools/translation/apply_bilingual.py --report /tmp/bilingual_report.json
+python3 tools/translation/apply_bilingual.py --verify       # every change since HEAD must be insert-only
+```
+
+Comment-only lines get an English twin line below them (`/// 中文` then `/// English`); string literals,
+logs, trailing comments, XML text and Markdown become `中文 / English` in place. Already-bilingual lines
+and blocks are left alone. A string with a printf placeholder is only made bilingual when the placeholder
+stays outside the duplicated text, otherwise it is reported for a hand-written entry in
+`bilingual_overrides.json` (`{zh_line: bilingual_line}`, `null` = leave as is).
 
 ## What apply.py validates
 
