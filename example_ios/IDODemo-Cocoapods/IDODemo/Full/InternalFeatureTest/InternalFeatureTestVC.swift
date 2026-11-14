@@ -1,0 +1,359 @@
+//
+//  InternalFeatureTestVC.swift
+//  IDODemo (native Full temp — temp sync to native Full)
+//
+//  Internal feature tests: dirty data / edge-case JSON / local decoding / binding encrypted auth, etc., temporarily synced to native Full (integration testing).
+//
+
+import UIKit
+import SnapKit
+import SVProgressHUD
+import protocol_channel
+
+class InternalFeatureTestVC: UIViewController {
+
+    /// Current device from the Function page (needed to mark as bound for encrypted auth)
+    var deviceModel: IDODeviceModel?
+
+    private var logBuffer = ""
+
+    private lazy var buttonScrollView: UIScrollView = {
+        let v = UIScrollView()
+        v.showsVerticalScrollIndicator = false
+        v.alwaysBounceVertical = true
+        return v
+    }()
+
+    private lazy var buttonStack: UIStackView = {
+        let v = UIStackView()
+        v.axis = .vertical
+        v.spacing = 10
+        v.alignment = .fill
+        return v
+    }()
+
+    private lazy var textConsole: UITextView = {
+        let v = UITextView()
+        v.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+        v.textColor = .darkGray
+        v.textAlignment = .left
+        v.isEditable = false
+        v.backgroundColor = UIColor(red: 233 / 255.0, green: 233 / 255.0, blue: 233 / 255.0, alpha: 1)
+        return v
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Internal feature test"
+        view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Clear",
+            style: .plain,
+            target: self,
+            action: #selector(onClearLog)
+        )
+        setupLayout()
+        setupActions()
+        appendLog("Internal Feature Test — native Full temp\nnot synced to the six-platform demos")
+        if let mac = resolveMacAddress() {
+            appendLog("current mac=\(mac)")
+        } else {
+            appendLog("current mac=(none) — set/get needs a mac; the device can be passed in from the Function page")
+        }
+    }
+
+    private func setupLayout() {
+        view.addSubview(buttonScrollView)
+        view.addSubview(textConsole)
+        buttonScrollView.addSubview(buttonStack)
+
+        buttonScrollView.snp.makeConstraints { make in
+            if #available(iOS 11.0, *) {
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(8)
+            } else {
+                make.top.equalTo(8)
+            }
+            make.left.right.equalToSuperview()
+            make.height.equalTo(400)
+        }
+
+        buttonStack.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12))
+            make.width.equalTo(buttonScrollView.snp.width).offset(-24)
+        }
+
+        textConsole.snp.makeConstraints { make in
+            make.left.equalTo(12)
+            make.right.equalTo(-12)
+            make.top.equalTo(buttonScrollView.snp.bottom).offset(8)
+            if #available(iOS 11.0, *) {
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
+            } else {
+                make.bottom.equalTo(-8)
+            }
+        }
+    }
+
+    private func setupActions() {
+        appendSection(
+            title: "Bind encrypted auth",
+            buttons: [
+                ("bind + onEncryptedAuthData", { [weak self] in self?.bindWithEncryptedAuthCallback() }),
+                ("setEncryptedAuthData(sample)", { [weak self] in self?.setEncryptedAuthSample() }),
+                ("getEncryptedAuthData", { [weak self] in self?.getEncryptedAuthCached() }),
+                ("get → copy JSON", { [weak self] in self?.getEncryptedAuthAndCopy() }),
+                ("Paste → set", { [weak self] in self?.pasteEncryptedAuthAndSet() }),
+                ("setEncryptedAuth + mark as bound", { [weak self] in self?.runSetEncryptedAuthAndMarkBound() }),
+            ]
+        )
+        appendSection(
+            title: "Alarm JSON",
+            buttons: [
+                ("Empty item / dirty name / out-of-range type·status", { [weak self] in self?.runAlarmJsonCases() }),
+            ]
+        )
+    }
+
+    private func appendSection(title: String, buttons: [(String, () -> Void)]) {
+        let label = UILabel()
+        label.text = title
+        label.font = .boldSystemFont(ofSize: 14)
+        label.textColor = .darkGray
+        buttonStack.addArrangedSubview(label)
+
+        for (title, action) in buttons {
+            let btn = UIButton(type: .system)
+            btn.setTitle(title, for: .normal)
+            btn.titleLabel?.font = .systemFont(ofSize: 15)
+            btn.contentHorizontalAlignment = .left
+            btn.addAction(UIAction { _ in action() }, for: .touchUpInside)
+            buttonStack.addArrangedSubview(btn)
+        }
+    }
+
+    private func runAlarmJsonCases() {
+        let result = InternalAlarmJsonCases.runAll()
+        for line in result.lines {
+            appendLog(line)
+        }
+        if result.passed {
+            SVProgressHUD.showSuccess(withStatus: result.summary)
+        } else {
+            SVProgressHUD.showError(withStatus: result.summary)
+        }
+    }
+
+    private func encryptedAuthSample() -> IDOEncryptedAuthData {
+        return IDOEncryptedAuthData(
+            authData: [0xAF, 0x83, 0xDA, 0x7B, 0xAE, 0x93, 0x47, 0x3C, 0xF4, 0x75, 0xB3, 0xB6],
+            encryptedVersion: 0,
+            authLength: 12
+        )
+    }
+
+    private func ensureConnected() -> Bool {
+        guard sdk.state.isConnected else {
+            SVProgressHUD.showError(withStatus: "Device not connected")
+            appendLog("Error: device not connected")
+            return false
+        }
+        return true
+    }
+
+    private func bindWithEncryptedAuthCallback() {
+        if !ensureConnected() { return }
+        appendLog("--- bind + onEncryptedAuthData ---")
+        SVProgressHUD.show(withStatus: "binding...")
+        sdk.cmd.bind(
+            osVersion: 15,
+            onDeviceInfo: { [weak self] info in
+                self?.appendLog("  onDeviceInfo battLevel=\(info.battLevel)")
+            },
+            onFuncTable: { [weak self] _ in
+                self?.appendLog("  onFuncTable received")
+            },
+            onEncryptedAuthData: { [weak self] authData in
+                self?.appendLog(
+                    "  onEncryptedAuthData encryptedVersion=\(authData.encryptedVersion) authLength=\(authData.authLength) authData=\(Self.formatAuthBytes(authData.authData))"
+                )
+                SVProgressHUD.showInfo(withStatus: "encrypted auth len=\(authData.authLength)")
+            },
+            completion: { [weak self] status in
+                SVProgressHUD.dismiss()
+                self?.appendLog("  bind status=\(status)")
+                if status == .needConfirmByApp {
+                    Cmds.sendBindResult(isSuccess: true).send { rs in
+                        if case .success = rs {
+                            sdk.cmd.appMarkBindResult(success: true)
+                            self?.appendLog("  appMarkBindResult success=true")
+                        } else {
+                            sdk.cmd.appMarkBindResult(success: false)
+                            self?.appendLog("  appMarkBindResult success=false")
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    private func setEncryptedAuthSample() {
+        guard let mac = resolveMacAddress(), !mac.isEmpty else {
+            SVProgressHUD.showError(withStatus: "no macAddress")
+            appendLog("Error: no macAddress")
+            return
+        }
+        appendLog("--- setEncryptedAuthData mac=\(mac) ---")
+        sdk.cmd.setEncryptedAuthData(macAddress: mac, data: encryptedAuthSample()) { [weak self] ok in
+            self?.appendLog("  result=\(ok)")
+            if ok {
+                SVProgressHUD.showSuccess(withStatus: "set encrypted auth ok")
+            } else {
+                SVProgressHUD.showError(withStatus: "set encrypted auth failed")
+            }
+        }
+    }
+
+    private func getEncryptedAuthCached() {
+        guard let mac = resolveMacAddress(), !mac.isEmpty else {
+            SVProgressHUD.showError(withStatus: "no macAddress")
+            appendLog("Error: no macAddress")
+            return
+        }
+        appendLog("--- getEncryptedAuthData mac=\(mac) ---")
+        sdk.cmd.getEncryptedAuthData(macAddress: mac) { [weak self] cached in
+            guard let cached = cached else {
+                self?.appendLog("  no cache")
+                SVProgressHUD.showInfo(withStatus: "no cache")
+                return
+            }
+            self?.appendLog(
+                "  encryptedVersion=\(cached.encryptedVersion) authLength=\(cached.authLength) authData=\(Self.formatAuthBytes(cached.authData))"
+            )
+            SVProgressHUD.showSuccess(withStatus: "len=\(cached.authLength) ver=\(cached.encryptedVersion)")
+        }
+    }
+
+    /// Unsigned 0–255, consistent with the protocol uint8 / JSON auth_data
+    private static func formatAuthBytes(_ bytes: [UInt8]) -> String {
+        "[" + bytes.map { String($0) }.joined(separator: ", ") + "]"
+    }
+
+    /// get the cache and copy the JSON to the clipboard (for pasting on another phone)
+    private func getEncryptedAuthAndCopy() {
+        guard let mac = resolveMacAddress(), !mac.isEmpty else {
+            SVProgressHUD.showError(withStatus: "no macAddress")
+            appendLog("Error: no macAddress")
+            return
+        }
+        appendLog("--- get → copy JSON mac=\(mac) ---")
+        sdk.cmd.getEncryptedAuthData(macAddress: mac) { [weak self] cached in
+            guard let self else { return }
+            guard let cached = cached else {
+                self.appendLog("  no cache")
+                SVProgressHUD.showInfo(withStatus: "no cache")
+                return
+            }
+            guard let json = cached.jsonString() else {
+                self.appendLog("  jsonString failed")
+                SVProgressHUD.showError(withStatus: "json encode failed")
+                return
+            }
+            UIPasteboard.general.string = json
+            self.appendLog("  copied: \(json)")
+            SVProgressHUD.showSuccess(withStatus: "JSON copied")
+        }
+    }
+
+    /// Read the JSON from the clipboard and setEncryptedAuthData
+    private func pasteEncryptedAuthAndSet() {
+        guard let mac = resolveMacAddress(), !mac.isEmpty else {
+            SVProgressHUD.showError(withStatus: "no macAddress")
+            appendLog("Error: no macAddress")
+            return
+        }
+        guard let text = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !text.isEmpty else {
+            SVProgressHUD.showError(withStatus: "Clipboard is empty")
+            appendLog("Error: clipboard is empty")
+            return
+        }
+        guard let data = IDOEncryptedAuthData(jsonString: text) else {
+            SVProgressHUD.showError(withStatus: "Clipboard is not valid auth JSON")
+            appendLog("Error: parsing failed\n  clipboard=\(text)")
+            return
+        }
+        appendLog("--- paste → set mac=\(mac) ---")
+        appendLog("  json=\(text)")
+        sdk.cmd.setEncryptedAuthData(macAddress: mac, data: data) { [weak self] ok in
+            self?.appendLog("  result=\(ok)")
+            if ok {
+                SVProgressHUD.showSuccess(withStatus: "paste set ok")
+            } else {
+                SVProgressHUD.showError(withStatus: "paste set failed")
+            }
+        }
+    }
+
+    /// Write the encrypted auth before connecting and mark as bound locally (simulates skipping binding after switching phones)
+    private func runSetEncryptedAuthAndMarkBound() {
+        guard let mac = resolveMacAddress(), !mac.isEmpty else {
+            appendLog("Error: no macAddress")
+            SVProgressHUD.showError(withStatus: "no macAddress")
+            return
+        }
+        guard let data = InternalEncryptedAuthCases.parseSampleJson() else {
+            appendLog("Error: JSON parse failed")
+            SVProgressHUD.showError(withStatus: "JSON parse failed")
+            return
+        }
+        appendLog("--- setEncryptedAuthData mac=\(mac) ver=\(data.encryptedVersion) len=\(data.authLength) ---")
+        SVProgressHUD.show(withStatus: "setEncryptedAuthData...")
+        sdk.cmd.setEncryptedAuthData(macAddress: mac, data: data) { [weak self] ok in
+            guard let self else { return }
+            if ok {
+                UserDefaults.standard.setBind(mac, isBind: true, device: self.deviceModel)
+                self.appendLog("  ok → setBind true")
+                SVProgressHUD.showSuccess(withStatus: "setAuth ok, bind=true")
+            } else {
+                self.appendLog("  failed")
+                SVProgressHUD.showError(withStatus: "setEncryptedAuthData failed")
+            }
+        }
+    }
+
+    private func resolveMacAddress() -> String? {
+        if let mac = deviceModel?.macAddress, !mac.isEmpty {
+            return mac
+        }
+        let full = sdk.device.macAddressFull
+        if !full.isEmpty { return full }
+        let short = sdk.device.macAddress
+        return short.isEmpty ? nil : short
+    }
+
+    private func appendLog(_ msg: String) {
+        // Callbacks on any thread (including bind/onEncryptedAuthData) are printed to the Xcode console
+        NSLog("[InternalFeatureTest] %@", msg)
+        let applyUI = { [weak self] in
+            guard let self else { return }
+            if self.logBuffer.isEmpty {
+                self.logBuffer = msg
+            } else {
+                self.logBuffer += "\n" + msg
+            }
+            self.textConsole.text = self.logBuffer
+            let bottom = NSRange(location: max(0, (self.textConsole.text as NSString).length - 1), length: 1)
+            self.textConsole.scrollRangeToVisible(bottom)
+        }
+        if Thread.isMainThread {
+            applyUI()
+        } else {
+            DispatchQueue.main.async(execute: applyUI)
+        }
+    }
+
+    @objc private func onClearLog() {
+        logBuffer = ""
+        textConsole.text = ""
+    }
+}

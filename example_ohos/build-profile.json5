@@ -5,26 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "/Users/hc/.ohos/config/default_example_ohos_gkMg-03WbRQa4-Ai-nM5BFSIqC2i__AEtylPD2QiT8g=.cer",
+          "certpath": "/Users/hc/.ohos/config/default_example_ohos_LvAmSaXInHwRqHwG_k6KE9GAhnZqai8xgf5LI7O6eXk=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BA392360DAE4E9E53CD487516E763DD6392C6B19F35D962B6A6B690A103C35869D0653A3FF0F63C",
-          "profile": "/Users/hc/.ohos/config/default_example_ohos_gkMg-03WbRQa4-Ai-nM5BFSIqC2i__AEtylPD2QiT8g=.p7b",
+          "keyPassword": "0000001A54201A7F2D59104A3716219DA160BCA0A280A8D9E756A8D19B969227D764E42B4032E243B320",
+          "profile": "/Users/hc/.ohos/config/default_example_ohos_LvAmSaXInHwRqHwG_k6KE9GAhnZqai8xgf5LI7O6eXk=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/hc/.ohos/config/default_example_ohos_gkMg-03WbRQa4-Ai-nM5BFSIqC2i__AEtylPD2QiT8g=.p12",
-          "storePassword": "0000001B8D27E11BDC99122F7C31BECA6BB72BC2D00FAF78B196C0E377CA0A04B59E9759E651FAB308E614"
-        }
-      },
-      {
-        "name": "ido",
-        "type": "HarmonyOS",
-        "material": {
-          "certpath": "/Users/davy/.ohos/config/ido_example_ohos_xDb0LNyc77F5b6piZRQvzIQlaWYMZjIJxrjnVAS7XSs=.cer",
-          "keyAlias": "debugKey",
-          "keyPassword": "0000001A1553D22AF628968C95D55358609221C1C8D98FD46E26F14EEB4193C5B477A74024374C8B5383",
-          "profile": "/Users/davy/.ohos/config/ido_example_ohos_xDb0LNyc77F5b6piZRQvzIQlaWYMZjIJxrjnVAS7XSs=.p7b",
-          "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/davy/.ohos/config/ido_example_ohos_xDb0LNyc77F5b6piZRQvzIQlaWYMZjIJxrjnVAS7XSs=.p12",
-          "storePassword": "0000001A66A41F5D485CB826B8CC331AD3BF2C94DA3680BF199B3735404265EDD31050EA21409B95ADE6"
+          "storeFile": "/Users/hc/.ohos/config/default_example_ohos_LvAmSaXInHwRqHwG_k6KE9GAhnZqai8xgf5LI7O6eXk=.p12",
+          "storePassword": "0000001ABBFDE60855E4D05A2FFD1FB469E193912D7EAF7A3B3E0F37FC83F606EBA36F19A1BA19464515"
         }
       }
     ],

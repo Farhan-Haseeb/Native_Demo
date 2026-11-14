@@ -45,6 +45,7 @@ import kotlinx.android.synthetic.main.layout_function_activity.rl_notificationIc
 import kotlinx.android.synthetic.main.layout_function_activity.rl_set_function
 import kotlinx.android.synthetic.main.layout_function_activity.rl_measure
 import kotlinx.android.synthetic.main.layout_function_activity.rl_sdk_feature_test
+import com.example.example_android.activity.internal.InternalFeatureTestActivity
 import kotlinx.android.synthetic.main.layout_function_activity.rl_gesture_control
 import kotlinx.android.synthetic.main.layout_function_activity.rl_task_list
 import kotlinx.android.synthetic.main.layout_function_activity.rl_walk_remind
@@ -263,6 +264,13 @@ class FunctionActivity : BaseActivity() {
 
     fun sdkFeatureTest(view: View) {
         startActivity(Intent(this, SdkFeatureTestActivity::class.java))
+    }
+
+    /** Temporary: internal feature test (synced from the channel example, Full only) */
+    fun internalFeatureTest(view: View) {
+        val intent = Intent(this, InternalFeatureTestActivity::class.java)
+        device?.let { intent.putExtra(MainActivity.DEVICE, it) }
+        startActivity(intent)
     }
 
     fun taskListTest(view: View) {

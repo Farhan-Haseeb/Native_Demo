@@ -26,6 +26,8 @@ struct Word {
     static let editSportScreen = "EditSportScreen"
     static let measure = "Measure"
     static let sdkFeatureTest = "SDK Feature Test"
+    /// Temporary: synced from the channel example to Full (integration testing)
+    static let internalFeatureTest = "Internal feature test"
     static let ida01FuncTest = "IDA01 Func Test"
     static let gestureControl = "Gesture Control"
     static let taskList = "Task List"

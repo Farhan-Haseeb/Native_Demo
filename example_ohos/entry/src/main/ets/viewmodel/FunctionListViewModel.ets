@@ -652,6 +652,7 @@ export class DeviceStateViewModel {
         this.deviceState.updateBindState(true)
         Tools.getInstance().setBindState(sdk.device.macAddressFull, true)
         Tools.getInstance().setBindDevice(this.device!);
+        BluetoothViewModel.getInstance().refreshBindDeviceList();
       } else {
         console.info("Bind failed")
         this.deviceState.updateBindState(false)

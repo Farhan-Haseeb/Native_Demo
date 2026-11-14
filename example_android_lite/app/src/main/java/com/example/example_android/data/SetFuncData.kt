@@ -373,14 +373,7 @@ class SetFuncData(
                 )
             }
 
-            if (sdk.funcTable.setSedentariness) {
-                mutableListOf.add(
-                    SetFuncData(
-                        CustomEvtType.SETLONGSIT,
-                        context.getString(R.string.setlongsit)
-                    )
-                )
-            }
+            // setLongSit is deprecated and its entry is hidden; use the walk reminder setWalkReminder instead
 
             if (sdk.funcTable.supportSetAntilost) {
                 mutableListOf.add(

@@ -274,8 +274,12 @@ export class Tools {
 
 
   setBindDevice(device: IDOBleDeviceModel) {
-    let devices = this.getBindDevices();
-    devices.push(device);
+    const mac = device.macAddress ?? '';
+    if (mac.length === 0) {
+      return;
+    }
+    let devices = this.getBindDevices().filter((item) => item.macAddress !== mac);
+    devices.unshift(device);
     let json = JSON.stringify(devices)
     console.info("setBindDevice: "+json);
     myPreferences?.putSync(this.keyBindDevices, json)
@@ -289,8 +293,19 @@ export class Tools {
     }
     console.info("getBindDevices: "+rs)
     let devices = JSON.parse(rs) as IDOBleDeviceModel[];
-    console.info("getBindDevices, devices = "+devices.length)
-    return devices;
+    // Deduplicate by mac, keeping the earlier snapshot (consistent with the setBindDevice upsert)
+    const seen = new Set<string>();
+    const unique: IDOBleDeviceModel[] = [];
+    for (let i = 0; i < devices.length; i++) {
+      const mac = devices[i].macAddress ?? '';
+      if (mac.length === 0 || seen.has(mac)) {
+        continue;
+      }
+      seen.add(mac);
+      unique.push(devices[i]);
+    }
+    console.info("getBindDevices, devices = "+unique.length)
+    return unique;
   }
 
   removeBindDevice(mac: string) {

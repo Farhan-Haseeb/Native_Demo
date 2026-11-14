@@ -2248,6 +2248,7 @@
  "Text(`${(item.size / 1024).toFixed(2)} KB`) // 将大小格式化为带单位的字符串": "Text(`${(item.size / 1024).toFixed(2)} KB`) // Format the size as a string with a unit",
  "Text(`以下 ${this.viewModel.bluetoothState.otaDeviceList.length} 个设备在 OTA 中`)": "Text(`The following ${this.viewModel.bluetoothState.otaDeviceList.length} devices are in OTA`)",
  "Text(`扫描到 ${this.viewModel.bluetoothState.deviceList.length} 个设备`)": "Text(`Found ${this.viewModel.bluetoothState.deviceList.length} devices`)",
+ "Text(`扫描结果 / Scan · ${this.viewModel.bluetoothState.deviceList.length}`)": "Text(`Scan · ${this.viewModel.bluetoothState.deviceList.length}`)",
  "Text(`绑定的设备`)": "Text(`Bound devices`)",
  "TextInput({ placeholder: '请输入表盘名称...' })": "TextInput({ placeholder: 'Enter the watch face name...' })",
  "activeSportInitiator = .app // 标记App端为操作者锁定 / Target Initiator set to App": "activeSportInitiator = .app // Target Initiator set to App",

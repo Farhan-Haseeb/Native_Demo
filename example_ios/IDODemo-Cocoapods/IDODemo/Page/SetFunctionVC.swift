@@ -121,8 +121,8 @@ class SetFunctionVC: UIViewController {
         
         add(SetCmd(type: .setStressSwitch, title: "setStressSwitch", desc: L10n.setStressSwitch), isSupported: funcTable.setPressureData)
         
-        let heartRateSupported = funcTable.setSmartHeartRate || funcTable.syncV3Hr || funcTable.syncHeartRateMonitor
-        add(SetCmd(type: .setHeartMode, title: "setHeartMode", desc: L10n.setHeartMode), isSupported: heartRateSupported)
+//        let heartRateSupported = funcTable.setSmartHeartRate || funcTable.syncV3Hr || funcTable.syncHeartRateMonitor
+//        add(SetCmd(type: .setHeartMode, title: "setHeartMode", desc: L10n.setHeartMode), isSupported: heartRateSupported)
         
         add(SetCmd(type: .setHeartRateInterval, title: "setHeartRateInterval", desc: L10n.setHeartRateInterval), isSupported: funcTable.syncHeartRate)
         
@@ -174,7 +174,7 @@ class SetFunctionVC: UIViewController {
         add(SetCmd(type: .setStressCalibration, title: "setStressCalibration", desc: L10n.setStressCalibration), isSupported: sdk.funcTable.setSetStressCalibration)
         add(SetCmd(type: .setHandWashingReminder, title: "setHandWashingReminder", desc: L10n.setHandWashingReminder), isSupported: funcTable.setHandWashReminder)
         add(SetCmd(type: .setBpCalibration, title: "setBpCalibration", desc: L10n.setBpCalibration), isSupported: funcTable.getSupportBpSetOrMeasurementV2)
-        add(SetCmd(type: .setLongSit, title: "setLongSit", desc: L10n.setLongSit), isSupported: funcTable.setSedentariness)
+        // setLongSit is deprecated and its entry is hidden; use the walk reminder setWalkRemind instead
         add(SetCmd(type: .setTakingMedicineReminder, title: "setTakingMedicineReminder", desc: L10n.setTakingMedicineReminder), isSupported: sdk.funcTable.supportTakeMedicineReminder)
         add(SetCmd(type: .setCgmKeyAndDevice, title: "setCgmKeyAndDevice", desc: L10n.setCgmKeyAndDevice), isSupported: sdk.funcTable.supportCgmPhoneCommand)
         add(SetCmd(type: .deleteCgmKeyAndDevice, title: "deleteCgmKeyAndDevice", desc: L10n.deleteCgmKeyAndDevice), isSupported: sdk.funcTable.supportCgmPhoneCommand)
@@ -867,30 +867,24 @@ extension CmdType {
         case .setMainUISortV3:
             return IDOMainUISortParamModel(operate: 2, items: [1, 2, 3], locationX: 1, locationY: 1, sizeType: 2, widgetsType: 1)
         case .setHistoricalMenstruation:
+            // Align example_android SetFunctionDetailActivity.setHistoricalMenstruation (v21 isMenstrualEnd)
             return IDOHistoricalMenstruationParamModel(avgMenstrualDay: 7,
-                                                       avgCycleDay: 29,
+                                                       avgCycleDay: 28,
                                                        items: [
-                                                           IDOHistoricalMenstruationParamItem(year: 2023,
-                                                                                              mon: 8,
-                                                                                              day: 1,
-                                                                                              menstrualDay: 7,
-                                                                                              cycleDay: 30,
-                                                                                              ovulationIntervalDay: 14,
-                                                                                              ovulationBeforeDay: 5,
-                                                                                              ovulationAfterDay: 5),
-                                                           IDOHistoricalMenstruationParamItem(year: 2023,
-                                                                                              mon: 9,
-                                                                                              day: 1,
-                                                                                              menstrualDay: 7,
-                                                                                              cycleDay: 30,
-                                                                                              ovulationIntervalDay: 14,
-                                                                                              ovulationBeforeDay: 5,
-                                                                                              ovulationAfterDay: 5),
-                                                           IDOHistoricalMenstruationParamItem(year: 2023,
+                                                           IDOHistoricalMenstruationParamItem(year: 2026,
                                                                                               mon: 10,
                                                                                               day: 1,
                                                                                               menstrualDay: 7,
-                                                                                              cycleDay: 30,
+                                                                                              cycleDay: 9,
+                                                                                              ovulationIntervalDay: 14,
+                                                                                              ovulationBeforeDay: 5,
+                                                                                              ovulationAfterDay: 5,
+                                                                                              isMenstrualEnd: 1),
+                                                           IDOHistoricalMenstruationParamItem(year: 2026,
+                                                                                              mon: 10,
+                                                                                              day: 10,
+                                                                                              menstrualDay: 7,
+                                                                                              cycleDay: 28,
                                                                                               ovulationIntervalDay: 14,
                                                                                               ovulationBeforeDay: 5,
                                                                                               ovulationAfterDay: 5)
